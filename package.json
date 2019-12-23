@@ -1,14 +1,18 @@
 {
-  "name": "yui",
+  "name": "yiview",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "description": "封装常用的组件",
+  "author":"justineyi",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
+  "typings": "types/index.d.ts",
   "dependencies": {
     "core-js": "^3.4.3",
+    "element-ui": "^2.13.0",
     "vue": "^2.6.10"
   },
   "devDependencies": {
