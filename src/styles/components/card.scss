@@ -1,0 +1,32 @@
+.yi-card{
+  position: relative;
+  box-sizing: border-box;
+  box-shadow: 0 0 5px rgba(0,0,0,0.15);
+  transition:.3s;
+  &__header{
+    padding: 10px 20px 0 10px;
+    display: flex;
+    border-bottom: 1px solid #ebeef5;
+    box-sizing: border-box;
+      & .title{
+        line-height: 35px;
+        font-weight: 600;
+        font-size: 14px;
+        position: relative;
+        padding-left: 10px;
+        display: block;
+        &:before{
+          content: '';
+          position: absolute;
+          background-color: #1980FF;
+          width: 4px;
+          left: 0;
+          height: 60%;
+          top: 20%;
+        }
+      }
+  }
+  &__body{
+    padding: 20px;
+  }
+}

@@ -1,14 +1,10 @@
 import Vue from 'vue'
-import App from './App.vue'
+import App from './app.vue'
 
-import Yui from '../src/index'
+import YiUi from '../src/index';
 
-
-Vue.config.productionTip = false
-
-Vue.use(Yui)
-
+Vue.use(YiUi)
 
 new Vue({
-  render: h => h(App),
-}).$mount('#app')
+    render: h => h(App)
+}).$mount('#app');

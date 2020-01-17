@@ -1,27 +1,22 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="../src/assets/logo.png">
-    <YiForm></YiForm>
-  </div>
+    <div>
+        <yi-card title="card demo" style="width: 300px">
+            <p>主体内容更部分</p>
+        </yi-card>
+    </div>
 </template>
 
 <script>
-
-export default {
-  name: 'app',
-  components: {
-
-  }
-}
+    import YiCard from "../src/components/card/card";
+    export default {
+        name: "app",
+        components: {YiCard}
+    }
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style scoped>
+
+</style>
+<style lang="scss">
+    @import "../src/styles/index.scss";
 </style>

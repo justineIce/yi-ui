@@ -1,18 +1,15 @@
-import  Form from './components/form'
-
-
-import locale from 'element-ui/src/locale';
-import CollapseTransition from 'element-ui/src/transitions/collapse-transition';
-
-
 import Vue from 'vue'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+import locale from 'element-ui/src/locale';
+import CollapseTransition from 'element-ui/src/transitions/collapse-transition';
+
+import  Card from './components/card'
+
 Vue.use(ElementUI);
 
-
 const components=[
-    Form,
+    Card,
     CollapseTransition
 ]
 
