@@ -1,6 +1,6 @@
 <template>
     <div class="yi-card">
-        <div class="yi-card__header" v-if="title!=='' || $slots.header">
+        <div class="yi-card__header" v-if="title || $slots.header">
             <span class="title">{{title}}</span>
             <slot name="header"></slot>
         </div>
