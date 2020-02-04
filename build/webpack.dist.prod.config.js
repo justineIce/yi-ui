@@ -15,8 +15,8 @@ module.exports = merge(webpackBaseConfig, {
     output: {
         path:path.resolve(__dirname,'../dist'),
         publicPath:'/dist',
-        filename:'[name].min.js',
-        library:'[name]',
+        filename:'yi-ui.min.js',
+        library:'yi-ui',
         libraryTarget: 'umd',
         umdNamedDefine: true
     },

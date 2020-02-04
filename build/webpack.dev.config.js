@@ -13,8 +13,8 @@ module.exports = merge(webpackBaseConfig, {
     output: {
         path: path.join(__dirname, '../examples/dist'),
         publicPath: '',
-        filename: '[name].js',
-        chunkFilename: '[name].chunk.js'
+        filename: 'yi-ui.js',
+        chunkFilename: 'yi-ui.chunk.js'
     },
     resolve: {
         alias: {
