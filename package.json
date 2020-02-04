@@ -1,7 +1,7 @@
 {
   "name": "yi-ui",
-  "version": "1.0.0",
-  "description": "```\r npm install\r ```",
+  "version": "0.1.0",
+  "description": "vue 组件",
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --open --inline --hot --history-api-fallback --port 8081 --config build/webpack.dev.config.js",
