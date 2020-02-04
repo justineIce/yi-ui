@@ -1,13 +1,13 @@
 {
   "name": "yiview",
-  "version": "0.1.0",
+  "version": "0.3.3",
   "description": "vue 组件",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "dev": "webpack-dev-server --open --inline --hot --history-api-fallback --port 8081 --config build/webpack.dev.config.js",
     "dist:style": "gulp --gulpfile build/build-style.js",
     "dist:dev": "webpack --config build/webpack.dist.dev.config.js",
-    "dist": "npm run dist:style",
+    "dist": "npm run dist:style && npm run dist:dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -25,10 +25,8 @@
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^5.0.0",
     "gulp-clean-css": "^3.10.0",
-    "gulp-less": "^4.0.1",
     "gulp-rename": "^1.4.0",
-    "less": "^3.10.3",
-    "less-loader": "^5.0.0",
+    "gulp-less": "^4.0.1",
     "sass": "^1.24.5",
     "sass-loader": "^8.0.2",
     "style-loader": "^1.1.2",
@@ -56,6 +54,7 @@
     "url": "git+https://github.com/justineIce/yi-ui.git"
   },
   "keywords": [],
+  "style": "dist/styles/yi-ui.css",
   "bugs": {
     "url": "https://github.com/justineIce/yi-ui/issues"
   },

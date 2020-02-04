@@ -2,7 +2,7 @@
     <div>
         <p>card</p>
         <yi-card title="card demo" style="width: 300px">
-            <p>主体内容更部分</p>
+            <p>主体内容更部分454</p>
         </yi-card>
         <p>列表</p>
         <yi-table :columns="column"
@@ -12,10 +12,8 @@
 </template>
 
 <script>
-    // import YiCard from "../src/components/card/card";
     export default {
         name: "app",
-        // components: {YiCard},
         data(){
             return{
                 column:[
