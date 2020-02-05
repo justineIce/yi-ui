@@ -1,4 +1,25 @@
 .yi-table{
   position: relative;
   box-sizing: border-box;
+  &__query{
+    margin-bottom: 20px;
+  }
+  &__header,&__foot{
+    padding: 10px;
+    border: 1px solid #eee;
+  }
+  &__header{
+    border-bottom: none;
+  }
+  &__foot{
+    border-top:none;
+    font-size: 14px;
+    color: #606266;
+  }
+  &__buttons{
+    display: flex;
+    .el-button{
+       margin-left: 10px;
+    }
+  }
 }

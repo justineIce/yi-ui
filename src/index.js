@@ -6,11 +6,14 @@ import Vue from 'vue'
 
 import  Card from './components/card'
 import  Table from './components/table'
-
+import  Form from './components/form'
+import  CountTo from './components/count-to'
 
 const components=[
     Card,
-    Table
+    Table,
+    Form,
+    CountTo
 ]
 
 const install = function (Vue, opts = {}) {

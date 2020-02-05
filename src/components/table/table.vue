@@ -1,54 +1,245 @@
 <template>
     <div class="yi-table">
-        <div class="yi-ui__header">
-
+        <div class="yi-table__query" v-if="formModel.length!==0">
+            <el-form ref="form"
+                     :inline="true"
+                     :model="queryData"
+                     label-width="80px"
+                     @submit.native.prevent>
+                <el-row style="display: flex;">
+                    <template v-for="item in formModel">
+                        <el-col v-if="item.component && handleAttribute(item.component.name,false)"
+                                :span="item.component ? handleAttribute(item.component.span,null) :null"
+                                :offset="item.component ? handleAttribute(item.component.offset,0) :0">
+                            <el-form-item :label="`${item.title}:`" :prop="item.key">
+                                <!--输入框-->
+                                <el-input v-if="item.component.name === 'el-input'"
+                                          v-model="queryData[item.key]"
+                                          v-bind="item.component"></el-input>
+                                <!--选择框-->
+                                <el-select
+                                        v-else-if="item.component.name === 'el-select'"
+                                        v-model="queryData[item.key]"
+                                        v-bind="item.component">
+                                    <el-option
+                                            v-for="option in item.component.options"
+                                            :key="option.value"
+                                            v-bind="option">
+                                    </el-option>
+                                </el-select>
+                                <!--级联选择器-->
+                                <el-cascader
+                                        v-else-if="item.component.name === 'el-cascader'"
+                                        v-model="queryData[item.key]"
+                                        v-bind="item.component">
+                                </el-cascader>
+                                <el-time-picker  v-else-if="item.component.name === 'el-time-picker'"
+                                                 v-model="queryData[item.key]"
+                                                 v-bind="item.component">
+                                </el-time-picker>
+                                <el-date-picker  v-else-if="item.component.name === 'el-date-picker'"
+                                                 v-model="queryData[item.key]"
+                                                 v-bind="item.component">
+                                </el-date-picker>
+                            </el-form-item>
+                        </el-col>
+                    </template>
+                    <el-col :span="null" :offset="0">
+                        <el-form-item>
+                            <div class="yi-table__buttons">
+                                <el-button type="primary" @click="handleQuery">查询</el-button>
+                                <el-button @click="handleClear">重置</el-button>
+                            <!--<slot name="query-button" v-bind="queryData"></slot>-->
+                            </div>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+            </el-form>
         </div>
-        <div class="yi-ui__body">
-            <!--列表内容-->
-            <div class="yi-ui__table">
-                <el-table role="table"
-                          ref="table"
-                          border
-                          v-bind="options"
-                          :data="data"
-                          @select="handleSelect"
-                          @select-all="handleSelectAll"
-                          @selection-change="handleSelectionChange"
-                          @cell-mouse-enter="handleCellMouseEnter"
-                          @cell-mouse-leave="handleCellMouseLeave"
-                          @cell-click="handleCellClick"
-                          @cell-dblclick="handleCellDblclick"
-                          @row-click="handleRowClick"
-                          @row-contextmenu="handleRowContextmenu"
-                          @row-dblclick="handleRowDblclick"
-                          @header-click="handleHeaderClick"
-                          @header-contextmenu="handleHeaderContextmenu"
-                          @sort-change="handleSortChange"
-                          @filter-change="handleFilterChange"
-                          @current-change="handleCurrentChange">
-                    <el-table-column v-for="(item,index) in columns"
-                                     :key="`column__${index}`"
-                                     v-bind="item"
-                                     :prop="item.key"
-                                     :label="item.title">
-                        <template slot-scope="scope">
-                            <slot :name="item.key" v-bind="scope.row">
-                                {{item.formatter ? item.formatter(scope.row, scope.column, scope.row[item.key], scope.$index) : scope.row[item.key]}}
-                            </slot>
-                        </template>
-                    </el-table-column>
-                </el-table>
+        <!--表搜索-->
+        <div class="yi-table__body">
+            <!--表头内容-->
+            <div class="yi-table__header" v-if="$slots.header">
+                <slot name="header"></slot>
             </div>
-            <!--翻页空间-->
-            <div class="yi-ui__pagination">
+            <!--列表内容-->
+            <el-table role="table"
+                      ref="table"
+                      border
+                      v-bind="options"
+                      :data="data"
+                      :header-cell-style="{padding: '10px 0', background: '#f3f3f3'}"
+                      @select="handleSelect"
+                      @select-all="handleSelectAll"
+                      @selection-change="handleSelectionChange"
+                      @cell-mouse-enter="handleCellMouseEnter"
+                      @cell-mouse-leave="handleCellMouseLeave"
+                      @cell-click="handleCellClick"
+                      @cell-dblclick="handleCellDblclick"
+                      @row-click="handleRowClick"
+                      @row-contextmenu="handleRowContextmenu"
+                      @row-dblclick="handleRowDblclick"
+                      @header-click="handleHeaderClick"
+                      @header-contextmenu="handleHeaderContextmenu"
+                      @sort-change="handleSortChange"
+                      @filter-change="handleFilterChange"
+                      @current-change="handleCurrentChange"
+                      @expand-change="handleExpandChange">
+                <el-table-column type="selection" width="50px" v-if="selection"></el-table-column>
+                <el-table-column v-for="(item,index) in columns"
+                                 :key="`column__${index}`"
+                                 v-bind="item"
+                                 :prop="item.key"
+                                 :label="item.title"
+                                 :filters="item.filters ? item.filters : null"
+                                 :filter-method="item.filterMethod ? item.filterMethod : null">
+                    <template slot-scope="scope">
+                        <div v-if="item.component && item.component.isEdit && handleAttributeShow(item.component.isEdit,scope.$index, scope.row)">
+                            <el-input
+                                    v-if="item.component && item.component.name === 'el-input'"
+                                    v-model="scope.row[item.key]"
+                                    v-bind="item.component"
+                                    @change="$emit('row-data-change', {rowIndex: scope.$index, key: item.key, value: scope.row[item.key], row: scope.row})">
+                            </el-input>
+                            <el-input-number
+                                    v-else-if="item.component && item.component.name === 'el-input-number'"
+                                    v-model="scope.row[item.key]"
+                                    v-bind="item.component"
+                                    @change="$emit('row-data-change', {rowIndex: scope.$index, key: item.key, value: scope.row[item.key], row: scope.row})">
+                            </el-input-number>
+                            <el-radio-group
+                                    v-else-if="item.component && item.component.name === 'el-radio'"
+                                    v-model="scope.row[item.key]"
+                                    v-bind="item.component"
+                                    @change="$emit('row-data-change', {rowIndex: scope.$index, key: item.key, value: scope.row[item.key], row: scope.row})">
+                                <template v-if="item.component.buttonMode">
+                                    <el-radio-button
+                                            v-for="option in item.component.options"
+                                            :key="option.value"
+                                            :label="option.value">
+                                        {{option.label}}
+                                    </el-radio-button>
+                                </template>
+                                <template v-else>
+                                    <el-radio
+                                            v-for="option in item.component.options"
+                                            :key="option.value"
+                                            :label="option.value">
+                                        {{option.label}}
+                                    </el-radio>
+                                </template>
+                            </el-radio-group>
+                            <el-checkbox-group
+                                    v-else-if="item.component && item.component.name === 'el-checkbox'"
+                                    v-model="scope.row[item.key]"
+                                    v-bind="item.component"
+                                    @change="$emit('row-data-change', {rowIndex: scope.$index, key: item.key, value: scope.row[item.key], row: scope.row})">
+                                <template v-if="item.component.buttonMode">
+                                    <el-checkbox-button
+                                            v-for="option in item.component.options"
+                                            :key="option.value"
+                                            :label="option.value">
+                                        {{option.label}}
+                                    </el-checkbox-button>
+                                </template>
+                                <template v-else>
+                                    <el-checkbox
+                                            v-for="option in item.component.options"
+                                            :key="option.value"
+                                            :label="option.value">
+                                        {{option.label}}
+                                    </el-checkbox>
+                                </template>
+                            </el-checkbox-group>
+                            <el-select
+                                    v-else-if="item.component && item.component.name === 'el-select'"
+                                    v-model="scope.row[item.key]"
+                                    v-bind="item.component"
+                                    @change="$emit('row-data-change', {rowIndex: scope.$index, key: item.key, value: scope.row[item.key], row: scope.row})">
+                                <el-option
+                                        v-for="option in item.component.options"
+                                        :key="option.value"
+                                        v-bind="option">
+                                </el-option>
+                            </el-select>
+                            <el-cascader
+                                    v-else-if="item.component && item.component.name === 'el-cascader'"
+                                    v-model="scope.row[item.key]"
+                                    v-bind="item.component"
+                                    @change="$emit('row-data-change', {rowIndex: scope.$index, key: item.key, value: scope.row[item.key], row: scope.row})">
+                            </el-cascader>
+                            <el-switch
+                                    v-else-if="item.component && item.component.name === 'el-switch'"
+                                    v-model="scope.row[item.key]"
+                                    v-bind="item.component"
+                                    @change="$emit('row-data-change', {rowIndex: scope.$index, key: item.key, value: scope.row[item.key], row: scope.row})">
+                            </el-switch>
+                            <el-time-select
+                                    v-else-if="item.component && item.component.name === 'el-time-select'"
+                                    v-model="scope.row[item.key]"
+                                    v-bind="item.component"
+                                    @change="$emit('row-data-change', {rowIndex: scope.$index, key: item.key, value: scope.row[item.key], row: scope.row})">
+                            </el-time-select>
+                            <el-time-picker
+                                    v-else-if="item.component && item.component.name === 'el-time-picker'"
+                                    v-model="scope.row[item.key]"
+                                    v-bind="item.component"
+                                    @change="$emit('row-data-change', {rowIndex: scope.$index, key: item.key, value: scope.row[item.key], row: scope.row})">
+                            </el-time-picker>
+                            <el-date-picker
+                                    v-else-if="item.component && item.component.name === 'el-date-picker'"
+                                    v-model="scope.row[item.key]"
+                                    v-bind="item.component"
+                                    @change="$emit('row-data-change', {rowIndex: scope.$index, key: item.key, value: scope.row[item.key], row: scope.row})">
+                            </el-date-picker>
+                            <slot :name="item.key" v-bind="scope.row" v-else>{{scope.row[item.key]}}</slot>
+                        </div>
+<!--                        <render-custom-component v-else-if="item.component && item.component.name"-->
+<!--                            :component-name="item.component.name"-->
+<!--                            :props="item.component.props ? item.component.props : null"-->
+<!--                            :scope="scope"-->
+<!--                            @change="$emit('row-data-change', {rowIndex: scope.$index, key: item.key, value: scope.row[item.key], row: scope.row})">-->
+<!--                        </render-custom-component>-->
+                        <slot :name="item.key" v-bind="scope.row" v-else>
+                            {{item.formatter ? item.formatter(scope.row, scope.column, scope.row[item.key], scope.$index) : scope.row[item.key]}}
+                        </slot>
+                    </template>
+                </el-table-column>
+                <!--操作栏-->
+                <el-table-column v-if="rowHandle && handleRowHandleShow(rowHandle)"
+                                 v-bind="rowHandle"
+                                 :label="handleAttribute(rowHandle.title, '操作')"
+                                 fixed="right">
+                    <template slot-scope="scope">
+                        <div style="display: flex;">
+                            <div v-for="(item,index) in handleAttribute(rowHandle.operate, [])" :key="index">
+                                <el-button  size="mini"
+                                            type="text"
+                                            v-bind="item"
+                                            v-if="handleAttributeShow(item.show, scope.$index, scope.row)"
+                                            :disabled="handleAttributeDisabled(item.disabled, scope.row, scope.$index)"
+                                            @click.stop="$emit(item.emit, {index: scope.$index, row: scope.row, event: $event})">{{item.text}}</el-button>
+                            </div>
+                        </div>
+                    </template>
+                </el-table-column>
+            </el-table>
+            <div class="yi-table__foot" v-if="$slots.foot">
+                <slot name="foot"></slot>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+    import Tool from '../../mixins/tool'
+    import renderCustomComponent from './renderCustomComponent.vue'
     export default {
         name: "YiTable",
+        components: {
+            renderCustomComponent
+        },
+        mixins:[Tool],
         props:{
             /**
              * @description 表格配置
@@ -71,13 +262,54 @@
                 type: Array,
                 request: true
             },
+            /**
+             * @description 是否多选
+             */
+            selection: {
+                type: Boolean,
+                default: false
+            },
+            /**
+             * @description 默认排序
+             * title 标题   operate操作数组
+             */
+            rowHandle: {
+                type: Object,
+                default: null
+            },
         },
         data(){
             return{
-
+                queryData:{},
+            }
+        },
+        computed:{
+            formModel(){
+                if(this.columns){
+                    let data=[]
+                    let query={}
+                    this.columns.forEach(item=>{
+                        if(item.query !==undefined && typeof item.query === 'boolean' && item.query){
+                            data.push(item)
+                            query[item.key]=item.value !== undefined ? item.value : ''
+                        }
+                    })
+                    this.queryData=query
+                    return data
+                }
+                return []
             }
         },
         methods:{
+            handleRowHandleShow (rowHandle, index, row) {
+                let data = this.handleAttribute(rowHandle.operate, [])
+                for (let i = 0; i < data.length; i++) {
+                    if (this.handleAttributeShow(data[i].show, index, row)) {
+                        return true
+                    }
+                }
+                return false
+            },
             /**
              * @description 勾选数据时触发的事件
              */
@@ -94,7 +326,6 @@
              * @description 复选框选择项发生变化时触发的事件
              */
             handleSelectionChange (selection) {
-                this.selectionData = selection
                 this.$emit('selection-change', selection)
             },
             /**
@@ -162,6 +393,15 @@
             },
             handleFilterChange (filters) {
                 this.$emit('filter-change', filters)
+            },
+            handleExpandChange(row,expandedRows ){
+                this.$emit('expand-change', row,expandedRows)
+            },
+            handleQuery(){
+                this.$emit('query-click', this.queryData)
+            },
+            handleClear(){
+                this.$refs.form.resetFields()
             }
         }
     }
