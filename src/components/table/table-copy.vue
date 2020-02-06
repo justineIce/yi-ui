@@ -1,6 +1,6 @@
 <template>
     <div class="yi-table">
-        <div class="yi-table__query" v-if="queryModel && queryModel.length>0">
+        <div class="yi-table__query" v-if="false">
             <el-form ref="form"
                      :inline="true"
                      :model="queryData"
@@ -49,6 +49,7 @@
                             <div class="yi-table__buttons">
                                 <el-button type="primary" @click="handleQuery">查询</el-button>
                                 <el-button @click="handleClear">重置</el-button>
+                            <!--<slot name="query-button" v-bind="queryData"></slot>-->
                             </div>
                         </el-form-item>
                     </el-col>
@@ -193,6 +194,12 @@
                             </el-date-picker>
                             <slot :name="item.key" v-bind="scope.row" v-else>{{scope.row[item.key]}}</slot>
                         </div>
+<!--                        <render-custom-component v-else-if="item.component && item.component.name"-->
+<!--                            :component-name="item.component.name"-->
+<!--                            :props="item.component.props ? item.component.props : null"-->
+<!--                            :scope="scope"-->
+<!--                            @change="$emit('row-data-change', {rowIndex: scope.$index, key: item.key, value: scope.row[item.key], row: scope.row})">-->
+<!--                        </render-custom-component>-->
                         <slot :name="item.key" v-bind="scope.row" v-else>
                             {{item.formatter ? item.formatter(scope.row, scope.column, scope.row[item.key], scope.$index) : scope.row[item.key]}}
                         </slot>
@@ -254,7 +261,6 @@
              */
             data: {
                 type: Array,
-                default:()=>[],
                 request: true
             },
             /**
@@ -293,7 +299,7 @@
                     this.queryData=query
                     return data
                 }
-                return null
+               return null
             }
         },
         methods:{
@@ -399,6 +405,9 @@
             handleClear(){
                 this.$refs.form.resetFields()
             }
+        },
+        mounted() {
+
         }
     }
 </script>

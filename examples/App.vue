@@ -7,13 +7,15 @@
                         <p>主体内容更部分454</p>
                     </yi-card>
                 </div>
-
             </el-tab-pane>
             <el-tab-pane label="列表">
-                <p>例子一</p>
+                <h1>例子一</h1>
+                <yi-table :columns="column2"
+                          :data="data"></yi-table>
+                <h1>例子二</h1>
                 <yi-table :columns="column"
                           :data="data"></yi-table>
-                <p>例子二</p>
+                <h2>例子三</h2>
                 <yi-table :columns="column"
                           :data="data"
                           :options="{stripe:true}"
@@ -66,6 +68,15 @@
                                 {label:'选项一',value:'选项一'}
                             ]}},
                     { title: '专业简称', key: 'short_name',query:true,component:{name:'el-input'} },
+                    { title: '所属机构', key: 'affiliate'},
+                    { title: '学制', key: 'education' },
+                    { title: '层次', key: 'level'},
+                    { title: '学科门类', key: 'category',},
+                ],
+                column2:[
+                    { title: '专业名称', key: 'name',fixed:true },
+                    { title: '专业代码', key: 'code',},
+                    { title: '专业简称', key: 'short_name',},
                     { title: '所属机构', key: 'affiliate'},
                     { title: '学制', key: 'education' },
                     { title: '层次', key: 'level'},
