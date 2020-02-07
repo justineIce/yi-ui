@@ -7,7 +7,7 @@
                  label-width="100px"
                  @submit.native.prevent>
             <el-row v-bind="options">
-                <template v-for="(value,key) in form">
+                <template v-for="(value,key) in template">
                     <el-col v-if="template[key] ? (template[key].component ? handleAttribute(template[key].component.show,true) : true) : false"
                             :span="template[key].component ? handleAttribute(template[key].component.span,(options ? (options.inline ? null : 24) : 24 )) : (options ? (options.inline ? null : 24) : 24 )"
                             :offset="template[key].component ? handleAttribute(template[key].component.offset, 0) : 0">
@@ -184,7 +184,6 @@
         </el-form>
     </div>
 </template>
-
 <script>
     import Tool from '../../mixins/tool'
     import renderCustomComponent from '../table/renderCustomComponent.vue'
@@ -209,7 +208,7 @@
             template: {
                 type: Object,
                 default: null,
-                request: true
+                required: true
             },
             rules: {
                 type: Object,

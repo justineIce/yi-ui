@@ -1,19 +1,15 @@
-import Vue from 'vue'
-
-// import ElementUI from 'element-ui';
-// import 'element-ui/lib/theme-chalk/index.css'
-// Vue.use(ElementUI);
-
 import  Card from './components/card'
+import  CountTo from './components/count-to'
 import  Table from './components/table'
 import  Form from './components/form'
-import  CountTo from './components/count-to'
+import  FormShow from './components/form-show/show'
 
 const components=[
     Card,
     Table,
     Form,
-    CountTo
+    CountTo,
+    FormShow
 ]
 
 const install = function (Vue, opts = {}) {

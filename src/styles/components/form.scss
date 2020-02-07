@@ -1,3 +1,23 @@
-.yi-form{
-
+.yi-form-show{
+ &.yi-form-border{
+   border: 1px solid #ebeef5;
+   .el-form{
+     .el-form-item{
+       padding: 0;
+       margin: 0;
+       display: flex;
+       align-items: center;
+       border-bottom: 1px solid #ebeef5;
+       border-right: 1px solid #ebeef5;
+       .el-form-item__label{
+         padding-left: 10px;
+       }
+       .el-form-item__content{
+         border-left: 1px solid #ebeef5;
+         padding: 5px;
+         margin: 0!important;
+       }
+     }
+   }
+ }
 }

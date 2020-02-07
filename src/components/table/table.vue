@@ -247,7 +247,7 @@
             columns: {
                 type: Array,
                 default:()=>[],
-                request: true
+                required: true
             },
             /**
              * @description 表格数据
@@ -255,7 +255,7 @@
             data: {
                 type: Array,
                 default:()=>[],
-                request: true
+                required: true
             },
             /**
              * @description 是否多选

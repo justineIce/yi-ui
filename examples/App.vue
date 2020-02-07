@@ -1,12 +1,38 @@
 <template>
     <div id="app">
         <el-tabs>
+            <el-tab-pane label="表单">
+                <p>表格显示</p>
+                <yi-form-show
+                         border
+                         :template="template1"
+                         :data="formData"
+                         :span="12"
+                         @handleClick="handleClick">
+                </yi-form-show>
+                <p>简单显示</p>
+                <yi-form-show
+                        :template="template1"
+                        :data="formData">
+                </yi-form-show>
+                <p>例子一</p>
+                <yi-form :template="template"
+                         :data="formData"
+                         :options="{inline:false}"
+                         :rules="rules"
+                         @form-submit="handleFormSubmit">
+                </yi-form>
+                <p>例子二</p>
+                <yi-form :template="template"
+                         :data="formData"
+                         :options="{inline:true}"
+                         show>
+                </yi-form>
+            </el-tab-pane>
             <el-tab-pane label="card">
-                <div style="padding: 10px">
-                    <yi-card title="card demo" style="width: 300px">
-                        <p>主体内容更部分454</p>
-                    </yi-card>
-                </div>
+                <yi-card title="card demo" style="width: 300px">
+                    <p>主体内容更部分454</p>
+                </yi-card>
             </el-tab-pane>
             <el-tab-pane label="列表">
                 <h1>例子一</h1>
@@ -32,34 +58,18 @@
                     </template>
                 </yi-table>
             </el-tab-pane>
-            <el-tab-pane label="列单">
-                <p>例子一</p>
-                <yi-form :template="template"
-                         :data="formData"
-                         :options="{inline:false}"
-                         :rules="rules"
-                         @form-submit="handleFormSubmit">
-                </yi-form>
-                <p>例子二</p>
-                <yi-form :template="template"
-                         :data="formData"
-                         :options="{inline:true}"
-                         show>
-                </yi-form>
-            </el-tab-pane>
             <el-tab-pane label="数字">
                 <yi-count-to :end="1234" :startVal="10" usegroup></yi-count-to>
-            </el-tab-pane>
-            <el-tab-pane label="标题">
-                <span class="d-title">指导研究生情况</span>
             </el-tab-pane>
         </el-tabs>
     </div>
 </template>
 
 <script>
+    import test from './test'
     export default {
         name: "app",
+        components:{test},
         data(){
             return{
                 column:[
@@ -100,6 +110,13 @@
                     constraint: { title: '必备数据', value: 0, component: { name: 'el-radio', options: [{ value: 1, label: '是' }, { value: 0, label: '否' }] } },
                     example: { title: '解释/举例', component: { name: 'el-input', type: 'textarea', rows: 5 } }
                 },
+                template1:{
+                    code: { title: '编码',component:{name:'el-button',emit:'handleClick'}},
+                    name: { title: '数据项名',component:{name:test,value:'2324'}},
+                    short_name: { title: '中文简称' ,component:{name:'el-tag',type:"success"}},
+                    constraint: { title: '必备数据',component:{name:'el-link',type:"primary"}},
+                    example: { title: '解释/举例'}
+                },
                 formData:{
                     code: "asdf",
                     name: "asdf",
@@ -115,6 +132,9 @@
             handleFormSubmit(data,done){
                 console.log(data)
                 done()
+            },
+            handleClick(){
+                console.log("click")
             }
         }
     }
