@@ -1,7 +1,9 @@
 .yi-card{
   position: relative;
   box-sizing: border-box;
-  box-shadow: 0 0 5px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+  border: 1px solid #ebeef5;
+  background-color: #fff;
   transition:.3s;
   &__header{
     padding: 10px 20px 0 10px;
