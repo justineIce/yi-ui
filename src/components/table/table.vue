@@ -1,5 +1,6 @@
 <template>
-    <div class="yi-table">
+    <div class="yi-table"
+         v-loading="loading">
         <div class="yi-table__query" v-if="queryModel && queryModel.length>0">
             <el-form ref="form"
                      :inline="true"
@@ -88,10 +89,13 @@
                 <el-table-column v-for="(item,index) in columns"
                                  :key="`column__${index}`"
                                  v-bind="item"
-                                 :prop="item.key"
-                                 :label="item.title"
+                                 :prop="handleAttribute(item.key,null)"
+                                 :label="handleAttribute(item.title,'')"
                                  :filters="item.filters ? item.filters : null"
                                  :filter-method="item.filterMethod ? item.filterMethod : null">
+                    <template v-if="item.children">
+
+                    </template>
                     <template slot-scope="scope">
                         <div v-if="item.component && item.component.isEdit && handleAttributeShow(item.component.isEdit,scope.$index, scope.row)">
                             <el-input
@@ -220,6 +224,16 @@
             <div class="yi-table__foot" v-if="$slots.foot">
                 <slot name="foot"></slot>
             </div>
+            <div class="yi-table__pagination"
+                 v-if="pagination">
+                <el-pagination
+                        v-if="pagination"
+                        v-bind="pagination"
+                        background
+                        layout="total, prev, pager, next,jumper"
+                        @current-change="handlePaginationCurrentChange">
+                </el-pagination>
+            </div>
         </div>
     </div>
 </template>
@@ -235,6 +249,13 @@
         mixins:[Tool],
         props:{
             /**
+             * @description 表格加载
+             */
+            loading: {
+                type: Boolean,
+                default: false
+            },
+            /**
              * @description 表格配置
              */
             options: {
@@ -246,7 +267,6 @@
              */
             columns: {
                 type: Array,
-                default:()=>[],
                 required: true
             },
             /**
@@ -254,7 +274,6 @@
              */
             data: {
                 type: Array,
-                default:()=>[],
                 required: true
             },
             /**
@@ -265,13 +284,26 @@
                 default: false
             },
             /**
-             * @description 默认排序
+             * @description 表格操作
              * title 标题   operate操作数组
              */
             rowHandle: {
                 type: Object,
                 default: null
             },
+            /**
+             * @description 表格数据
+             */
+            pagination: {
+                type: [Object,Boolean],
+                default(){
+                    return{
+                        currentPage: 1,
+                        pageSize: 10,
+                        total: 0
+                    }
+                }
+            }
         },
         data(){
             return{
@@ -394,10 +426,22 @@
                 this.$emit('expand-change', row,expandedRows)
             },
             handleQuery(){
-                this.$emit('query-click', this.queryData)
+                // 当前页为0,
+                this.pagination.currentPage = 1
+                let data=JSON.parse(JSON.stringify(this.queryData))
+                this.$emit('query-changes',Object.assign(data,{
+                    pageIndex:this.pagination.currentPage,
+                    pageSize :this.pagination && this.pagination.pageSize ? this.pagination.pageSize : 100 }))
             },
             handleClear(){
                 this.$refs.form.resetFields()
+            },
+            handlePaginationCurrentChange(page){
+                this.pagination.currentPage = page
+                let data=JSON.parse(JSON.stringify(this.queryData))
+                this.$emit('query-changes',Object.assign(data,{
+                    pageIndex:this.pagination.currentPage,
+                    pageSize :this.pagination && this.pagination.pageSize ? this.pagination.pageSize : 100 }))
             }
         }
     }

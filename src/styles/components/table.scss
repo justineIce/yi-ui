@@ -2,7 +2,7 @@
   position: relative;
   box-sizing: border-box;
   &__query{
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
   &__header,&__foot{
     padding: 10px;
@@ -15,6 +15,11 @@
     border-top:none;
     font-size: 14px;
     color: #606266;
+  }
+  &__pagination{
+    margin: 20px 0;
+    background: #FFF;
+    text-align: right;
   }
   &__buttons{
     display: flex;

@@ -14,159 +14,152 @@
                         <el-form-item :label="`${template[key].title}：`"
                                       :prop="key">
                             <slot :name="key" v-bind="form">
-                                <div v-if="show">
-                                    <label class="el-form-item__label">
-                                        {{form ? (template[key].formatter ? template[key].formatter(form[key]) : form[key]) : ''}}
-                                    </label>
-                                </div>
-                                <div v-else>
-                                    <!--输入框-->
-                                    <el-input
-                                            v-if="(!template[key].component) ||((!template[key].component.name) && (!template[key].component.render)) || template[key].component.name === 'el-input'"
-                                            v-model="form[key]"
-                                            v-bind="template[key].component"
-                                            :disabled="handleAttributeDisabled(template[key].disabled,form)"
-                                            @change="$emit('change',{key: key, data: form})">
-                                    </el-input>
-                                    <!--数字输入框-->
-                                    <el-input-number
-                                            v-else-if="template[key].component.name === 'el-input-number'"
-                                            v-model="form[key]"
-                                            v-bind="template[key].component"
-                                            :disabled="handleAttributeDisabled(template[key].disabled,form)"
-                                            @change="$emit('change',{key: key,data: form})">
-                                    </el-input-number>
-                                    <!--单选按钮-->
-                                    <el-radio-group
-                                            v-else-if="template[key].component.name === 'el-radio'"
-                                            v-model="form[key]"
-                                            v-bind="template[key].component"
-                                            :disabled="handleAttributeDisabled(template[key].disabled,form)"
-                                            @change="$emit('change',{key: key, data: form})">
-                                        <template v-if="template[key].component.buttonMode">
-                                            <el-radio-button
-                                                    v-for="option in template[key].component.options"
-                                                    :key="option.value"
-                                                    :label="option.value">
-                                                {{option.label}}
-                                            </el-radio-button>
-                                        </template>
-                                        <template v-else>
-                                            <el-radio
-                                                    v-for="option in template[key].component.options"
-                                                    :key="option.value"
-                                                    :label="option.value">
-                                                {{option.label}}
-                                            </el-radio>
-                                        </template>
-                                    </el-radio-group>
-                                    <el-checkbox-group
-                                            v-else-if="template[key].component.name === 'el-checkbox'"
-                                            v-model="form[key]"
-                                            v-bind="template[key].component"
-                                            :disabled="handleAttributeDisabled(template[key].disabled,form)"
-                                            @change="$emit('change',{key: key, data: form})">
-                                        <template v-if="template[key].component.buttonMode">
-                                            <el-checkbox-button
-                                                    v-for="option in template[key].component.options"
-                                                    :key="option.value"
-                                                    :label="option.value"
-                                            >
-                                                {{option.label}}
-                                            </el-checkbox-button>
-                                        </template>
-                                        <template v-else>
-                                            <el-checkbox
-                                                    v-for="option in template[key].component.options"
-                                                    :key="option.value"
-                                                    :label="option.value">
-                                                {{option.label}}
-                                            </el-checkbox>
-                                        </template>
-                                    </el-checkbox-group>
-                                    <el-select
-                                            v-else-if="template[key].component.name === 'el-select'"
-                                            v-model="form[key]"
-                                            v-bind="template[key].component"
-                                            :disabled="handleAttributeDisabled(template[key].disabled,form)"
-                                            @change="$emit('change',{key: key, data: form})">
-                                        <el-option
+                                <!--输入框-->
+                                <el-input
+                                        v-if="(!template[key].component) ||((!template[key].component.name) && (!template[key].component.render)) || template[key].component.name === 'el-input'"
+                                        v-model="form[key]"
+                                        v-bind="template[key].component"
+                                        :disabled="handleAttributeDisabled(template[key].disabled,form)"
+                                        @change="$emit('change',{key: key, data: form})">
+                                </el-input>
+                                <!--数字输入框-->
+                                <el-input-number
+                                        v-else-if="template[key].component.name === 'el-input-number'"
+                                        v-model="form[key]"
+                                        v-bind="template[key].component"
+                                        :disabled="handleAttributeDisabled(template[key].disabled,form)"
+                                        @change="$emit('change',{key: key,data: form})">
+                                </el-input-number>
+                                <!--单选按钮-->
+                                <el-radio-group
+                                        v-else-if="template[key].component.name === 'el-radio'"
+                                        v-model="form[key]"
+                                        v-bind="template[key].component"
+                                        :disabled="handleAttributeDisabled(template[key].disabled,form)"
+                                        @change="$emit('change',{key: key, data: form})">
+                                    <template v-if="template[key].component.buttonMode">
+                                        <el-radio-button
                                                 v-for="option in template[key].component.options"
                                                 :key="option.value"
-                                                v-bind="option"
+                                                :label="option.value">
+                                            {{option.label}}
+                                        </el-radio-button>
+                                    </template>
+                                    <template v-else>
+                                        <el-radio
+                                                v-for="option in template[key].component.options"
+                                                :key="option.value"
+                                                :label="option.value">
+                                            {{option.label}}
+                                        </el-radio>
+                                    </template>
+                                </el-radio-group>
+                                <el-checkbox-group
+                                        v-else-if="template[key].component.name === 'el-checkbox'"
+                                        v-model="form[key]"
+                                        v-bind="template[key].component"
+                                        :disabled="handleAttributeDisabled(template[key].disabled,form)"
+                                        @change="$emit('change',{key: key, data: form})">
+                                    <template v-if="template[key].component.buttonMode">
+                                        <el-checkbox-button
+                                                v-for="option in template[key].component.options"
+                                                :key="option.value"
+                                                :label="option.value"
                                         >
-                                        </el-option>
-                                    </el-select>
-                                    <el-cascader
-                                            v-else-if="template[key].component.name === 'el-cascader'"
-                                            v-model="form[key]"
-                                            v-bind="template[key].component"
-                                            :disabled="handleAttributeDisabled(template[key].disabled,form)"
-                                            @change="$emit('change',{key: key, data: form})">
-                                    </el-cascader>
-                                    <el-switch
-                                            v-else-if="template[key].component.name === 'el-switch'"
-                                            v-model="form[key]"
-                                            v-bind="template[key].component"
-                                            :disabled="handleAttributeDisabled(template[key].disabled,form)"
-                                            @change="$emit('change',{key: key, data: form})">
-                                    </el-switch>
-                                    <el-slider
-                                            v-else-if="template[key].component.name === 'el-slider'"
-                                            v-model="form[key]"
-                                            v-bind="template[key].component"
-                                            :disabled="handleAttributeDisabled(template[key].disabled,form)"
-                                            @change="$emit('change',{key: key, data: form})">
-                                    </el-slider>
-                                    <el-time-select
-                                            v-else-if="template[key].component.name === 'el-time-select'"
-                                            v-model="form[key]"
-                                            v-bind="template[key].component"
-                                            :disabled="handleAttributeDisabled(template[key].disabled,form)"
-                                            @change="$emit('change',{key: key, data: form})">
-                                    </el-time-select>
-                                    <el-time-picker
-                                            v-else-if="template[key].component.name === 'el-time-picker'"
-                                            v-model="form[key]"
-                                            v-bind="template[key].component"
-                                            :disabled="handleAttributeDisabled(template[key].disabled,form)"
-                                            @change="$emit('change',{key: key, data: form})">
-                                    </el-time-picker>
-                                    <el-date-picker
-                                            v-else-if="template[key].component.name === 'el-date-picker'"
-                                            v-model="form[key]"
-                                            v-bind="template[key].component"
-                                            :disabled="handleAttributeDisabled(template[key].disabled,form)"
-                                            @change="$emit('change',{key: key, data: form})">
-                                    </el-date-picker>
-                                    <el-rate
-                                            v-else-if="template[key].component.name === 'el-rate'"
-                                            v-model="form[key]"
-                                            v-bind="template[key].component"
-                                            :disabled="handleAttributeDisabled(template[key].disabled,form)"
-                                            @change="$emit('change',{key: key, data: form})">
-                                    </el-rate>
-                                    <el-color-picker
-                                            v-else-if="template[key].component.name === 'el-color-picker'"
-                                            v-model="form[key]"
-                                            v-bind="template[key].component"
-                                            :disabled="handleAttributeDisabled(template[key].disabled,form)"
-                                            @change="$emit('change',{key: key, data: form})">
-                                    </el-color-picker>
-                                    <render-custom-component
-                                            v-else-if="template[key].component.name"
-                                            v-model="form[key]"
-                                            v-bind="template[key].component"
-                                            :component-name="template[key].component.name"
-                                            :props="template[key].component.props ? template[key].component.props : null"
-                                            @change="$emit('change',{key: key, data: form})">
-                                    </render-custom-component>
-                                </div>
+                                            {{option.label}}
+                                        </el-checkbox-button>
+                                    </template>
+                                    <template v-else>
+                                        <el-checkbox
+                                                v-for="option in template[key].component.options"
+                                                :key="option.value"
+                                                :label="option.value">
+                                            {{option.label}}
+                                        </el-checkbox>
+                                    </template>
+                                </el-checkbox-group>
+                                <el-select
+                                        v-else-if="template[key].component.name === 'el-select'"
+                                        v-model="form[key]"
+                                        v-bind="template[key].component"
+                                        :disabled="handleAttributeDisabled(template[key].disabled,form)"
+                                        @change="$emit('change',{key: key, data: form})">
+                                    <el-option
+                                            v-for="option in template[key].component.options"
+                                            :key="option.value"
+                                            v-bind="option"
+                                    >
+                                    </el-option>
+                                </el-select>
+                                <el-cascader
+                                        v-else-if="template[key].component.name === 'el-cascader'"
+                                        v-model="form[key]"
+                                        v-bind="template[key].component"
+                                        :disabled="handleAttributeDisabled(template[key].disabled,form)"
+                                        @change="$emit('change',{key: key, data: form})">
+                                </el-cascader>
+                                <el-switch
+                                        v-else-if="template[key].component.name === 'el-switch'"
+                                        v-model="form[key]"
+                                        v-bind="template[key].component"
+                                        :disabled="handleAttributeDisabled(template[key].disabled,form)"
+                                        @change="$emit('change',{key: key, data: form})">
+                                </el-switch>
+                                <el-slider
+                                        v-else-if="template[key].component.name === 'el-slider'"
+                                        v-model="form[key]"
+                                        v-bind="template[key].component"
+                                        :disabled="handleAttributeDisabled(template[key].disabled,form)"
+                                        @change="$emit('change',{key: key, data: form})">
+                                </el-slider>
+                                <el-time-select
+                                        v-else-if="template[key].component.name === 'el-time-select'"
+                                        v-model="form[key]"
+                                        v-bind="template[key].component"
+                                        :disabled="handleAttributeDisabled(template[key].disabled,form)"
+                                        @change="$emit('change',{key: key, data: form})">
+                                </el-time-select>
+                                <el-time-picker
+                                        v-else-if="template[key].component.name === 'el-time-picker'"
+                                        v-model="form[key]"
+                                        v-bind="template[key].component"
+                                        :disabled="handleAttributeDisabled(template[key].disabled,form)"
+                                        @change="$emit('change',{key: key, data: form})">
+                                </el-time-picker>
+                                <el-date-picker
+                                        v-else-if="template[key].component.name === 'el-date-picker'"
+                                        v-model="form[key]"
+                                        v-bind="template[key].component"
+                                        :disabled="handleAttributeDisabled(template[key].disabled,form)"
+                                        @change="$emit('change',{key: key, data: form})">
+                                </el-date-picker>
+                                <el-rate
+                                        v-else-if="template[key].component.name === 'el-rate'"
+                                        v-model="form[key]"
+                                        v-bind="template[key].component"
+                                        :disabled="handleAttributeDisabled(template[key].disabled,form)"
+                                        @change="$emit('change',{key: key, data: form})">
+                                </el-rate>
+                                <el-color-picker
+                                        v-else-if="template[key].component.name === 'el-color-picker'"
+                                        v-model="form[key]"
+                                        v-bind="template[key].component"
+                                        :disabled="handleAttributeDisabled(template[key].disabled,form)"
+                                        @change="$emit('change',{key: key, data: form})">
+                                </el-color-picker>
+                                <render-custom-component
+                                        v-else-if="template[key].component.name"
+                                        v-model="form[key]"
+                                        v-bind="template[key].component"
+                                        :component-name="template[key].component.name"
+                                        :props="template[key].component.props ? template[key].component.props : null"
+                                        @change="$emit('change',{key: key, data: form})">
+                                </render-custom-component>
                             </slot>
                         </el-form-item>
                     </el-col>
                 </template>
-                <el-col v-if="!show" :span="options ? (options.inline ? null : 24) : 24" :offset="0">
+                <el-col :span="options ? (options.inline ? null : 24) : 24" :offset="0">
                     <el-form-item>
                         <el-button v-if="options ? handleAttribute(options.saveButton, true) : true"
                                    :style="{backgroundColor : options ? handleAttribute(options.saveButtonColor, null) : null ,'border-color' : options ? handleAttribute(options.saveButtonColor, null) : null  }"
@@ -194,9 +187,6 @@
             renderCustomComponent
         },
         props:{
-            show: {
-                type: Boolean,
-            },
             options: {
                 type: Object,
                 default: null

@@ -1,32 +1,31 @@
 <template>
     <div id="app">
         <el-tabs>
-            <el-tab-pane label="表单">
-                <p>表格显示</p>
-                <yi-form-show
-                         border
-                         :template="template1"
-                         :data="formData"
-                         :span="12"
-                         @handleClick="handleClick">
-                </yi-form-show>
-                <p>简单显示</p>
+            <el-tab-pane label="信息显示">
+                <h1>例子一</h1>
                 <yi-form-show
                         :template="template1"
                         :data="formData">
                 </yi-form-show>
-                <p>例子一</p>
+                <h1>例子二</h1>
+                <yi-form-show
+                        :template="template1"
+                        :data="formData"
+                        :span="8"></yi-form-show>
+                <h1>例子三:带边框</h1>
+                <yi-form-show
+                        border
+                        :template="template1"
+                        :data="formData"
+                        :span="12">
+                </yi-form-show>
+            </el-tab-pane>
+            <el-tab-pane label="表单">
+                <h1>例子一</h1>
                 <yi-form :template="template"
                          :data="formData"
-                         :options="{inline:false}"
                          :rules="rules"
                          @form-submit="handleFormSubmit">
-                </yi-form>
-                <p>例子二</p>
-                <yi-form :template="template"
-                         :data="formData"
-                         :options="{inline:true}"
-                         show>
                 </yi-form>
             </el-tab-pane>
             <el-tab-pane label="card">
@@ -36,11 +35,16 @@
             </el-tab-pane>
             <el-tab-pane label="列表">
                 <h1>例子一</h1>
-                <yi-table :columns="column2"
-                          :data="data"></yi-table>
-                <h1>例子二</h1>
-                <yi-table :columns="column"
-                          :data="data"></yi-table>
+                <yi-table
+                        :columns="column2"
+                        :data="data"
+                        :pagination="pagination"
+                        @query-changes="handleQueryChange"/>
+                <h1>例子二：表格加载</h1>
+                <yi-table
+                        :columns="column2"
+                        :data="data"
+                        :loading="loading"/>
                 <h2>例子三</h2>
                 <yi-table :columns="column"
                           :data="data"
@@ -51,14 +55,14 @@
                         <el-tag>{{scope.name}}</el-tag>
                     </template>
                     <template slot="header">
-                        <h4 style="text-align: center">指导研究生情况</h4>
+                        <el-button>指导研究生情况</el-button>
                     </template>
                     <template slot="foot">
                         <span>数据采集时间：2019-12-13 00:00:00</span>
                     </template>
                 </yi-table>
             </el-tab-pane>
-            <el-tab-pane label="数字">
+            <el-tab-pane label="动态数字">
                 <yi-count-to :end="1234" :startVal="10" usegroup></yi-count-to>
             </el-tab-pane>
         </el-tabs>
@@ -72,6 +76,12 @@
         components:{test},
         data(){
             return{
+                pagination:{
+                    total: 4,
+                    pageSize: 10,
+                    currentPage: 1
+                },
+                loading: true,
                 column:[
                     { title: '专业名称', key: 'name',fixed:true ,query:true,component:{name:'el-input'}},
                     { title: '专业代码', key: 'code',query:true,component:{name:'el-select',options:[
@@ -135,6 +145,9 @@
             },
             handleClick(){
                 console.log("click")
+            },
+            handleQueryChange(data){
+                console.log(data)
             }
         }
     }
