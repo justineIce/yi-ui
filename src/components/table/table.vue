@@ -426,7 +426,6 @@
                 this.$emit('expand-change', row,expandedRows)
             },
             handleQuery(){
-                // 当前页为0,
                 this.pagination.currentPage = 1
                 let data=JSON.parse(JSON.stringify(this.queryData))
                 this.$emit('query-changes',Object.assign(data,{

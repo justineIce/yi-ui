@@ -1,6 +1,6 @@
 <template>
     <div class="yi-form-show" :class="{'yi-form-border': border}">
-        <el-form :label-width="labelWidth"
+        <el-form :label-width="border ? (labelWidth ? labelWidth : '100px') : labelWidth"
                  :label-position="labelPosition"
                  @submit.native.prevent>
            <el-row>
@@ -52,7 +52,7 @@
             border:Boolean,
             labelWidth:{
                 type:String,
-                default:'100px'
+                default:null
             },
             //right/left/top
             labelPosition:{

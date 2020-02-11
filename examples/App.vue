@@ -5,7 +5,8 @@
                 <h1>例子一</h1>
                 <yi-form-show
                         :template="template1"
-                        :data="formData">
+                        :data="formData"
+                        :span="6">
                 </yi-form-show>
                 <h1>例子二</h1>
                 <yi-form-show
@@ -14,7 +15,7 @@
                         :span="8"></yi-form-show>
                 <h1>例子三:带边框</h1>
                 <yi-form-show
-                        border
+                         border
                         :template="template1"
                         :data="formData"
                         :span="12">
@@ -50,7 +51,8 @@
                           :data="data"
                           :options="{stripe:true}"
                           selection
-                          :rowHandle="rowHandle">
+                          :rowHandle="rowHandle"
+                          @query-changes="handleQueryChange">
                     <template slot="name" slot-scope="scope">
                         <el-tag>{{scope.name}}</el-tag>
                     </template>
@@ -147,6 +149,7 @@
                 console.log("click")
             },
             handleQueryChange(data){
+                console.log("click")
                 console.log(data)
             }
         }
