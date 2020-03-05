@@ -7,7 +7,7 @@
                      :model="queryData"
                      label-width="80px"
                      @submit.native.prevent>
-                <el-row style="display: flex;">
+                <el-row>
                     <template v-for="item in queryModel">
                         <el-col v-if="item.component && handleAttribute(item.component.name,false)"
                                 :span="item.component ? handleAttribute(item.component.span,null) :null"
@@ -50,6 +50,9 @@
                             <div class="yi-table__buttons">
                                 <el-button type="primary" @click="handleQuery">查询</el-button>
                                 <el-button @click="handleClear">重置</el-button>
+                                <div v-if="$slots.operate">
+                                    <slot name="operate" ></slot>
+                                </div>
                             </div>
                         </el-form-item>
                     </el-col>
@@ -209,7 +212,9 @@
                                  fixed="right">
                     <template slot-scope="scope">
                         <div style="display: flex;">
-                            <div v-for="(item,index) in handleAttribute(rowHandle.operate, [])" :key="index">
+                            <div style="margin-right: 10px"
+                                 v-for="(item,index) in handleAttribute(rowHandle.operate, [])"
+                                 :key="index">
                                 <el-button  size="mini"
                                             type="text"
                                             v-bind="item"

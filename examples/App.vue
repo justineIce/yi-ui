@@ -1,40 +1,33 @@
 <template>
     <div id="app">
         <el-tabs>
-            <el-tab-pane label="信息显示">
-                <h1>例子一</h1>
-                <yi-form-show
-                        :template="template1"
-                        :data="formData"
-                        :span="6">
-                </yi-form-show>
-                <h1>例子二</h1>
-                <yi-form-show
-                        :template="template1"
-                        :data="formData"
-                        :span="8"></yi-form-show>
-                <h1>例子三:带边框</h1>
-                <yi-form-show
-                         border
-                        :template="template1"
-                        :data="formData"
-                        :span="12">
-                </yi-form-show>
-            </el-tab-pane>
-            <el-tab-pane label="表单">
-                <h1>例子一</h1>
-                <yi-form :template="template"
-                         :data="formData"
-                         :rules="rules"
-                         @form-submit="handleFormSubmit">
-                </yi-form>
-            </el-tab-pane>
-            <el-tab-pane label="card">
-                <yi-card title="card demo" style="width: 300px">
-                    <p>主体内容更部分454</p>
-                </yi-card>
-            </el-tab-pane>
             <el-tab-pane label="列表">
+                <yi-table
+                        :columns="column"
+                        :data="data">
+                    <template slot="operate">
+                        <el-button>123</el-button>
+                    </template>
+                    <template slot="header">
+                        <el-button>指导研究生情况</el-button>
+                    </template>
+                </yi-table>
+
+
+                <h1>树形数据与懒加载</h1>
+                <yi-table :columns="tableColumn" :data="tableData"
+                        :options="{
+                          treeProps:{children: 'children',hasChildren: 'hasChildren'},
+                          rowKey:'id'
+                        }"/>
+                    <yi-table :columns="tableColumn" :data="tableData1"
+                            :options="{
+                              treeProps:{children: 'children',hasChildren: 'hasChildren'},
+                              rowKey:'id',
+                              lazy:true,
+                              load:load
+                        }">
+                </yi-table>
                 <h1>例子一</h1>
                 <yi-table
                         :columns="column2"
@@ -64,6 +57,39 @@
                     </template>
                 </yi-table>
             </el-tab-pane>
+            <el-tab-pane label="信息显示">
+                <h1>例子一</h1>
+                <yi-form-show
+                        :template="template1"
+                        :data="formData"
+                        :span="6">
+                </yi-form-show>
+                <h1>例子二</h1>
+                <yi-form-show
+                        :template="template1"
+                        :data="formData"
+                        :span="8"></yi-form-show>
+                <h1>例子三:带边框</h1>
+                <yi-form-show
+                        border
+                        :template="template1"
+                        :data="formData"
+                        :span="12">
+                </yi-form-show>
+            </el-tab-pane>
+            <el-tab-pane label="表单">
+                <h1>例子一</h1>
+                <yi-form :template="template"
+                         :data="formData"
+                         :rules="rules"
+                         @form-submit="handleFormSubmit">
+                </yi-form>
+            </el-tab-pane>
+            <el-tab-pane label="card">
+                <yi-card title="card demo" style="width: 300px">
+                    <p>主体内容更部分454</p>
+                </yi-card>
+            </el-tab-pane>
             <el-tab-pane label="动态数字">
                 <yi-count-to :end="1234" :startVal="10" usegroup></yi-count-to>
             </el-tab-pane>
@@ -78,6 +104,53 @@
         components:{test},
         data(){
             return{
+                tableColumn:[
+                    { title: '时间', key: 'date'},
+                    { title: '名称', key: 'name'},
+                    { title: '地址', key: 'address'},
+                ],
+                tableData: [
+                    {
+                    id: 1,
+                    date: '2016-05-02',
+                    name: '王小虎',
+                    address: '上海市普陀区金沙江路 1518 弄'
+                }, {
+                    id: 2,
+                    date: '2016-05-04',
+                    name: '王小虎',
+                    address: '上海市普陀区金沙江路 1517 弄'
+                }, {
+                    id: 3,
+                    date: '2016-05-01',
+                    name: '王小虎',
+                    address: '上海市普陀区金沙江路 1519 弄',
+                    children: [{
+                        id: 31,
+                        date: '2016-05-01',
+                        name: '小虎',
+                        address: '上海市普陀区金沙江路 1519 弄'
+                    }, {
+                        id: 32,
+                        date: '2016-05-01',
+                        name: '王小',
+                        address: '上海市普陀区金沙江路 1519 弄'
+                    }]
+                }, {
+                    id: 4,
+                    date: '2016-05-03',
+                    name: '王小虎',
+                    address: '上海市普陀区金沙江路 1516 弄'
+                }],
+                tableData1:[
+                    {
+                        id: 3,
+                        date: '2016-05-01',
+                        name: '王小虎',
+                        address: '上海市普陀区金沙江路 1519 弄',
+                        hasChildren: true
+                    }
+                ],
                 pagination:{
                     total: 4,
                     pageSize: 10,
@@ -125,22 +198,25 @@
                 template1:{
                     code: { title: '编码',component:{name:'el-button',emit:'handleClick'}},
                     name: { title: '数据项名',component:{name:test,value:'2324'}},
+                    mc: { title: '校内职务名称'},
                     short_name: { title: '中文简称' ,component:{name:'el-tag',type:"success"}},
                     constraint: { title: '必备数据',component:{name:'el-link',type:"primary"}},
-                    example: { title: '解释/举例'}
+                    example: { title: '解释/举例'},
                 },
                 formData:{
                     code: "asdf",
                     name: "asdf",
                     short_name: "asfdasdf",
                     constraint: 0,
-                    example: "asf"
+                    example: "asf",
+                    mc:'信息化建设与管理办公室主任'
                 },
                 rules:{
 
                 }
             }
-        },methods:{
+        },
+        methods:{
             handleFormSubmit(data,done){
                 console.log(data)
                 done()
@@ -151,6 +227,23 @@
             handleQueryChange(data){
                 console.log("click")
                 console.log(data)
+            },
+            load(tree,treeNode,resolve){
+                setTimeout(() => {
+                    resolve([
+                        {
+                            id: 31,
+                            date: '2016-05-01',
+                            name: '王小虎',
+                            address: '上海市普陀区金沙江路 1519 弄'
+                        }, {
+                            id: 32,
+                            date: '2016-05-01',
+                            name: '王小虎',
+                            address: '上海市普陀区金沙江路 1519 弄'
+                        }
+                    ])
+                }, 1000)
             }
         }
     }
