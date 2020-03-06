@@ -211,7 +211,20 @@
                 form:{}
             }
         },
+        watch:{
+            data: {
+                deep: true,
+                handler (v) { if (v) { this.changeFormData() } }
+            },
+        },
         methods:{
+            changeFormData(){
+                if(this.data && JSON.stringify(this.data) !=='{}'){
+                    this.form = Object.assign(this.initFormData(),this.data)
+                }else {
+                    this.form = this.initFormData()
+                }
+            },
             initFormData(){
                 let data={}
                 if(this.template){
@@ -241,11 +254,7 @@
             }
         },
         mounted() {
-            if(this.data && JSON.stringify(this.data) !=='{}'){
-                this.form = Object.assign(this.initFormData(),this.data)
-            }else {
-                this.form = this.initFormData()
-            }
+            this.changeFormData()
         }
     }
 </script>

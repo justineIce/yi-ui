@@ -1,6 +1,15 @@
 <template>
     <div id="app">
         <el-tabs>
+            <el-tab-pane label="表单">
+                <h1>例子一</h1>
+                <el-button @click="handleFormEdit">编辑</el-button>
+                <yi-form :template="template"
+                         :data="formData"
+                         :rules="rules"
+                         @form-submit="handleFormSubmit">
+                </yi-form>
+            </el-tab-pane>
             <el-tab-pane label="列表">
                 <yi-table
                         :columns="column"
@@ -76,14 +85,6 @@
                         :data="formData"
                         :span="12">
                 </yi-form-show>
-            </el-tab-pane>
-            <el-tab-pane label="表单">
-                <h1>例子一</h1>
-                <yi-form :template="template"
-                         :data="formData"
-                         :rules="rules"
-                         @form-submit="handleFormSubmit">
-                </yi-form>
             </el-tab-pane>
             <el-tab-pane label="card">
                 <yi-card title="card demo" style="width: 300px">
@@ -204,20 +205,24 @@
                     constraint: { title: '必备数据',component:{name:'el-link',type:"primary"}},
                     example: { title: '解释/举例'},
                 },
-                formData:{
-                    code: "asdf",
-                    name: "asdf",
-                    short_name: "asfdasdf",
-                    constraint: 0,
-                    example: "asf",
-                    mc:'信息化建设与管理办公室主任'
-                },
+                formData:{},
                 rules:{
 
                 }
             }
         },
         methods:{
+            handleFormEdit(){
+                this.formData={
+                    code: "asdf",
+                        name: "asdf",
+                        short_name: "asfdasdf",
+                        constraint: 0,
+                        example: "asf",
+                        mc:'信息化建设与管理办公室主任'
+                }
+                console.log(this.formData)
+            },
             handleFormSubmit(data,done){
                 console.log(data)
                 done()

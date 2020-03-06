@@ -5,7 +5,6 @@
             <el-form ref="form"
                      :inline="true"
                      :model="queryData"
-                     label-width="80px"
                      @submit.native.prevent>
                 <el-row>
                     <template v-for="item in queryModel">
