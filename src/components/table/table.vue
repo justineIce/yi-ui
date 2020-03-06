@@ -92,13 +92,12 @@
                 <el-table-column v-for="(item,index) in columns"
                                  :key="`column__${index}`"
                                  v-bind="item"
+                                 :width="isImageColumnWidth(item)"
                                  :prop="handleAttribute(item.key,null)"
                                  :label="handleAttribute(item.title,'')"
                                  :filters="item.filters ? item.filters : null"
                                  :filter-method="item.filterMethod ? item.filterMethod : null">
-                    <template v-if="item.children">
-
-                    </template>
+                    <template v-if="item.children"></template>
                     <template slot-scope="scope">
                         <div v-if="item.component && item.component.isEdit && handleAttributeShow(item.component.isEdit,scope.$index, scope.row)">
                             <el-input
@@ -201,7 +200,19 @@
                             <slot :name="item.key" v-bind="scope.row" v-else>{{scope.row[item.key]}}</slot>
                         </div>
                         <slot :name="item.key" v-bind="scope.row" v-else>
-                            {{item.formatter ? item.formatter(scope.row, scope.column, scope.row[item.key], scope.$index) : scope.row[item.key]}}
+                            <el-image
+                                    v-if="item.component && item.component.name === 'el-image'"
+                                    v-bind="item.component"
+                                    style="border:1px solid #ddd;"
+                                    :style="{height:isImageColumnHeight(item)}"
+                                    lazy
+                                    fit="cover"
+                                    :src="scope.row[item.key]"
+                                    :preview-src-list="[scope.row[item.key]]">
+                            </el-image>
+                            <span v-else>
+                                {{item.formatter ? item.formatter(scope.row, scope.column, scope.row[item.key], scope.$index) : scope.row[item.key]}}
+                            </span>
                         </slot>
                     </template>
                 </el-table-column>
@@ -334,6 +345,22 @@
             }
         },
         methods:{
+            isImageColumnWidth(item){
+                if(item.width){
+                    return  item.width
+                }
+                if(item.component && item.component.name === 'el-image'){
+                    return 120 + 'px'
+                }
+            },
+            isImageColumnHeight(item){
+                if(item.height){
+                    return  item.height
+                }
+                if(item.component && item.component.name === 'el-image'){
+                    return 120 + 'px'
+                }
+            },
             handleRowHandleShow (rowHandle, index, row) {
                 let data = this.handleAttribute(rowHandle.operate, [])
                 for (let i = 0; i < data.length; i++) {

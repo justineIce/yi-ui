@@ -158,6 +158,7 @@
                 },
                 loading: true,
                 column:[
+                    {title:'图片',key:'img',component:{name:'el-image'}},
                     { title: '专业名称', key: 'name',fixed:true ,query:true,component:{name:'el-input'}},
                     { title: '专业代码', key: 'code',query:true,component:{name:'el-select',options:[
                                 {label:'选项一',value:'选项一'}
@@ -178,10 +179,10 @@
                     { title: '学科门类', key: 'category',},
                 ],
                 data:[
-                    {name:'法律质询',code:'fz001',short_name:'法律质询',affiliate:'法律学院',education:'4年',level:'本科',category:'法学'},
-                    {name:'法律质询',code:'fz001',short_name:'法律质询',affiliate:'法律学院',education:'4年',level:'本科',category:'法学'},
-                    {name:'法律质询',code:'fz001',short_name:'法律质询',affiliate:'法律学院',education:'4年',level:'本科',category:'法学'},
-                    {name:'法律质询',code:'fz001',short_name:'法律质询',affiliate:'法律学院',education:'4年',level:'本科',category:'法学'}
+                    {img:'http://attach.bbs.miui.com/forum/201505/26/165830wjhnbgkouuyyybyv.jpg',name:'法律质询',code:'fz001',short_name:'法律质询',affiliate:'法律学院',education:'4年',level:'本科',category:'法学'},
+                    {img:'http://5b0988e595225.cdn.sohucs.com/q_70,c_zoom,w_640/images/20181226/97d5877e0ac1445980e755225514efc5.jpeg',name:'法律质询',code:'fz001',short_name:'法律质询',affiliate:'法律学院',education:'4年',level:'本科',category:'法学'},
+                    {img:'http://attach.bbs.miui.com/forum/201505/26/165830wjhnbgkouuyyybyv.jpg',name:'法律质询',code:'fz001',short_name:'法律质询',affiliate:'法律学院',education:'4年',level:'本科',category:'法学'},
+                    {img:'http://attach.bbs.miui.com/forum/201505/26/165830wjhnbgkouuyyybyv.jpg',name:'法律质询',code:'fz001',short_name:'法律质询',affiliate:'法律学院',education:'4年',level:'本科',category:'法学'}
                 ],
                 rowHandle:{
                     operate:[
