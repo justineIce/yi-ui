@@ -209,6 +209,9 @@
                                     :src="scope.row[item.key]"
                                     :preview-src-list="[scope.row[item.key]]">
                             </el-image>
+                            <span v-else-if="item.dataType && item.dataType === 'time'">
+                                {{formatDate(scope.row[item.key])}}
+                            </span>
                             <span v-else>
                                 {{item.formatter ? item.formatter(scope.row, scope.column, scope.row[item.key], scope.$index) : scope.row[item.key]}}
                             </span>
@@ -252,8 +255,9 @@
         </div>
     </div>
 </template>
-
+<!--data-type-->
 <script>
+    import utils from '../../utils/util'
     import Tool from '../../mixins/tool'
     import renderCustomComponent from './renderCustomComponent.vue'
     export default {
@@ -472,6 +476,18 @@
                 this.$emit('query-changes',Object.assign(data,{
                     pageIndex:this.pagination.currentPage,
                     pageSize :this.pagination && this.pagination.pageSize ? this.pagination.pageSize : 100 }))
+            },
+            //得到查询条件的值
+            getQueryCriteria(){
+              return  JSON.parse(JSON.stringify(this.queryData))
+            },
+            //设置查询条件
+            setQueryCriteria(data){
+                let form=JSON.parse(JSON.stringify(this.queryData))
+                Object.keys(data).forEach(key=>{
+                    form[key]=data[key]
+                })
+                this.queryData=form
             }
         }
     }

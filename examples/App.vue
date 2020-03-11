@@ -1,19 +1,10 @@
 <template>
     <div id="app">
         <el-tabs>
-            <el-tab-pane label="表单">
-                <h1>例子一</h1>
-                <el-button @click="handleFormEdit">编辑</el-button>
-                <yi-form :template="template"
-                         :data="formData"
-                         :rules="rules"
-                         @form-submit="handleFormSubmit">
-                </yi-form>
-            </el-tab-pane>
             <el-tab-pane label="列表">
                 <yi-table
                         :columns="column"
-                        :data="data">
+                        :data="data" ref="table">
                     <template slot="operate">
                         <el-button>123</el-button>
                     </template>
@@ -25,12 +16,12 @@
 
                 <h1>树形数据与懒加载</h1>
                 <yi-table :columns="tableColumn" :data="tableData"
-                        :options="{
+                          :options="{
                           treeProps:{children: 'children',hasChildren: 'hasChildren'},
                           rowKey:'id'
                         }"/>
-                    <yi-table :columns="tableColumn" :data="tableData1"
-                            :options="{
+                <yi-table :columns="tableColumn" :data="tableData1"
+                          :options="{
                               treeProps:{children: 'children',hasChildren: 'hasChildren'},
                               rowKey:'id',
                               lazy:true,
@@ -65,6 +56,15 @@
                         <span>数据采集时间：2019-12-13 00:00:00</span>
                     </template>
                 </yi-table>
+            </el-tab-pane>
+            <el-tab-pane label="表单">
+                <h1>例子一</h1>
+                <el-button @click="handleFormEdit">编辑</el-button>
+                <yi-form :template="template"
+                         :data="formData"
+                         :rules="rules"
+                         @form-submit="handleFormSubmit">
+                </yi-form>
             </el-tab-pane>
             <el-tab-pane label="信息显示">
                 <h1>例子一</h1>
@@ -160,15 +160,17 @@
                 loading: true,
                 column:[
                     {title:'图片',key:'img',component:{name:'el-image'}},
-                    { title: '专业名称', key: 'name',fixed:true ,query:true,component:{name:'el-input'}},
-                    { title: '专业代码', key: 'code',query:true,component:{name:'el-select',options:[
+                    { title: '专业名称', key: 'name',fixed:true ,value:'法律专业',query:true,component:{name:'el-input'}},
+                    { title: '专业代码', key: 'code',query:true,component:{
+                        name:'el-select',options:[
                                 {label:'选项一',value:'选项一'}
                             ]}},
                     { title: '专业简称', key: 'short_name',query:true,component:{name:'el-input'} },
-                    { title: '所属机构', key: 'affiliate'},
-                    { title: '学制', key: 'education' },
-                    { title: '层次', key: 'level'},
-                    { title: '学科门类', key: 'category',},
+                    { title: '所属机构', key: 'affiliate',query:true,component:{name:'el-input'}},
+                    { title: '学制', key: 'education' ,query:true,component:{name:'el-input'}},
+                    { title: '层次', key: 'level',query:true,component:{name:'el-input'}},
+                    { title: '学科门类', key: 'category',query:true},
+                    { title: '时间', key: 'time',dataType:'time'},
                 ],
                 column2:[
                     { title: '专业名称', key: 'name',fixed:true },
@@ -180,10 +182,10 @@
                     { title: '学科门类', key: 'category',},
                 ],
                 data:[
-                    {img:'http://attach.bbs.miui.com/forum/201505/26/165830wjhnbgkouuyyybyv.jpg',name:'法律质询',code:'fz001',short_name:'法律质询',affiliate:'法律学院',education:'4年',level:'本科',category:'法学'},
-                    {img:'http://5b0988e595225.cdn.sohucs.com/q_70,c_zoom,w_640/images/20181226/97d5877e0ac1445980e755225514efc5.jpeg',name:'法律质询',code:'fz001',short_name:'法律质询',affiliate:'法律学院',education:'4年',level:'本科',category:'法学'},
-                    {img:'http://attach.bbs.miui.com/forum/201505/26/165830wjhnbgkouuyyybyv.jpg',name:'法律质询',code:'fz001',short_name:'法律质询',affiliate:'法律学院',education:'4年',level:'本科',category:'法学'},
-                    {img:'http://attach.bbs.miui.com/forum/201505/26/165830wjhnbgkouuyyybyv.jpg',name:'法律质询',code:'fz001',short_name:'法律质询',affiliate:'法律学院',education:'4年',level:'本科',category:'法学'}
+                    {time:'2020-03-11T09:27:44+08:00',img:'http://attach.bbs.miui.com/forum/201505/26/165830wjhnbgkouuyyybyv.jpg',name:'法律质询',code:'fz001',short_name:'法律质询',affiliate:'法律学院',education:'4年',level:'本科',category:'法学'},
+                    {time:'2020-03-11T09:27:44+08:00',img:'http://5b0988e595225.cdn.sohucs.com/q_70,c_zoom,w_640/images/20181226/97d5877e0ac1445980e755225514efc5.jpeg',name:'法律质询',code:'fz001',short_name:'法律质询',affiliate:'法律学院',education:'4年',level:'本科',category:'法学'},
+                    {time:'2020-03-11T09:27:44+08:00',img:'http://attach.bbs.miui.com/forum/201505/26/165830wjhnbgkouuyyybyv.jpg',name:'法律质询',code:'fz001',short_name:'法律质询',affiliate:'法律学院',education:'4年',level:'本科',category:'法学'},
+                    {time:'2020-03-11T09:27:44+08:00',img:'http://attach.bbs.miui.com/forum/201505/26/165830wjhnbgkouuyyybyv.jpg',name:'法律质询',code:'fz001',short_name:'法律质询',affiliate:'法律学院',education:'4年',level:'本科',category:'法学'}
                 ],
                 rowHandle:{
                     operate:[
@@ -251,6 +253,17 @@
                     ])
                 }, 1000)
             }
+        },
+        mounted() {
+            this.$nextTick(()=>{
+                this.$refs.table.setQueryCriteria({
+                    name:'法律专业',
+                    code:'选项一',
+                    level:'高级'
+                })
+              var data=  this.$refs.table.getQueryCriteria()
+                console.log(data)
+            })
         }
     }
 </script>
