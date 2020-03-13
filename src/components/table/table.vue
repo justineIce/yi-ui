@@ -1,62 +1,76 @@
 <template>
     <div class="yi-table"
          v-loading="loading">
-        <div class="yi-table__query" v-if="queryModel && queryModel.length>0">
-            <el-form ref="form"
-                     :inline="true"
-                     :model="queryData"
-                     @submit.native.prevent>
-                <el-row>
-                    <template v-for="item in queryModel">
-                        <el-col v-if="item.component && handleAttribute(item.component.name,false)"
-                                :span="item.component ? handleAttribute(item.component.span,null) :null"
-                                :offset="item.component ? handleAttribute(item.component.offset,0) :0">
-                            <el-form-item :label="`${item.title}:`" :prop="item.key">
-                                <!--输入框-->
-                                <el-input v-if="item.component.name === 'el-input'"
-                                          v-model="queryData[item.key]"
-                                          v-bind="item.component"></el-input>
-                                <!--选择框-->
-                                <el-select
-                                        v-else-if="item.component.name === 'el-select'"
-                                        v-model="queryData[item.key]"
-                                        v-bind="item.component">
-                                    <el-option
-                                            v-for="option in item.component.options"
-                                            :key="option.value"
-                                            v-bind="option">
-                                    </el-option>
-                                </el-select>
-                                <!--级联选择器-->
-                                <el-cascader
-                                        v-else-if="item.component.name === 'el-cascader'"
-                                        v-model="queryData[item.key]"
-                                        v-bind="item.component">
-                                </el-cascader>
-                                <el-time-picker  v-else-if="item.component.name === 'el-time-picker'"
-                                                 v-model="queryData[item.key]"
-                                                 v-bind="item.component">
-                                </el-time-picker>
-                                <el-date-picker  v-else-if="item.component.name === 'el-date-picker'"
-                                                 v-model="queryData[item.key]"
-                                                 v-bind="item.component">
-                                </el-date-picker>
-                            </el-form-item>
-                        </el-col>
-                    </template>
-                    <el-col :span="null" :offset="0">
-                        <el-form-item>
-                            <div class="yi-table__buttons">
-                                <el-button type="primary" @click="handleQuery">查询</el-button>
-                                <el-button @click="handleClear">重置</el-button>
-                                <div v-if="$slots.operate">
-                                    <slot name="operate" ></slot>
-                                </div>
-                            </div>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-            </el-form>
+        <div class="yi-table__query" ref="query" v-if="queryModel && queryModel.length>0">
+            <div class="yi-table__wrap">
+                <!--搜索内容-->
+                <div class="wrap-content">
+                    <div class="wrap-from">
+                        <el-form ref="form" style="overflow: hidden;"
+                                 :style="{height: isClick ? 'auto' : '62px'}"
+                                 :label-width="labelWidth"
+                                 :inline="true"
+                                 :model="queryData"
+                                 @submit.native.prevent>
+                            <el-row>
+                                <template v-for="item in queryModel">
+                                    <el-col v-if="item.component && handleAttribute(item.component.name,false)"
+                                            :span="item.component ? handleAttribute(item.component.span,null) :null"
+                                            :offset="item.component ? handleAttribute(item.component.offset,0) :0">
+                                        <el-form-item :label="`${item.title}:`" :prop="item.key">
+                                            <!--输入框-->
+                                            <el-input v-if="item.component.name === 'el-input'"
+                                                      v-model="queryData[item.key]"
+                                                      v-bind="item.component"
+                                                      :style="{width:handleAttribute(item.component.width,'100%')}"></el-input>
+                                            <!--选择框-->
+                                            <el-select
+                                                    v-else-if="item.component.name === 'el-select'"
+                                                    v-model="queryData[item.key]"
+                                                    v-bind="item.component">
+                                                <el-option
+                                                        v-for="option in item.component.options"
+                                                        :key="option.value"
+                                                        v-bind="option">
+                                                </el-option>
+                                            </el-select>
+                                            <!--级联选择器-->
+                                            <el-cascader
+                                                    v-else-if="item.component.name === 'el-cascader'"
+                                                    v-model="queryData[item.key]"
+                                                    v-bind="item.component">
+                                            </el-cascader>
+                                            <el-time-picker  v-else-if="item.component.name === 'el-time-picker'"
+                                                             v-model="queryData[item.key]"
+                                                             v-bind="item.component">
+                                            </el-time-picker>
+                                            <el-date-picker  v-else-if="item.component.name === 'el-date-picker'"
+                                                             v-model="queryData[item.key]"
+                                                             v-bind="item.component">
+                                            </el-date-picker>
+                                        </el-form-item>
+                                    </el-col>
+                                </template>
+                                <el-col :span="null" :offset="0">
+                                    <el-form-item>
+                                        <div class="yi-table__buttons">
+                                            <el-button type="primary" @click="handleQuery">查询</el-button>
+                                            <el-button @click="handleClear">重置</el-button>
+                                            <div v-if="$slots.operate">
+                                                <slot name="operate" ></slot>
+                                            </div>
+                                        </div>
+                                    </el-form-item>
+                                </el-col>
+                            </el-row>
+                        </el-form>
+                    </div>
+                </div>
+                <!--搜索更多-->
+                <div class="wrap-ext" @click="handleMore">
+                    <span>更多<i :class="{'el-icon-arrow-down':!isClick,'el-icon-arrow-up':isClick }"></i></span>
+                </div>
+            </div>
         </div>
         <!--表搜索-->
         <div class="yi-table__body">
@@ -255,9 +269,7 @@
         </div>
     </div>
 </template>
-<!--data-type-->
 <script>
-    import utils from '../../utils/util'
     import Tool from '../../mixins/tool'
     import renderCustomComponent from './renderCustomComponent.vue'
     export default {
@@ -268,65 +280,53 @@
         mixins:[Tool],
         props:{
             /**
+             * @description 搜索栏的标签宽度
+             */
+            labelWidth:{type:String,default:'auto'},
+            /**
+             * @description 展开所有的搜索条件
+             */
+            expandAll:{type:Boolean,default:false},
+            /**
              * @description 表格加载
              */
-            loading: {
-                type: Boolean,
-                default: false
-            },
+            loading: {type: Boolean, default: false},
             /**
              * @description 表格配置
              */
-            options: {
-                type: Object,
-                default: null
-            },
+            options: {type: Object, default: null},
             /**
              * @description 表头数据
              */
-            columns: {
-                type: Array,
-                required: true
-            },
+            columns: {type: Array, required: true},
             /**
              * @description 表格数据
              */
-            data: {
-                type: Array,
-                required: true
-            },
+            data: {type: Array, required: true},
             /**
              * @description 是否多选
              */
-            selection: {
-                type: Boolean,
-                default: false
-            },
+            selection: {type: Boolean, default: false},
             /**
              * @description 表格操作
              * title 标题   operate操作数组
              */
-            rowHandle: {
-                type: Object,
-                default: null
-            },
+            rowHandle: {type: Object, default: null},
             /**
              * @description 表格数据
              */
-            pagination: {
-                type: [Object,Boolean],
-                default(){
-                    return{
-                        currentPage: 1,
-                        pageSize: 10,
-                        total: 0
-                    }
-                }
+            pagination: {type: [Object,Boolean], default(){return{currentPage: 1, pageSize: 10, total: 0}}}
+        },
+        watch:{
+            expandAll(val){
+                this.isClick=val
+                console.log(this.isClick)
             }
         },
         data(){
             return{
-                queryData:{}
+                queryData:{},
+                isClick:false,
             }
         },
         computed:{
@@ -348,6 +348,16 @@
             }
         },
         methods:{
+            //判断是否发生溢出情况
+            judgeHeight(){
+                if(this.$refs.query.scrollHeight>this.$refs.query.clientHeight){
+
+                }
+            },
+            //展开更多
+            handleMore(){
+                this.isClick=!this.isClick
+            },
             isImageColumnWidth(item){
                 if(item.width){
                     return  item.width
@@ -489,6 +499,9 @@
                 })
                 this.queryData=form
             }
+        },
+        mounted() {
+            this.isClick=this.expandAll
         }
     }
 </script>

@@ -3,6 +3,29 @@
   box-sizing: border-box;
   &__query{
     margin-bottom: 10px;
+    .el-form{
+      .el-form-item{
+        display: flex;
+        .el-form-item__content{
+          flex: 1;
+        }
+      }
+    }
+  }
+  &__wrap{
+    position: relative;
+    .wrap-content{
+
+    }
+    .wrap-ext{
+      position: absolute;
+      right: 8px;
+      top:5px;
+      color: #409EFF;
+      z-index: 44;
+      font-size: 14px;
+      cursor: pointer;
+    }
   }
   &__header,&__foot{
     padding: 10px;
