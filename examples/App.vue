@@ -26,6 +26,13 @@
                           selection
                           :rowHandle="rowHandle"
                           @query-changes="handleQueryChange">
+                    column:[
+                    {title:'图片',key:'img',component:{name:'el-image'}},
+                    { title: '专业名称', key: 'name',fixed:true ,value:'法律专业',query:true,component:{name:'el-input',span:4}},
+                    { title: '专业代码', key: 'code',query:true,component:{name:'el-select', span:4, options:[{label:'选项一',value:'选项一'}]}},
+                    { title: '专业简称', key: 'short_name',query:true,component:{name:'el-input',width:'150px'} }
+                    ]
+
                     <template slot="operate">
                         <el-button>自定义按钮</el-button>
                     </template>
