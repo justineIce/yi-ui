@@ -1,12 +1,6 @@
 <template>
     <div id="app">
         <el-tabs>
-            <el-tab-pane label="图表">
-                <yi-line height="300px" :data="{
-                     dimensions:['name','value:人数'],
-                     source:[{name:'男',value:'123'},{name:'女',value:'234'}]
-                }"></yi-line>
-            </el-tab-pane>
             <el-tab-pane label="列表">
                 <div style="padding: 20px;">
                     <p> 搜索栏优化：</p>
@@ -14,8 +8,8 @@
                         <span style="color: red;"> labelWidth="80px"</span>
                     </p>
                     <p>2、输入框或下拉框等宽度可以自定义
-                        <p><span>设置“columns”中</span></p>
-                       <span>component:{name:'el-input',<span style="color: red;">span:4</span>}
+                    <p><span>设置“columns”中</span></p>
+                    <span>component:{name:'el-input',<span style="color: red;">span:4</span>}
                            或component:{name:'el-input',<span style="color: red;">width:'150px'</span>}</span>
                     </p>
                     <p>3、默认显示一排搜索条件（也可以设置显示所有搜索条件），加入更多方式进行展开收起
@@ -32,13 +26,6 @@
                           selection
                           :rowHandle="rowHandle"
                           @query-changes="handleQueryChange">
-                    column:[
-                    {title:'图片',key:'img',component:{name:'el-image'}},
-                    { title: '专业名称', key: 'name',fixed:true ,value:'法律专业',query:true,component:{name:'el-input',span:4}},
-                    { title: '专业代码', key: 'code',query:true,component:{name:'el-select', span:4, options:[{label:'选项一',value:'选项一'}]}},
-                    { title: '专业简称', key: 'short_name',query:true,component:{name:'el-input',width:'150px'} }
-                    ]
-
                     <template slot="operate">
                         <el-button>自定义按钮</el-button>
                     </template>
@@ -53,7 +40,9 @@
                     </template>
                 </yi-table>
                 <h1>树形数据与懒加载</h1>
-                <yi-table :columns="tableColumn" :data="tableData"
+                <yi-table :columns="tableColumn"
+                          :data="tableData"
+                          :expandAll="false"
                           :options="{
                           defaultExpandAll:true,
                           treeProps:{children: 'children',hasChildren: 'hasChildren'},
@@ -67,6 +56,12 @@
                               load:load
                         }">
                 </yi-table>
+            </el-tab-pane>
+            <el-tab-pane label="图表">
+                <yi-line height="300px" :data="{
+                     dimensions:['name','value:人数'],
+                     source:[{name:'男',value:'123'},{name:'女',value:'234'}]
+                }"></yi-line>
             </el-tab-pane>
             <el-tab-pane label="信息显示">
                 <h1>例子一</h1>
@@ -167,8 +162,8 @@
                 },
                 column:[
                     {title:'图片',key:'img',component:{name:'el-image'}},
-                    { title: '专业名称', key: 'name',fixed:true ,value:'法律专业',query:true,component:{name:'el-input',span:4}},
-                    { title: '专业代码', key: 'code',query:true,component:{name:'el-select', span:4, options:[{label:'选项一',value:'选项一'}]}},
+                    { title: '专业名称', key: 'name',fixed:true ,value:'法律专业',query:true,component:{name:'el-input'}},
+                    { title: '专业代码', key: 'code',query:true,component:{name:'el-select',options:[{label:'选项一',value:'选项一'}]}},
                     { title: '专业简称', key: 'short_name',query:true,component:{name:'el-input',width:'150px'} },
                     { title: '所属机构', key: 'affiliate',query:true,component:{name:'el-input'}},
                     { title: '学制', key: 'education' ,query:true,component:{name:'el-input'}},

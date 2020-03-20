@@ -7,7 +7,11 @@ import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
 ```
 
-
+```
+import YiView from 'yiview'
+import 'yiview/dist/styles/yi-ui.css'
+Vue.use(YiView)
+```
 
 
 

@@ -6,13 +6,14 @@
                 <!--搜索内容-->
                 <div class="wrap-content">
                     <div class="wrap-from">
-                        <el-form ref="form" style="overflow: hidden;"
-                                 :style="{height: isClick ? 'auto' : '62px'}"
+                        <el-form ref="form"
+                                 style="display: flex;width: 100%;"
                                  :label-width="labelWidth"
                                  :inline="true"
                                  :model="queryData"
                                  @submit.native.prevent>
-                            <el-row>
+                            <el-row ref="fbody" style="overflow: hidden;position: relative;"
+                                    :style="{height: showMore && (isClick ||expandAll )? 'auto' : '62px'}">
                                 <template v-for="item in queryModel">
                                     <el-col v-if="item.component && handleAttribute(item.component.name,false)"
                                             :span="item.component ? handleAttribute(item.component.span,null) :null"
@@ -51,24 +52,37 @@
                                         </el-form-item>
                                     </el-col>
                                 </template>
-                                <el-col :span="null" :offset="0">
-                                    <el-form-item>
-                                        <div class="yi-table__buttons">
-                                            <el-button type="primary" @click="handleQuery">查询</el-button>
-                                            <el-button @click="handleClear">重置</el-button>
-                                            <div v-if="$slots.operate">
-                                                <slot name="operate" ></slot>
-                                            </div>
-                                        </div>
-                                    </el-form-item>
-                                </el-col>
+                                <!--<el-col :span="null" :offset="0" v-if="showMore">-->
+                                    <!--<el-form-item>-->
+                                        <!--<div class="yi-table__buttons">-->
+                                            <!--<el-button type="primary" @click="handleQuery">查询</el-button>-->
+                                            <!--<el-button @click="handleClear">重置</el-button>-->
+                                            <!--<div v-if="$slots.operate">-->
+                                                <!--<slot name="operate" ></slot>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    <!--</el-form-item>-->
+                                <!--</el-col>-->
+                                <!--搜索更多-->
+                                <div class="wrap-ext" :style="{display: showMore ? '' :'none'}" @click="handleMore">
+                                    <span>更多<i :class="{
+                                        'el-icon-arrow-down':!isClick,
+                                        'el-icon-arrow-up':isClick}"></i></span>
+                                </div>
                             </el-row>
+                            <!--按钮-->
+                            <el-form-item v-if="expandAll ? (showMore ? !isClick :false) : false">
+                                <div class="yi-table__buttons">
+                                    <el-button type="primary" @click="handleQuery">查询1</el-button>
+                                    <el-button @click="handleClear">重置1</el-button>
+                                    <div v-if="$slots.operate">
+                                        <slot name="operate" ></slot>
+                                    </div>
+                                </div>
+                            </el-form-item>
                         </el-form>
+
                     </div>
-                </div>
-                <!--搜索更多-->
-                <div class="wrap-ext" @click="handleMore">
-                    <span>更多<i :class="{'el-icon-arrow-down':!isClick,'el-icon-arrow-up':isClick }"></i></span>
                 </div>
             </div>
         </div>
@@ -319,14 +333,14 @@
         },
         watch:{
             expandAll(val){
-                this.isClick=val
-                console.log(this.isClick)
+               this.judgeHeight()
             }
         },
         data(){
             return{
                 queryData:{},
                 isClick:false,
+                showMore:false
             }
         },
         computed:{
@@ -350,12 +364,17 @@
         methods:{
             //判断是否发生溢出情况
             judgeHeight(){
-                if(this.$refs.query.scrollHeight>this.$refs.query.clientHeight){
-
-                }
+                this.$nextTick(()=>{
+                    this.showMore=this.expandAll?true:false
+                    if(this.$refs.fbody){
+                        this.showMore = this.$refs.fbody.$el.scrollHeight>this.$refs.fbody.$el.clientHeight ?true :false
+                        this.isClick = this.expandAll && this.showMore ? true :false
+                    }
+                })
             },
             //展开更多
             handleMore(){
+                console.log("a")
                 this.isClick=!this.isClick
             },
             isImageColumnWidth(item){
@@ -501,7 +520,8 @@
             }
         },
         mounted() {
-            this.isClick=this.expandAll
+            this.judgeHeight()
+
         }
     }
 </script>

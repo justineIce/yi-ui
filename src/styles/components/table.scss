@@ -15,7 +15,9 @@
   &__wrap{
     position: relative;
     .wrap-content{
-
+      .wrap-from{
+        display: flex;
+      }
     }
     .wrap-ext{
       position: absolute;
