@@ -15,6 +15,22 @@ export default {
         style: this.canvasStyle,
         ref: 'canvas'
       }),
+      h('div', {
+        style: {
+          display: this.dataEmpty ? '' : 'none',
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          top: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(255, 255, 255, .9)',
+          color: '#888',
+          fontSize: '14px'
+        },
+        domProps: {
+          innerHTML: '<div style="width: 100%;height: 100%;display:flex;justify-content: center;align-items: center">暂无数据</div>'
+        }
+      }),
       this.$slots.default
     ])
   },
@@ -57,7 +73,8 @@ export default {
   },
   data () {
     return {
-      time: null
+      time: null,
+      dataEmpty: false
     }
   },
   methods: {
@@ -160,11 +177,18 @@ export default {
         dataZoom: this.dataZoom
       }
       let options = null
+      this.dataEmpty = false
       // 如果为数组则是自定义图表
       if (!(data.constructor === Object)) {
+        if (data.length === 0) {
+          this.dataEmpty = true
+        }
         options = this.chartHandler(data, this.settings, extra)
       } else {
         const { dimensions = [], source = [] } = data
+        if (!source || source.length === 0) {
+          this.dataEmpty = true
+        }
         options = this.chartHandler(dimensions, source instanceof Array ? source : [], this.settings, extra)
       }
       if (options) {

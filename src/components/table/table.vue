@@ -13,7 +13,8 @@
                                  :model="queryData"
                                  @submit.native.prevent>
                             <el-row ref="fbody" style="overflow: hidden;position: relative;"
-                                    :style="{height: showMore && (isClick ||expandAll )? 'auto' : '62px'}">
+                                    :style="{
+                                        height: showMore && isClick ? 'auto' : '62px'}">
                                 <template v-for="item in queryModel">
                                     <el-col v-if="item.component && handleAttribute(item.component.name,false)"
                                             :span="item.component ? handleAttribute(item.component.span,null) :null"
@@ -52,17 +53,17 @@
                                         </el-form-item>
                                     </el-col>
                                 </template>
-                                <!--<el-col :span="null" :offset="0" v-if="showMore">-->
-                                    <!--<el-form-item>-->
-                                        <!--<div class="yi-table__buttons">-->
-                                            <!--<el-button type="primary" @click="handleQuery">查询</el-button>-->
-                                            <!--<el-button @click="handleClear">重置</el-button>-->
-                                            <!--<div v-if="$slots.operate">-->
-                                                <!--<slot name="operate" ></slot>-->
-                                            <!--</div>-->
-                                        <!--</div>-->
-                                    <!--</el-form-item>-->
-                                <!--</el-col>-->
+                                <el-col :span="null" :offset="0" v-if="showMore">
+                                    <el-form-item>
+                                        <div class="yi-table__buttons">
+                                            <el-button type="primary" @click="handleQuery">查询</el-button>
+                                            <el-button @click="handleClear">重置</el-button>
+                                            <div v-if="$slots.operate">
+                                                <slot name="operate" ></slot>
+                                            </div>
+                                        </div>
+                                    </el-form-item>
+                                </el-col>
                                 <!--搜索更多-->
                                 <div class="wrap-ext" :style="{display: showMore ? '' :'none'}" @click="handleMore">
                                     <span>更多<i :class="{
@@ -71,7 +72,7 @@
                                 </div>
                             </el-row>
                             <!--按钮-->
-                            <el-form-item v-if="expandAll ? (showMore ? !isClick :false) : false">
+                            <el-form-item v-if="showMore ? (expandAll &&isClick ? false : !isClick) :true">
                                 <div class="yi-table__buttons">
                                     <el-button type="primary" @click="handleQuery">查询1</el-button>
                                     <el-button @click="handleClear">重置1</el-button>
@@ -81,7 +82,6 @@
                                 </div>
                             </el-form-item>
                         </el-form>
-
                     </div>
                 </div>
             </div>
@@ -332,9 +332,8 @@
             pagination: {type: [Object,Boolean], default(){return{currentPage: 1, pageSize: 10, total: 0}}}
         },
         watch:{
-            expandAll(val){
-               this.judgeHeight()
-            }
+            columns:'judgeHeight',
+            expandAll:'judgeHeight',
         },
         data(){
             return{
@@ -365,16 +364,14 @@
             //判断是否发生溢出情况
             judgeHeight(){
                 this.$nextTick(()=>{
-                    this.showMore=this.expandAll?true:false
                     if(this.$refs.fbody){
-                        this.showMore = this.$refs.fbody.$el.scrollHeight>this.$refs.fbody.$el.clientHeight ?true :false
-                        this.isClick = this.expandAll && this.showMore ? true :false
+                        this.showMore = this.$refs.fbody.$el.scrollHeight>=this.$refs.fbody.$el.clientHeight ?true :false
+                        this.isClick = this.expandAll && this.showMore
                     }
                 })
             },
             //展开更多
             handleMore(){
-                console.log("a")
                 this.isClick=!this.isClick
             },
             isImageColumnWidth(item){

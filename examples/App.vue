@@ -40,22 +40,22 @@
                     </template>
                 </yi-table>
                 <h1>树形数据与懒加载</h1>
-                <yi-table :columns="tableColumn"
-                          :data="tableData"
-                          :expandAll="false"
-                          :options="{
-                          defaultExpandAll:true,
-                          treeProps:{children: 'children',hasChildren: 'hasChildren'},
-                          rowKey:'id'
-                        }"/>
-                <yi-table :columns="tableColumn" :data="tableData1"
-                          :options="{
-                              treeProps:{children: 'children',hasChildren: 'hasChildren'},
-                              rowKey:'id',
-                              lazy:true,
-                              load:load
-                        }">
-                </yi-table>
+                <!--<yi-table :columns="tableColumn"-->
+                          <!--:data="tableData"-->
+                          <!--:expandAll="false"-->
+                          <!--:options="{-->
+                          <!--defaultExpandAll:true,-->
+                          <!--treeProps:{children: 'children',hasChildren: 'hasChildren'},-->
+                          <!--rowKey:'id'-->
+                        <!--}"/>-->
+                <!--<yi-table :columns="tableColumn" :data="tableData1"-->
+                          <!--:options="{-->
+                              <!--treeProps:{children: 'children',hasChildren: 'hasChildren'},-->
+                              <!--rowKey:'id',-->
+                              <!--lazy:true,-->
+                              <!--load:load-->
+                        <!--}">-->
+                <!--</yi-table>-->
             </el-tab-pane>
             <el-tab-pane label="图表">
                 <yi-line height="300px" :data="{
