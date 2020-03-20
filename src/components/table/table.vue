@@ -74,8 +74,8 @@
                             <!--按钮-->
                             <el-form-item v-if="showMore ? (expandAll &&isClick ? false : !isClick) :true">
                                 <div class="yi-table__buttons">
-                                    <el-button type="primary" @click="handleQuery">查询1</el-button>
-                                    <el-button @click="handleClear">重置1</el-button>
+                                    <el-button type="primary" @click="handleQuery">查询</el-button>
+                                    <el-button @click="handleClear">重置</el-button>
                                     <div v-if="$slots.operate">
                                         <slot name="operate" ></slot>
                                     </div>
