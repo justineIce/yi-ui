@@ -1,6 +1,12 @@
 <template>
     <div id="app">
         <el-tabs>
+            <el-tab-pane label="图表">
+                <yi-line height="300px" :data="{
+                     dimensions:['name','value:人数'],
+                     source:[{name:'男',value:'123'},{name:'女',value:'234'}]
+                }"></yi-line>
+            </el-tab-pane>
             <el-tab-pane label="列表">
                 <div style="padding: 20px;">
                     <p> 搜索栏优化：</p>
@@ -49,6 +55,7 @@
                 <h1>树形数据与懒加载</h1>
                 <yi-table :columns="tableColumn" :data="tableData"
                           :options="{
+                          defaultExpandAll:true,
                           treeProps:{children: 'children',hasChildren: 'hasChildren'},
                           rowKey:'id'
                         }"/>
@@ -99,9 +106,10 @@
 
 <script>
     import test from './test'
+    import YiLine from "../src/components/echarts/packages/line";
     export default {
         name: "app",
-        components:{test},
+        components:{YiLine, test},
         data(){
             return{
                 /**表格**/

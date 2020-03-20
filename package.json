@@ -1,6 +1,6 @@
 {
   "name": "yiview",
-  "version": "0.6.3-beta",
+  "version": "0.6.4-beta",
   "description": "vue 组件",
   "main": "dist/yi-ui.js",
   "scripts": {
@@ -10,7 +10,7 @@
     "dist": "npm run dist:style && npm run dist:dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "justineyi",
   "license": "ISC",
   "devDependencies": {
     "babel-core": "^6.26.0",
@@ -20,6 +20,9 @@
     "babel-preset-stage-3": "^6.24.1",
     "babel-runtime": "^6.26.0",
     "css-loader": "^3.4.2",
+    "echarts": "^4.2.1",
+    "echarts-liquidfill": "^2.0.5",
+    "echarts-wordcloud": "^1.1.3",
     "element-ui": "^2.13.0",
     "file-loader": "^5.0.2",
     "gulp": "^3.9.1",
@@ -43,8 +46,8 @@
   },
   "dependencies": {
     "compression-webpack-plugin": "^3.1.0",
-    "uglifyjs-webpack-plugin": "^2.2.0",
     "countup.js": "^2.0.4",
+    "uglifyjs-webpack-plugin": "^2.2.0",
     "vue": "^2.5.19"
   },
   "directories": {
