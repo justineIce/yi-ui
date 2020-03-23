@@ -6,6 +6,7 @@
     .el-form{
       .el-form-item{
         display: flex;
+        align-items: center;
         .el-form-item__content{
           flex: 1;
         }
@@ -17,6 +18,9 @@
     .wrap-content{
       .wrap-from{
         display: flex;
+        .el-button--small{
+           height: 32px;
+        }
       }
     }
     .wrap-ext{
@@ -48,6 +52,7 @@
   }
   &__buttons{
     display: flex;
+    align-items: center;
     .el-button{
        margin-left: 10px;
     }

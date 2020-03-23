@@ -21,12 +21,13 @@
                                             :offset="item.component ? handleAttribute(item.component.offset,0) :0">
                                         <el-form-item :label="`${item.title}:`" :prop="item.key">
                                             <!--输入框-->
-                                            <el-input v-if="item.component.name === 'el-input'"
+                                            <el-input size="small"
+                                                      v-if="item.component.name === 'el-input'"
                                                       v-model="queryData[item.key]"
                                                       v-bind="item.component"
                                                       :style="{width:handleAttribute(item.component.width,'100%')}"></el-input>
                                             <!--选择框-->
-                                            <el-select
+                                            <el-select size="small"
                                                     v-else-if="item.component.name === 'el-select'"
                                                     v-model="queryData[item.key]"
                                                     v-bind="item.component">
@@ -37,16 +38,18 @@
                                                 </el-option>
                                             </el-select>
                                             <!--级联选择器-->
-                                            <el-cascader
+                                            <el-cascader size="small"
                                                     v-else-if="item.component.name === 'el-cascader'"
                                                     v-model="queryData[item.key]"
                                                     v-bind="item.component">
                                             </el-cascader>
-                                            <el-time-picker  v-else-if="item.component.name === 'el-time-picker'"
+                                            <el-time-picker  size="small"
+                                                             v-else-if="item.component.name === 'el-time-picker'"
                                                              v-model="queryData[item.key]"
                                                              v-bind="item.component">
                                             </el-time-picker>
-                                            <el-date-picker  v-else-if="item.component.name === 'el-date-picker'"
+                                            <el-date-picker  size="small"
+                                                             v-else-if="item.component.name === 'el-date-picker'"
                                                              v-model="queryData[item.key]"
                                                              v-bind="item.component">
                                             </el-date-picker>
@@ -56,8 +59,8 @@
                                 <el-col :span="null" :offset="0" v-if="showMore">
                                     <el-form-item>
                                         <div class="yi-table__buttons">
-                                            <el-button type="primary" @click="handleQuery">查询</el-button>
-                                            <el-button @click="handleClear">重置</el-button>
+                                            <el-button type="primary" size="small" @click="handleQuery">查询</el-button>
+                                            <el-button size="small" @click="handleClear">重置</el-button>
                                             <div v-if="$slots.operate">
                                                 <slot name="operate" ></slot>
                                             </div>
@@ -74,8 +77,8 @@
                             <!--按钮-->
                             <el-form-item v-if="showMore ? (expandAll &&isClick ? false : !isClick) :true">
                                 <div class="yi-table__buttons">
-                                    <el-button type="primary" @click="handleQuery">查询</el-button>
-                                    <el-button @click="handleClear">重置</el-button>
+                                    <el-button type="primary" size="small" @click="handleQuery">查询</el-button>
+                                    <el-button size="small" @click="handleClear">重置</el-button>
                                     <div v-if="$slots.operate">
                                         <slot name="operate" ></slot>
                                     </div>
@@ -365,7 +368,7 @@
             judgeHeight(){
                 this.$nextTick(()=>{
                     if(this.$refs.fbody){
-                        this.showMore = this.$refs.fbody.$el.scrollHeight>=this.$refs.fbody.$el.clientHeight ?true :false
+                        this.showMore = this.$refs.fbody.$el.scrollHeight>this.$refs.fbody.$el.clientHeight ?true :false
                         this.isClick = this.expandAll && this.showMore
                     }
                 })
