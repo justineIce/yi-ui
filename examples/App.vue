@@ -19,7 +19,7 @@
                 <yi-table ref="table"
                           :columns="column"
                           :data="data"
-                          :expandAll="true"
+                          :expandAll="false"
                           :options="{stripe:true}"
                           :pagination="pagination"
                           selection
@@ -167,8 +167,8 @@
                     { title: '所属机构', key: 'affiliate',query:true,component:{name:'el-input'}},
                     { title: '学制', key: 'education' ,query:true,component:{name:'el-input'}},
                     { title: '层次', key: 'level',query:true,component:{name:'el-input'}},
-                    // { title: '学科门类', key: 'category',query:true},
-                    // { title: '时间', key: 'time',query:true,dataType:'time',component:{name:'el-date-picker',valueFormat:'yyyy-MM-dd'}},
+                    { title: '学科门类', key: 'category',query:true,component:{name:'el-input'}},
+                    { title: '时间', key: 'time',query:true,dataType:'time',component:{name:'el-date-picker',valueFormat:'yyyy-MM-dd'}},
                 ],
                 data:[
                     {time:'2020-03-11T09:27:44+08:00',img:'http://attach.bbs.miui.com/forum/201505/26/165830wjhnbgkouuyyybyv.jpg',name:'法律质询',code:'fz001',short_name:'法律质询',affiliate:'法律学院',education:'4年',level:'本科',category:'法学'},

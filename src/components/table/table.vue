@@ -43,6 +43,7 @@
                                                     v-model="queryData[item.key]"
                                                     v-bind="item.component">
                                             </el-cascader>
+                                            <!--时间选择-->
                                             <el-time-picker  size="small"
                                                              v-else-if="item.component.name === 'el-time-picker'"
                                                              v-model="queryData[item.key]"
@@ -56,7 +57,7 @@
                                         </el-form-item>
                                     </el-col>
                                 </template>
-                                <el-col :span="null" :offset="0" v-if="showMore">
+                                <el-col :span="null" :offset="0" v-if="showMore && isClick">
                                     <el-form-item>
                                         <div class="yi-table__buttons">
                                             <el-button type="primary" size="small" @click="handleQuery">查询</el-button>
@@ -368,7 +369,7 @@
             judgeHeight(){
                 this.$nextTick(()=>{
                     if(this.$refs.fbody){
-                        this.showMore = this.$refs.fbody.$el.scrollHeight>this.$refs.fbody.$el.clientHeight ?true :false
+                        this.showMore = this.$refs.fbody.$el.scrollHeight > this.$refs.fbody.$el.clientHeight ?true :false
                         this.isClick = this.expandAll && this.showMore
                     }
                 })

@@ -1,8 +1,8 @@
 {
   "name": "yiview",
-  "version": "0.7.2-beta",
+  "version": "0.7.4-beta",
   "description": "vue 组件",
-  "main": "src/index.js",
+  "main": "dist/yi-ui.js",
   "scripts": {
     "dev": "webpack-dev-server --open --inline --hot --history-api-fallback --port 8085 --config build/webpack.dev.config.js",
     "dist:style": "gulp --gulpfile build/build-style.js",
