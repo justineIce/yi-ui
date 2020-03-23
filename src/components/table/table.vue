@@ -315,11 +315,11 @@
             /**
              * @description 表头数据
              */
-            columns: {type: Array, required: true},
+            columns: {type: Array, required: true, default:[] },
             /**
              * @description 表格数据
              */
-            data: {type: Array, required: true},
+            data: {type: Array, required: true, default:[]},
             /**
              * @description 是否多选
              */
