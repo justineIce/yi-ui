@@ -1,27 +1,5 @@
 <template>
-    <div id="app" style="padding: 16px;width: 1635px;border:1px solid red;">
-        <yi-table ref="table"
-                  :columns="column"
-                  :data="data"
-                  :expandAll="false"
-                  :options="{stripe:true}"
-                  :pagination="pagination"
-                  selection
-                  :rowHandle="rowHandle"
-                  @query-changes="handleQueryChange">
-            <!--<template slot="operate">-->
-            <!--<el-button size="small">自定义按钮</el-button>-->
-            <!--</template>-->
-            <template slot="header">
-                <el-button size="small">自定义header</el-button>
-            </template>
-            <template slot="foot">
-                <span>自定义foot</span>
-            </template>
-            <template slot="name" slot-scope="scope">
-                <el-tag>{{scope.name}}</el-tag>
-            </template>
-        </yi-table>
+    <div id="app">
         <el-tabs>
             <el-tab-pane label="列表">
                 <div style="padding: 20px;">
@@ -38,45 +16,45 @@
                         <span style="color: red;"> :expandAll="true"</span>
                     </p>
                 </div>
-                <!--<yi-table ref="table"-->
-                          <!--:columns="column"-->
-                          <!--:data="data"-->
-                          <!--:expandAll="false"-->
-                          <!--:options="{stripe:true}"-->
-                          <!--:pagination="pagination"-->
-                          <!--selection-->
-                          <!--:rowHandle="rowHandle"-->
-                          <!--@query-changes="handleQueryChange">-->
-                    <!--&lt;!&ndash;<template slot="operate">&ndash;&gt;-->
-                        <!--&lt;!&ndash;<el-button size="small">自定义按钮</el-button>&ndash;&gt;-->
-                    <!--&lt;!&ndash;</template>&ndash;&gt;-->
-                    <!--<template slot="header">-->
-                        <!--<el-button size="small">自定义header</el-button>-->
+                <yi-table ref="table"
+                          :columns="column"
+                          :data="data"
+                          :expandAll="false"
+                          :options="{stripe:true}"
+                          :pagination="pagination"
+                          selection
+                          :rowHandle="rowHandle"
+                          @query-changes="handleQueryChange">
+                    <!--<template slot="operate">-->
+                        <!--<el-button size="small">自定义按钮</el-button>-->
                     <!--</template>-->
-                    <!--<template slot="foot">-->
-                        <!--<span>自定义foot</span>-->
-                    <!--</template>-->
-                    <!--<template slot="name" slot-scope="scope">-->
-                        <!--<el-tag>{{scope.name}}</el-tag>-->
-                    <!--</template>-->
-                <!--</yi-table>-->
+                    <template slot="header">
+                        <el-button size="small">自定义header</el-button>
+                    </template>
+                    <template slot="foot">
+                        <span>自定义foot</span>
+                    </template>
+                    <template slot="name" slot-scope="scope">
+                        <el-tag>{{scope.name}}</el-tag>
+                    </template>
+                </yi-table>
                 <h1>树形数据与懒加载</h1>
-                <!--<yi-table :columns="tableColumn"-->
-                          <!--:data="tableData"-->
-                          <!--:expandAll="false"-->
-                          <!--:options="{-->
-                          <!--defaultExpandAll:true,-->
-                          <!--treeProps:{children: 'children',hasChildren: 'hasChildren'},-->
-                          <!--rowKey:'id'-->
-                        <!--}"/>-->
-                <!--<yi-table :columns="tableColumn" :data="tableData1"-->
-                          <!--:options="{-->
-                              <!--treeProps:{children: 'children',hasChildren: 'hasChildren'},-->
-                              <!--rowKey:'id',-->
-                              <!--lazy:true,-->
-                              <!--load:load-->
-                        <!--}">-->
-                <!--</yi-table>-->
+                <yi-table :columns="tableColumn"
+                          :data="tableData"
+                          :expandAll="false"
+                          :options="{
+                          defaultExpandAll:true,
+                          treeProps:{children: 'children',hasChildren: 'hasChildren'},
+                          rowKey:'id'
+                        }"/>
+                <yi-table :columns="tableColumn" :data="tableData1"
+                          :options="{
+                              treeProps:{children: 'children',hasChildren: 'hasChildren'},
+                              rowKey:'id',
+                              lazy:true,
+                              load:load
+                        }">
+                </yi-table>
             </el-tab-pane>
             <el-tab-pane label="图表">
                 <yi-line height="300px" :data="{
@@ -186,11 +164,11 @@
                     { title: '专业名称', key: 'name',fixed:true ,value:'法律专业',query:true,component:{name:'el-input'}},
                     { title: '代码', key: 'code',query:true,component:{name:'el-select',options:[{label:'选项一',value:'选项一'}]}},
                     { title: '简称', key: 'short_name',query:true,component:{name:'el-input',width:'150px'} },
-                    // { title: '所属机构', key: 'affiliate',query:true,component:{name:'el-input'}},
+                    { title: '所属机构', key: 'affiliate',query:true,component:{name:'el-select',options:[]}},
                     { title: '学制', key: 'education' ,query:true,component:{name:'el-input'}},
-                    // { title: '层次', key: 'level',query:true,component:{name:'el-input'}},
-                    // { title: '学科门类', key: 'category',query:true,component:{name:'el-input'}},
-                    // { title: '时间', key: 'time',query:true,dataType:'time',component:{name:'el-date-picker',valueFormat:'yyyy-MM-dd'}},
+                    { title: '层次', key: 'level',query:true,component:{name:'el-input'}},
+                    { title: '学科门类', key: 'category',query:true,component:{name:'el-input'}},
+                    { title: '时间', key: 'time',query:true,dataType:'time',component:{name:'el-date-picker',valueFormat:'yyyy-MM-dd'}},
                 ],
                 data:[
                     {time:'2020-03-11T09:27:44+08:00',img:'http://attach.bbs.miui.com/forum/201505/26/165830wjhnbgkouuyyybyv.jpg',name:'法律质询',code:'fz001',short_name:'法律质询',affiliate:'法律学院',education:'4年',level:'本科',category:'法学'},

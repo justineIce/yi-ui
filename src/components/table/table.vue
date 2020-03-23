@@ -12,7 +12,8 @@
                                  :inline="true"
                                  :model="queryData"
                                  @submit.native.prevent>
-                            <el-row ref="fbody" style="overflow: hidden;position: relative;flex: 1; display: flex;flex-wrap: wrap;align-items: center;"
+                            <el-row ref="fbody"
+                                    class="wrap-row"
                                     :style="{
                                         height: showMore && isClick ? 'auto' : '62px'}">
                                 <template v-for="item in queryModel">
@@ -25,12 +26,14 @@
                                                       v-if="item.component.name === 'el-input'"
                                                       v-model="queryData[item.key]"
                                                       v-bind="item.component"
+                                                      :placeholder="`请输入${item.title}`"
                                                       :style="{width:handleAttribute(item.component.width,'100%')}"></el-input>
                                             <!--选择框-->
                                             <el-select size="small"
-                                                    v-else-if="item.component.name === 'el-select'"
-                                                    v-model="queryData[item.key]"
-                                                    v-bind="item.component">
+                                                       v-else-if="item.component.name === 'el-select'"
+                                                       v-model="queryData[item.key]"
+                                                       v-bind="item.component"
+                                                       :placeholder="`请选择${item.title}`">
                                                 <el-option
                                                         v-for="option in item.component.options"
                                                         :key="option.value"
@@ -39,20 +42,24 @@
                                             </el-select>
                                             <!--级联选择器-->
                                             <el-cascader size="small"
-                                                    v-else-if="item.component.name === 'el-cascader'"
-                                                    v-model="queryData[item.key]"
-                                                    v-bind="item.component">
+                                                         v-else-if="item.component.name === 'el-cascader'"
+                                                         v-model="queryData[item.key]"
+                                                         v-bind="item.component"
+                                                         :placeholder="`请选择${item.title}`">>
                                             </el-cascader>
                                             <!--时间选择-->
                                             <el-time-picker  size="small"
                                                              v-else-if="item.component.name === 'el-time-picker'"
                                                              v-model="queryData[item.key]"
-                                                             v-bind="item.component">
+                                                             v-bind="item.component"
+                                                             :placeholder="`请选择时间`">>
                                             </el-time-picker>
+                                            <!--日期选择-->
                                             <el-date-picker  size="small"
                                                              v-else-if="item.component.name === 'el-date-picker'"
                                                              v-model="queryData[item.key]"
-                                                             v-bind="item.component">
+                                                             v-bind="item.component"
+                                                             :placeholder="`请选择日期`">>
                                             </el-date-picker>
                                         </el-form-item>
                                     </el-col>
@@ -316,11 +323,11 @@
             /**
              * @description 表头数据
              */
-            columns: {type: Array, required: true, default(){return []} },
+            columns: {type: Array, required: true},
             /**
              * @description 表格数据
              */
-            data: {type: Array, required: true, default(){return []}},
+            data: {type: Array, required: true},
             /**
              * @description 是否多选
              */
@@ -337,7 +344,7 @@
         },
         watch:{
             columns:'judgeHeight',
-            expandAll:'judgeHeight'
+            expandAll:'judgeHeight',
         },
         data(){
             return{
@@ -376,9 +383,7 @@
             },
             //展开更多
             handleMore(){
-                console.log("a")
                 this.isClick=!this.isClick
-                console.log(this.showMore)
             },
             isImageColumnWidth(item){
                 if(item.width){
@@ -523,7 +528,7 @@
             }
         },
         mounted() {
-            this.judgeHeight()
+           this.judgeHeight()
         }
     }
 </script>
@@ -531,3 +536,5 @@
 <style scoped>
 
 </style>
+
+

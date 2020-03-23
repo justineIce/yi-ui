@@ -22,6 +22,15 @@
            height: 32px;
         }
       }
+      .wrap-row{
+        overflow: hidden;
+        position: relative;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        padding-right: 30px;
+        //flex: 1;
+      }
     }
     .wrap-ext{
       position: absolute;

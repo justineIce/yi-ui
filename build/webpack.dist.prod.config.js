@@ -40,7 +40,7 @@ module.exports = merge(webpackBaseConfig, {
             sourceMap: true
         }),
         new CompressionPlugin({
-            asset: '[path].gz[query]',
+            // asset: '[path].gz[query]',
             algorithm: 'gzip',
             test: /\.(js|css)$/,
             threshold: 10240,
