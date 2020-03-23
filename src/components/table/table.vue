@@ -12,7 +12,7 @@
                                  :inline="true"
                                  :model="queryData"
                                  @submit.native.prevent>
-                            <el-row ref="fbody" style="overflow: hidden;position: relative;"
+                            <el-row ref="fbody" style="overflow: hidden;position: relative;flex: 1; display: flex;flex-wrap: wrap;align-items: center;"
                                     :style="{
                                         height: showMore && isClick ? 'auto' : '62px'}">
                                 <template v-for="item in queryModel">
@@ -316,11 +316,11 @@
             /**
              * @description 表头数据
              */
-            columns: {type: Array, required: true, default:[] },
+            columns: {type: Array, required: true, default(){return []} },
             /**
              * @description 表格数据
              */
-            data: {type: Array, required: true, default:[]},
+            data: {type: Array, required: true, default(){return []}},
             /**
              * @description 是否多选
              */
@@ -337,7 +337,7 @@
         },
         watch:{
             columns:'judgeHeight',
-            expandAll:'judgeHeight',
+            expandAll:'judgeHeight'
         },
         data(){
             return{
@@ -369,14 +369,16 @@
             judgeHeight(){
                 this.$nextTick(()=>{
                     if(this.$refs.fbody){
-                        this.showMore = this.$refs.fbody.$el.scrollHeight > this.$refs.fbody.$el.clientHeight ?true :false
+                        this.showMore = this.$refs.fbody.$el.scrollHeight > this.$refs.fbody.$el.clientHeight * 3 /2 ?true :false
                         this.isClick = this.expandAll && this.showMore
                     }
                 })
             },
             //展开更多
             handleMore(){
+                console.log("a")
                 this.isClick=!this.isClick
+                console.log(this.showMore)
             },
             isImageColumnWidth(item){
                 if(item.width){
@@ -522,7 +524,6 @@
         },
         mounted() {
             this.judgeHeight()
-
         }
     }
 </script>
