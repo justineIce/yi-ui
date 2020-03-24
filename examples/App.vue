@@ -1,6 +1,16 @@
 <template>
     <div id="app">
         <el-tabs>
+            <el-tab-pane label="图表">
+                <yi-line height="300px" :data="{
+                     dimensions:['name','value:人数'],
+                     source:[{name:'男',value:'123'},{name:'女',value:'234'}]
+                }"></yi-line>
+                <yi-bar height="300px" :data="{
+                     dimensions:['name','value:人数'],
+                     source:[{name:'男',value:'123'},{name:'女',value:'234'}]
+                }"></yi-bar>
+            </el-tab-pane>
             <el-tab-pane label="列表">
                 <div style="padding: 20px;">
                     <p> 搜索栏优化：</p>
@@ -56,12 +66,6 @@
                         }">
                 </yi-table>
             </el-tab-pane>
-            <el-tab-pane label="图表">
-                <yi-line height="300px" :data="{
-                     dimensions:['name','value:人数'],
-                     source:[{name:'男',value:'123'},{name:'女',value:'234'}]
-                }"></yi-line>
-            </el-tab-pane>
             <el-tab-pane label="信息显示">
                 <h1>例子一</h1>
                 <yi-form-show
@@ -100,10 +104,9 @@
 
 <script>
     import test from './test'
-    import YiLine from "../src/components/echarts/packages/line";
     export default {
         name: "app",
-        components:{YiLine, test},
+        components:{ test},
         data(){
             return{
                 /**表格**/
