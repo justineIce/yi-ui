@@ -18,7 +18,7 @@ const ranking = (source, settings, extra) => {
   let option = {
     grid: {
       left: '60px',
-      right: '60px',
+      right: '100px ',
       top: '30px',
       bottom: '30px'
     },
@@ -41,14 +41,14 @@ const ranking = (source, settings, extra) => {
             lg: {
               backgroundColor: '#fff',
               color: '#1296DB',
-              borderRadius: 30,
+              borderRadius: 25,
               borderColor: '#1296DB',
-              borderWidth: 3,
-              fontSize: 18,
-              fontWeight: 700,
+              borderWidth: 1,
+              fontSize: 16,
+              fontWeight: 600,
               align: 'center',
-              width: 30,
-              height: 30
+              width: 25,
+              height: 25
             }
           }
         },
@@ -58,8 +58,7 @@ const ranking = (source, settings, extra) => {
     series: [
       {
         type: 'bar',
-
-        barWidth: 20,
+        barWidth: 15,
         itemStyle: {
           normal: {
             color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{
@@ -78,14 +77,13 @@ const ranking = (source, settings, extra) => {
       },
       {
         type: 'bar',
-        barWidth: 20,
+        barWidth: 15,
         xAxisIndex: 0,
         barGap: '-100%',
         label: {
           normal: {
             show: true,
             position: 'right',
-            // formatter: '{b}:{c}',
             formatter: (e) => {
               let index = e.dataIndex
               return `${source[index].name}:${source[index].value}`
@@ -93,10 +91,11 @@ const ranking = (source, settings, extra) => {
             color: '#1296DB',
             fontSize: 14,
             fontWeight: 700,
-            align: 'right',
+            align: 'top',
             verticalAlign: 'middle',
             lineHeight: 20,
-            distance: 75
+            distance: 0,
+            offset:[10,0]
           }
         },
         itemStyle: {

@@ -70,7 +70,7 @@ export const radar = (dimensions, source, settings, extra) => {
   const { metrics, targets } = getMetricsAndTarget(target)
   let legend = Object.assign({}, getRadarLegend({ source, dimension }), extra.legend)
   let tooltip = Object.assign({}, { show: true }, extra.tooltip)
-  let grid = Object.assign({}, { bottom: '10%' }, extra.grid)
+  let grid = Object.assign({}, extra.grid)
 
   const radar = getRadarSetting({ source, metrics, targets })
   const series = getRadarSeries({ source, dimension, metrics, targets })

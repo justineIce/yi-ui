@@ -6,6 +6,7 @@ function getBarXAxis (args) {
     nameGap: 20,
     axisLine: { show: false },
     axisTick: { show: false },
+    axisLabel:{rotate:45},
     nameLocation: 'middle',
     data: sources.map(row => row[item])
   }))
@@ -71,7 +72,7 @@ export const histogram = (dimensions, source, settings, extra) => {
 
   let legend = Object.assign({}, { show: true, type: 'scroll' }, extra.legend, { data: targets })
   let tooltip = Object.assign({}, { show: true, trigger: 'axis' }, extra.tooltip)
-  let grid = Object.assign({}, { left: '8%', right: '5%', bottom: (extra.dataZoom ? '60' : '30') }, extra.grid)
+  let grid = Object.assign({}, { left: '10%', right: '10%', bottom: (extra.dataZoom || label.rotate   ? '60' : '30') }, extra.grid)
 
   const xAxis = getBarXAxis({ dimension, sources })
   const yAxis = getBarYAxis({ metrics })
@@ -100,7 +101,7 @@ export const bar = (dimensions, source, settings, extra) => {
 
   let legend = Object.assign({}, { show: true, type: 'scroll' }, extra.legend, { data: targets })
   let tooltip = Object.assign({}, { show: true, trigger: 'axis' }, extra.tooltip)
-  let grid = Object.assign({}, { left: '20%', right: '5%', bottom: '30' }, extra.grid)
+  let grid = Object.assign({}, { left: '20%', right: '10%', bottom: '30' }, extra.grid)
 
   const xAxis = getBarYAxis({ metrics })
   const yAxis = getBarXAxis({ dimension, sources })

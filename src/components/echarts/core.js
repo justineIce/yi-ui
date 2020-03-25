@@ -41,6 +41,7 @@ export default {
     height: { type: String, default: '400px' },
     tooltip: Object,
     legend: Object,
+    grid:Object,
     dataZoom: { type: [Object, Array] },
     xAxis: [Object, Array],
     yAxis: [Object, Array],
@@ -174,8 +175,10 @@ export default {
         _once: this._once,
         tooltip: this.tooltip,
         legend: this.legend,
-        dataZoom: this.dataZoom
+        dataZoom: this.dataZoom,
+        grid:this.grid
       }
+      console.log(extra)
       let options = null
       this.dataEmpty = false
       // 如果为数组则是自定义图表
