@@ -12,15 +12,15 @@
                            <slot :name="key" v-bind="data">
                                <el-tag v-if="template[key].component && template[key].component.name && template[key].component.name === 'el-tag'"
                                        v-bind="template[key].component">
-                                   {{data[key]}}
+                                   {{template[key].dataType && template[key].dataType === 'time' ? formatDate( data[key]) : data[key]}}
                                </el-tag>
                                <el-button v-else-if="template[key].component && template[key].component.name && template[key].component.name === 'el-button'"
                                        v-bind="template[key].component" @click="handleClick(key,data)">
-                                   {{data[key]}}
+                                   {{template[key].dataType && template[key].dataType === 'time' ? formatDate( data[key]) : data[key]}}
                                </el-button>
                                <el-link v-else-if="template[key].component && template[key].component.name && template[key].component.name === 'el-link'"
                                           v-bind="template[key].component">
-                                   {{data[key]}}
+                                   {{template[key].dataType && template[key].dataType === 'time' ? formatDate( data[key]) : data[key]}}
                                </el-link>
                                <render-custom-component
                                        v-else-if="template[key].component && template[key].component.name && template[key].component.name !==''"
@@ -30,7 +30,7 @@
                                        :scope="data">
                                </render-custom-component>
                                <label class="el-form-item__label" v-else>
-                                   {{data ? (template[key].formatter ? template[key].formatter(data[key]) : data[key]) : ''}}
+                                   {{data ? (template[key].formatter ? template[key].formatter(data[key]) : (template[key].dataType && template[key].dataType === 'time' ? formatDate( data[key]) : data[key])) : ''}}
                                </label>
                            </slot>
                        </el-form-item>

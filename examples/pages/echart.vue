@@ -13,27 +13,18 @@
                     style="border:1px solid red"
                     :data="chartData"></yi-line>
        </el-tab-pane>
-       <el-tab-pane label="男女比例图">
-           <yi-gender-ratio  width="482px"
-                             height="150px"
-                             style="border:1px solid red"
-                             :data="[32,72]"></yi-gender-ratio>
-       </el-tab-pane>
-       <el-tab-pane label="排名">
-           <yi-ranking  width="482px"
-                        height="300px"
-                        style="border:1px solid red"
-                        :data="rankingData"></yi-ranking>
-           <yi-ranking-icon  width="482px"
-                             height="300px"
-                             style="border:1px solid red"
-                             :data="rankingData"></yi-ranking-icon>
-       </el-tab-pane>
+
        <el-tab-pane label="柱状图">
            <yi-histogram width="482px"
                          height="300px"
                          style="border:1px solid red"
                          :data="chartData"></yi-histogram>
+           <yi-histogram width="482px"
+                    height="300px"
+                    style="border:1px solid red"
+                    :data="data"
+                    :grid="{left:'20%'}"
+                    :settings="{label:{rotate:20}}"></yi-histogram>
        </el-tab-pane>
        <el-tab-pane label="条形图">
            <yi-bar width="482px"
@@ -76,7 +67,22 @@
                     style="border:1px solid red"
                     :data="wordData"></yi-word-cloud>
        </el-tab-pane>
-
+       <el-tab-pane label="男女比例图">
+           <yi-gender-ratio  width="482px"
+                             height="150px"
+                             style="border:1px solid red"
+                             :data="[20,50]"></yi-gender-ratio>
+       </el-tab-pane>
+       <el-tab-pane label="排名">
+           <yi-ranking  width="482px"
+                        height="300px"
+                        style="border:1px solid red"
+                        :data="rankingData"></yi-ranking>
+           <yi-ranking-icon  width="482px"
+                             height="300px"
+                             style="border:1px solid red"
+                             :data="rankingData"></yi-ranking-icon>
+       </el-tab-pane>
    </el-tabs>
 </template>
 

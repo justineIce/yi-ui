@@ -79,6 +79,5 @@ export const line = (dimensions, source, settings, extra) => {
   const yAxis = getLineYAxis({ metrics })
   const series = getLineSeries({ metrics, targets, sources, stack, area })
   const options = { grid, legend, tooltip, xAxis, yAxis, series }
-  console.log(options)
   return options
 }

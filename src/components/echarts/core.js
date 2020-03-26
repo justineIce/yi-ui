@@ -178,7 +178,6 @@ export default {
         dataZoom: this.dataZoom,
         grid:this.grid
       }
-      console.log(extra)
       let options = null
       this.dataEmpty = false
       // 如果为数组则是自定义图表

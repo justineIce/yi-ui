@@ -26,18 +26,18 @@
                 template:{
                     code: { title: '编码',component:{name:'el-button',emit:'handleClick'}},
                     name: { title: '数据项名'},
-                    mc: { title: '校内职务名称'},
+                    time: { title: '校内职务名称',dataType:'time',component:{name:'el-tag'}},
                     short_name: { title: '中文简称' ,component:{name:'el-tag',type:"success"}},
                     constraint: { title: '必备数据',component:{name:'el-link',type:"primary"}},
                     example: { title: '解释/举例'},
                 },
                 formData:{
-                    code: "asdf",
-                    name: "asdf",
-                    short_name: "asfdasdf",
+                    code: "234FF2342",
+                    name: "信息化建设与管理办公室主任",
+                    short_name: "办公室主任",
                     constraint: 0,
-                    example: "asf",
-                    mc:'信息化建设与管理办公室主任'
+                    example: "信息化建设与管理办公室主任",
+                    time:'2020-03-26T16:10:17+08:00'
                 },
             }
         }
