@@ -343,14 +343,15 @@
             pagination: {type: [Object,Boolean], default(){return{currentPage: 1, pageSize: 10, total: 0}}}
         },
         watch:{
-            columns:'judgeHeight',
-            expandAll:'judgeHeight',
+            columns:'resetTable',
+            expandAll:'resetTable',
         },
         data(){
             return{
                 queryData:{},
                 isClick:false,
-                showMore:false
+                showMore:false,
+                time:null
             }
         },
         computed:{
@@ -373,11 +374,12 @@
         },
         methods:{
             //判断是否发生溢出情况
-            judgeHeight(){
+            resetTable(){
                 this.$nextTick(()=>{
-                    if(this.$refs.fbody){
+                    if(this.$refs.fbody && this.$refs.fbody.$el.scrollHeight  && this.$refs.fbody.$el.clientHeight){
                         this.showMore = this.$refs.fbody.$el.scrollHeight > this.$refs.fbody.$el.clientHeight * 3 /2 ?true :false
                         this.isClick = this.expandAll && this.showMore
+                        clearInterval(this.time)
                     }
                 })
             },
@@ -528,7 +530,7 @@
             }
         },
         mounted() {
-           this.judgeHeight()
+           this.resetTable()
         }
     }
 </script>

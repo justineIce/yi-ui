@@ -27,7 +27,7 @@
             </yi-table>
         </el-tab-pane>
         <el-tab-pane label="树形数据与懒加载">
-            <yi-table :columns="tColumn"
+            <yi-table ref="table1" :columns="tColumn"
                       :data="tData"
                       :expandAll="false"
                       :options="{
