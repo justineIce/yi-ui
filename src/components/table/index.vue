@@ -266,11 +266,11 @@
                         <div style="display: flex;">
                             <div style="margin-right: 10px"
                                  v-for="(item,index) in handleAttribute(rowHandle.operate, [])"
-                                 :key="index">
+                                 :key="index"
+                                 v-if="handleAttributeShow(item.show, scope.$index, scope.row)">
                                 <el-button  size="mini"
                                             type="text"
                                             v-bind="item"
-                                            v-if="handleAttributeShow(item.show, scope.$index, scope.row)"
                                             :disabled="handleAttributeDisabled(item.disabled, scope.row, scope.$index)"
                                             @click.stop="$emit(item.emit, {index: scope.$index, row: scope.row, event: $event})">{{item.text}}</el-button>
                             </div>

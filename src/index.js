@@ -7,8 +7,6 @@ import  FormShow from './components/form-show'
 //无缝滚动
 import SeamlessScroll from './components/seamless-scroll'
 
-//图表
-import * as echarts from './components/echarts'
 
 const components=[
     Card,
@@ -18,10 +16,6 @@ const components=[
     FormShow,
     SeamlessScroll
 ]
-Object.keys(echarts).forEach(key=>{
-    components.push(echarts[key])
-})
-
 const install = function (Vue, opts = {}) {
     components.forEach(component => {
         Vue.component(component.name, component);
