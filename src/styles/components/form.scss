@@ -1,29 +1,48 @@
 .yi-form-show{
-  padding: 20px;
-  .el-form{
-    .el-form-item{
-      margin-bottom: 10px;
-   }
+  &__table{
+    width: 100%;
+    border-collapse: collapse;
+    &>tbody{
+      display: flex;
+      flex-wrap: wrap;
+      box-sizing: border-box;
+    }
   }
- &.yi-form-border{
-   border: 1px solid #ebeef5;
-   .el-form{
-     .el-form-item{
-       padding: 0;
-       margin: 0;
-       display: flex;
-       align-items: center;
-       border-bottom: 1px solid #ebeef5;
-       border-right: 1px solid #ebeef5;
-       .el-form-item__label{
-         padding-left: 10px;
-       }
-       .el-form-item__content{
-         border-left: 1px solid #ebeef5;
-         padding: 5px;
-         margin: 0!important;
-       }
-     }
-   }
- }
+  &__tr{
+    display: flex;
+    box-sizing: border-box;
+  }
+  &__title{
+    text-align: right;
+    vertical-align: middle;
+    font-size: 14px;
+    color: #606266;
+    line-height: 40px;
+    padding: 0 5px 0 15px;
+    box-sizing: border-box;
+
+  }
+  &__content{
+    line-height: 40px;
+    position: relative;
+    font-size: 14px;
+    flex: 1;
+    padding: 0 15px;
+  }
+  &.yi-form-border{
+    .yi-form-show__table{
+      border-top: 1px solid #f2eeee;
+      border-left: 1px solid #f2eeee;
+    }
+    .yi-form-show__title{
+      background: #fbfafa;
+      border-bottom: 1px solid #f2eeee;
+      border-right: 1px solid #f2eeee;
+    }
+    .yi-form-show__content{
+      border-bottom: 1px solid #f2eeee;
+      border-right: 1px solid #f2eeee;
+    }
+  }
+
 }

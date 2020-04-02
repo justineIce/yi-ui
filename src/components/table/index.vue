@@ -76,14 +76,15 @@
                                     </el-form-item>
                                 </el-col>
                                 <!--搜索更多-->
-                                <div class="wrap-ext" :style="{display: showMore ? '' :'none'}" @click="handleMore">
+                                <div class="wrap-ext" v-if="showMore && expandAll ? false : showMore" @click="handleMore">
                                     <span>更多<i :class="{
                                         'el-icon-arrow-down':!isClick,
                                         'el-icon-arrow-up':isClick}"></i></span>
                                 </div>
                             </el-row>
                             <!--按钮-->
-                            <el-form-item v-if="showMore ? (expandAll &&isClick ? false : !isClick) :true">
+                            <!--v-if="showMore ? (expandAll &&isClick ? false : !isClick) :true"-->
+                            <el-form-item v-if=" showMore && expandAll ? false : (showMore ? !isClick :true)">
                                 <div class="yi-table__buttons">
                                     <el-button type="primary" size="small" @click="handleQuery">查询</el-button>
                                     <el-button size="small" @click="handleClear">重置</el-button>
@@ -249,7 +250,7 @@
                                     :preview-src-list="[scope.row[item.key]]">
                             </el-image>
                             <span v-else-if="item.dataType && item.dataType === 'time'">
-                                {{formatDate(scope.row[item.key])}}
+                                {{formatDate(scope.row[item.key],item.format)}}
                             </span>
                             <span v-else>
                                 {{item.formatter ? item.formatter(scope.row, scope.column, scope.row[item.key], scope.$index) : scope.row[item.key]}}
@@ -311,7 +312,7 @@
             /**
              * @description 展开所有的搜索条件
              */
-            expandAll:{type:Boolean,default:false},
+            expandAll:{type:Boolean},
             /**
              * @description 表格加载
              */

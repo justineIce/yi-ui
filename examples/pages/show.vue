@@ -1,19 +1,29 @@
 <template>
     <el-tabs tab-position="left">
-        <el-tab-pane label="基础">
-            <yi-form-show
-                    :template="template"
-                    :data="formData"
-                    :span="6"></yi-form-show>
-        </el-tab-pane>
         <el-tab-pane label="带边框">
             <yi-form-show
                     border
                     labelWidth="120px"
                     :template="template"
                     :data="formData"
-                    :span="12">
+                    :span="6">
             </yi-form-show>
+            <yi-form-show
+                    border
+                    labelWidth="120px"
+                    labelColor="#ccdc"
+                    borColor="#409EFF"
+                    :template="template"
+                    :data="formData"
+                    :span="6">
+            </yi-form-show>
+        </el-tab-pane>
+        <el-tab-pane label="基础">
+            <yi-form-show
+                    labelWidth="120px"
+                    :template="template"
+                    :data="formData"
+                    :span="6"></yi-form-show>
         </el-tab-pane>
     </el-tabs>
 </template>
@@ -24,12 +34,14 @@
         data(){
             return{
                 template:{
-                    code: { title: '编码',component:{name:'el-button',emit:'handleClick'}},
-                    name: { title: '数据项名'},
-                    time: { title: '校内职务名称',dataType:'time',component:{name:'el-tag'}},
-                    short_name: { title: '中文简称' ,component:{name:'el-tag',type:"success"}},
-                    constraint: { title: '必备数据',component:{name:'el-link',type:"primary"}},
-                    example: { title: '解释/举例'},
+                    code: { title: '编码',component:{name:'el-tag'}},
+                    name: { title: '数据项名',component:{name:'el-link'}},
+                    time: { title: '校内职务名称',dataType:'time',format:'yyyy-MM-dd',component:{name:'el-button',emit:()=>{
+                            console.log("aaaaa")
+                            }}},
+                    short_name: { title: '中文简称'},
+                    constraint: { title: '必备数据'},
+                    example: { title: '解释/举例',span:18},
                 },
                 formData:{
                     code: "234FF2342",

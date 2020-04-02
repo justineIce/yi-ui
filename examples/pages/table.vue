@@ -6,7 +6,7 @@
             <yi-table ref="table"
                       :columns="column"
                       :data="data"
-                      :expandAll="false"
+                      :expand-all="false"
                       :options="{stripe:true}"
                       :pagination="pagination"
                       selection
@@ -25,16 +25,25 @@
                     <el-tag>{{scope.name}}</el-tag>
                 </template>
             </yi-table>
+            <yi-table ref="table"
+                      :columns="column"
+                      :data="data"
+                      :expand-all="true"
+                      :options="{stripe:true}"
+                      :pagination="pagination"
+                      selection
+                      :rowHandle="rowHandle"
+                      @query-changes="handleQueryChange"/>
         </el-tab-pane>
-        <el-tab-pane label="树形数据与懒加载">
+        <el-tab-pane label="树形数据与懒加载" v-if="false">
             <yi-table ref="table1" :columns="tColumn"
                       :data="tData"
-                      :expandAll="false"
+                      expand-all
                       :options="{
                           defaultExpandAll:true,
                           treeProps:{children: 'children',hasChildren: 'hasChildren'},
                           rowKey:'id'
-                        }"/>
+                        }"></yi-table>
             <yi-table :columns="tColumn"
                       :data="tData1"
                       :options="{
@@ -119,7 +128,7 @@
                     { title: '学制', key: 'education' ,query:true,component:{name:'el-input'}},
                     { title: '层次', key: 'level',query:true,component:{name:'el-input'}},
                     { title: '学科门类', key: 'category',query:true,component:{name:'el-input'}},
-                    { title: '时间', key: 'time',query:true,dataType:'time',component:{name:'el-date-picker',valueFormat:'yyyy-MM-dd'}},
+                    { title: '时间', key: 'time',query:true,dataType:'time',format:'yyyy-MM-dd',component:{name:'el-date-picker',valueFormat:'yyyy-MM-dd'}},
                 ],
                 data:[
                     {time:'2020-03-11T09:27:44+08:00',img:'http://attach.bbs.miui.com/forum/201505/26/165830wjhnbgkouuyyybyv.jpg',name:'法律质询',code:'fz001',short_name:'法律质询',affiliate:'法律学院',education:'4年',level:'本科',category:'法学'},

@@ -1,43 +1,60 @@
 <template>
-    <div class="yi-form-show" :class="{'yi-form-border': border}">
-        <el-form :label-width="border ? (labelWidth ? labelWidth : '100px') : labelWidth"
-                 :label-position="labelPosition"
-                 @submit.native.prevent>
-           <el-row>
-               <template v-for="(value,key) in template">
-                   <el-col v-if="template[key] ? handleAttribute(template[key].show,true) : false"
-                           :span="template[key] ? handleAttribute(template[key].span,span) : span">
-                       <el-form-item :label="`${template[key].title}：`"
-                                     :prop="key">
-                           <slot :name="key" v-bind="data">
-                               <el-tag v-if="template[key].component && template[key].component.name && template[key].component.name === 'el-tag'"
-                                       v-bind="template[key].component">
-                                   {{template[key].dataType && template[key].dataType === 'time' ? formatDate( data[key]) : data[key]}}
-                               </el-tag>
-                               <el-button v-else-if="template[key].component && template[key].component.name && template[key].component.name === 'el-button'"
-                                       v-bind="template[key].component" @click="handleClick(key,data)">
-                                   {{template[key].dataType && template[key].dataType === 'time' ? formatDate( data[key]) : data[key]}}
-                               </el-button>
-                               <el-link v-else-if="template[key].component && template[key].component.name && template[key].component.name === 'el-link'"
-                                          v-bind="template[key].component">
-                                   {{template[key].dataType && template[key].dataType === 'time' ? formatDate( data[key]) : data[key]}}
-                               </el-link>
-                               <render-custom-component
-                                       v-else-if="template[key].component && template[key].component.name && template[key].component.name !==''"
-                                       v-bind="template[key].component"
-                                       :component-name="template[key].component.name"
-                                       :props="template[key].component.props ? template[key].component.props : null"
-                                       :scope="data">
-                               </render-custom-component>
-                               <label class="el-form-item__label" v-else>
-                                   {{data ? (template[key].formatter ? template[key].formatter(data[key]) : (template[key].dataType && template[key].dataType === 'time' ? formatDate( data[key]) : data[key])) : ''}}
-                               </label>
-                           </slot>
-                       </el-form-item>
-                   </el-col>
-               </template>
-           </el-row>
-        </el-form>
+    <div class="yi-form-show"
+         :class="{'yi-form-border': border}">
+        <table class="yi-form-show__table"
+               cellpadding="0"
+               cellspacing="0"
+               :style="{
+                    borderTop:border ? `1px solid ${borColor}` : 'unset',
+                    borderLeft:border ? `1px solid ${borColor}` : 'unset',
+               }">
+            <tbody>
+                <template v-for="(value,key) in template">
+                    <tr class="yi-form-show__tr" :style="{
+                        width:`${100/(template[key] ? handleAttribute(24/template[key].span,24/span) : 24/span)}%`
+                    }">
+                        <td class="yi-form-show__title"
+                            :width="labelWidth"
+                            :style="{
+                                textAlign:labelPosition,
+                                backgroundColor:border ? labelColor:'transparent',
+                                borderBottom:border ? `1px solid ${borColor}` : 'unset',
+                                borderRight:border ? `1px solid ${borColor}` : 'unset',
+                            }">{{template[key].title}}：</td>
+                        <td class="yi-form-show__content"
+                            :style="{
+                                borderBottom:border ? `1px solid ${borColor}` : 'unset',
+                                borderRight:border ? `1px solid ${borColor}` : 'unset',
+                            }">
+                            <slot :name="key" v-bind="data">
+                                <el-tag v-if="template[key].component && template[key].component.name && template[key].component.name === 'el-tag'"
+                                        v-bind="template[key].component">
+                                    {{template[key].dataType && template[key].dataType === 'time' ? formatDate( data[key],template[key].format) : data[key]}}
+                                </el-tag>
+                                <el-button v-else-if="template[key].component && template[key].component.name && template[key].component.name === 'el-button'"
+                                           v-bind="template[key].component" @click="handleClick(key,data)">
+                                    {{template[key].dataType && template[key].dataType === 'time' ? formatDate( data[key],template[key].format) : data[key]}}
+                                </el-button>
+                                <el-link v-else-if="template[key].component && template[key].component.name && template[key].component.name === 'el-link'"
+                                         v-bind="template[key].component">
+                                    {{template[key].dataType && template[key].dataType === 'time' ? formatDate( data[key],template[key].format) : data[key]}}
+                                </el-link>
+                                <render-custom-component
+                                        v-else-if="template[key].component && template[key].component.name && template[key].component.name !==''"
+                                        v-bind="template[key].component"
+                                        :component-name="template[key].component.name"
+                                        :props="template[key].component.props ? template[key].component.props : null"
+                                        :scope="data">
+                                </render-custom-component>
+                                <label  v-else>
+                                    {{data ? (template[key].formatter ? template[key].formatter(data[key],template[key].format) : (template[key].dataType && template[key].dataType === 'time' ? formatDate( data[key],template[key].format) : data[key])) : ''}}
+                                </label>
+                            </slot>
+                        </td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
     </div>
 </template>
 
@@ -52,12 +69,20 @@
             border:Boolean,
             labelWidth:{
                 type:String,
-                default:null
+                default:'20%'
+            },
+            labelColor:{
+                type:String,
+                default:'#fbfafa'
+            },
+            borColor:{
+                type:String,
+                default:'#f2eeee'
             },
             //right/left/top
             labelPosition:{
                 type:String,
-                default:'left'
+                default:'right'
             },
             span: {
                 type:Number,
@@ -67,16 +92,6 @@
                 type: Object,
                 required: true
             },
-            /**
-                title:'',
-                show:true,
-                span:24,
-                formatter:Function
-                component:{
-                    name:'',
-                }
-             * 支持自定义组件 el-tag el-button el-link
-             */
             template: {
                 type: Object,
                 required: true
@@ -84,8 +99,9 @@
         },
         methods:{
             handleClick(key,data){
-                if(this.template[key].component.emit){
-                    this.$emit(this.template[key].component.emit,key,data)
+                let emit=this.template[key].component.emit
+                if(emit && typeof emit === 'function'  ){
+                    this.template[key].component.emit(key,data)
                 }
             }
         }

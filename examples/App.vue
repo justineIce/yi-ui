@@ -1,11 +1,11 @@
 <template>
     <div id="app">
         <el-tabs @tab-click="handleChange">
-            <el-tab-pane label="信息显示" lazy>
-                <d-show></d-show>
-            </el-tab-pane>
             <el-tab-pane label="列表" lazy>
                 <d-table ref="table"></d-table>
+            </el-tab-pane>
+            <el-tab-pane label="信息显示" lazy>
+                <d-show></d-show>
             </el-tab-pane>
             <el-tab-pane label="表单" lazy>
                 <d-from></d-from>
