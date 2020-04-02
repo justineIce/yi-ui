@@ -69,7 +69,7 @@
             border:Boolean,
             labelWidth:{
                 type:String,
-                default:'20%'
+                default:''
             },
             labelColor:{
                 type:String,

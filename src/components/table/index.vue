@@ -15,7 +15,7 @@
                             <el-row ref="fbody"
                                     class="wrap-row"
                                     :style="{
-                                        height: showMore && isClick ? 'auto' : '62px'}">
+                                        height: showMore && isClick ? 'auto' : '40px'}">
                                 <template v-for="item in queryModel">
                                     <el-col v-if="item.component && handleAttribute(item.component.name,false)"
                                             :span="item.component ? handleAttribute(item.component.span,null) :null"

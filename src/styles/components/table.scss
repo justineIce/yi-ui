@@ -2,11 +2,16 @@
   position: relative;
   box-sizing: border-box;
   &__query{
-    margin-bottom: 10px;
+    padding-bottom: 20px;
     .el-form{
       .el-form-item{
         display: flex;
         align-items: center;
+        margin: 0!important;
+        .el-input--small .el-input__inner {
+          height: 32px !important;
+          line-height: 32px !important;
+        }
         .el-form-item__content{
           flex: 1;
         }

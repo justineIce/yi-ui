@@ -20,7 +20,6 @@
         </el-tab-pane>
         <el-tab-pane label="基础">
             <yi-form-show
-                    labelWidth="120px"
                     :template="template"
                     :data="formData"
                     :span="6"></yi-form-show>
