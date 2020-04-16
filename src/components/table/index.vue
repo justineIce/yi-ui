@@ -129,6 +129,7 @@
                 <el-table-column type="selection" width="50px" v-if="selection"></el-table-column>
                 <el-table-column v-for="(item,index) in columns"
                                  :key="`column__${index}`"
+                                 v-if="handleAttribute(item.show,true)"
                                  v-bind="item"
                                  :width="isImageColumnWidth(item)"
                                  :prop="handleAttribute(item.key,null)"
@@ -361,7 +362,7 @@
                     let data=[]
                     let query={}
                     columns.forEach(item=>{
-                        if(item.query !==undefined && typeof item.query === 'boolean' && item.query){
+                        if(item.query !==undefined && typeof item.query === 'boolean' && item.query && this.handleAttribute(item.show,true)){
                             data.push(item)
                             query[item.key]=item.value !== undefined ? item.value : ''
                         }

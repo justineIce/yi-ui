@@ -6,13 +6,13 @@
 |expand-all|展开所有的搜索条件|String|—|—|false|
 |label-width|搜索栏的标签宽度|String|—|—|auto|
 |options|表格配置|Object|参考:[options](https://element.eleme.cn/#/zh-CN/component/table)|—|—|
-|columns|表头设置|Array|参数:title,key,query,value,data-type,component。其中query为true,设置为搜索条件;component.isEdit=true,在线编辑;component中的设置参考[element-ui](https://element.eleme.cn/);dataType设置数据类型,目前有time,对时间格式化。|—|—|
+|columns|表头设置|Array|参数:title,key,query,show,value,data-type,component。其中query为true,设置为搜索条件;component.isEdit=true,在线编辑;component中的设置参考[element-ui](https://element.eleme.cn/);dataType设置数据类型,目前有time,对时间格式化。|—|—|
 |data|表格数据|Array|—|—|—|
 |selection|是否多选|Boolean|—|—|false|
 |rowHandle|表格操作|Object|结构：{operate:[]}。包含text,emit,show,disabled参数。其中show，disabled类型为:[boolean,Function]|—|—|
 |pagination|翻页设置|Object,Boolean|currentPage,pageSize,total||pageSize=10|
 
-###Slot
+###Slotn
 |  name | 说明 |
 | :-----| :-----|
 |header|表格表头 自定义|
