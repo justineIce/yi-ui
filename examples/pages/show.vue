@@ -43,7 +43,7 @@
                     example: { title: '解释/举例',span:18},
                 },
                 formData:{
-                    code: "234FF2342",
+                    code: "",
                     name: "信息化建设与管理办公室主任",
                     short_name: "办公室主任",
                     constraint: 0,

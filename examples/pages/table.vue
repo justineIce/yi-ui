@@ -7,7 +7,7 @@
                       :columns="column"
                       :data="data"
                       :expand-all="false"
-                      :options="{stripe:true}"
+                      :options="{stripe:true,fit:false}"
                       :pagination="pagination"
                       selection
                       :rowHandle="rowHandle"

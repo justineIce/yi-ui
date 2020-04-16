@@ -64,7 +64,7 @@
                                         </el-form-item>
                                     </el-col>
                                 </template>
-                                <el-col :span="null" :offset="0" v-if="showMore && isClick">
+                                <el-col :span="null" :offset="0" v-if="(expandAll || (!expandAll && !showMore) ) || (showMore && isClick)">
                                     <el-form-item>
                                         <div class="yi-table__buttons">
                                             <el-button type="primary" size="small" @click="handleQuery">查询</el-button>
@@ -76,15 +76,14 @@
                                     </el-form-item>
                                 </el-col>
                                 <!--搜索更多-->
-                                <div class="wrap-ext" v-if="showMore && expandAll ? false : showMore" @click="handleMore">
+                                <div class="wrap-ext" v-if="!(expandAll || (!expandAll && !showMore))" @click="handleMore">
                                     <span>更多<i :class="{
                                         'el-icon-arrow-down':!isClick,
                                         'el-icon-arrow-up':isClick}"></i></span>
                                 </div>
                             </el-row>
                             <!--按钮-->
-                            <!--v-if="showMore ? (expandAll &&isClick ? false : !isClick) :true"-->
-                            <el-form-item v-if=" showMore && expandAll ? false : (showMore ? !isClick :true)">
+                            <el-form-item v-if="(expandAll || (!expandAll && !showMore) ) ? false : !isClick">
                                 <div class="yi-table__buttons">
                                     <el-button type="primary" size="small" @click="handleQuery">查询</el-button>
                                     <el-button size="small" @click="handleClear">重置</el-button>
