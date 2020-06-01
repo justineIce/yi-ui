@@ -1,6 +1,6 @@
 {
   "name": "yiview",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "vue 组件",
   "main": "dist/yi-ui.js",
   "scripts": {

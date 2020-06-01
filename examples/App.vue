@@ -27,7 +27,6 @@
         components:{dTable, dShow,dFrom,dOther},
         data(){
            return{
-
            }
         },
         methods:{

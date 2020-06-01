@@ -35,7 +35,7 @@
                       :rowHandle="rowHandle"
                       @query-changes="handleQueryChange"/>
         </el-tab-pane>
-        <el-tab-pane label="树形数据与懒加载" v-if="false">
+        <el-tab-pane label="树形数据与懒加载">
             <yi-table ref="table1" :columns="tColumn"
                       :data="tData"
                       expand-all
@@ -127,7 +127,35 @@
                     { title: '所属机构', key: 'affiliate',query:true,component:{name:'el-select',options:[]}},
                     { title: '学制', key: 'education' ,query:true,component:{name:'el-input'}},
                     { title: '层次', key: 'level',query:true,component:{name:'el-input'}},
-                    { title: '学科门类', key: 'category',query:true,component:{name:'el-input'}},
+                    {
+                        title: '学科门类', key: 'category', query: true, component: {
+                            name: 'el-cascader',
+                            props:{value:'id'},
+                            options: [
+                                {
+                                    id: 'zhinan',
+                                    label: '指南',
+                                    children: [{
+                                        id: 'shejiyuanze',
+                                        label: '设计原则',
+                                        children: [{
+                                            id: 'yizhi',
+                                            label: '一致'
+                                        }, {
+                                            id: 'fankui',
+                                            label: '反馈'
+                                        }, {
+                                            id: 'xiaolv',
+                                            label: '效率'
+                                        }, {
+                                            id: 'kekong',
+                                            label: '可控'
+                                        }]
+                                    }]
+                                }
+                            ]
+                        }
+                    },
                     { title: '时间', key: 'time',query:true,dataType:'time',format:'yyyy-MM-dd',component:{name:'el-date-picker',valueFormat:'yyyy-MM-dd'}},
                 ],
                 data:[

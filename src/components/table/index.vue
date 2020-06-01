@@ -45,21 +45,23 @@
                                                          v-else-if="item.component.name === 'el-cascader'"
                                                          v-model="queryData[item.key]"
                                                          v-bind="item.component"
-                                                         :placeholder="`请选择${item.title}`">>
+                                                         :options="item.component.options"
+                                                         :props="item.component.props"
+                                                         :placeholder="`请选择${item.title}`">
                                             </el-cascader>
                                             <!--时间选择-->
                                             <el-time-picker  size="small"
                                                              v-else-if="item.component.name === 'el-time-picker'"
                                                              v-model="queryData[item.key]"
                                                              v-bind="item.component"
-                                                             :placeholder="`请选择时间`">>
+                                                             :placeholder="`请选择时间`">
                                             </el-time-picker>
                                             <!--日期选择-->
                                             <el-date-picker  size="small"
                                                              v-else-if="item.component.name === 'el-date-picker'"
                                                              v-model="queryData[item.key]"
                                                              v-bind="item.component"
-                                                             :placeholder="`请选择日期`">>
+                                                             :placeholder="`请选择日期`">
                                             </el-date-picker>
                                         </el-form-item>
                                     </el-col>
