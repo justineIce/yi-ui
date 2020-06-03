@@ -131,7 +131,7 @@
                 <el-table-column type="selection" width="50px" v-if="selection"></el-table-column>
                 <el-table-column v-for="(item,index) in columns"
                                  :key="`column__${index}`"
-                                 v-if="handleAttribute(item.show,true)"
+                                 v-if="handleAttribute(item.show,true) && (item.onlyQuery ? !item.onlyQuery :true)"
                                  v-bind="item"
                                  :width="isImageColumnWidth(item)"
                                  :prop="handleAttribute(item.key,null)"

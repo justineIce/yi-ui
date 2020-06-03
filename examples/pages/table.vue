@@ -122,7 +122,7 @@
                 column:[
                     {title:'图片',key:'img',show:false,component:{name:'el-image'}},
                     { title: '专业名称', key: 'name',show:true,fixed:true ,value:'法律专业',query:true,component:{name:'el-input'}},
-                    { title: '代码', key: 'code',query:true,component:{name:'el-select',options:[{label:'选项一',value:'选项一'}]}},
+                    { title: '代码', key: 'code',query:true,onlyQuery: true,component:{name:'el-select',options:[{label:'选项一',value:'选项一'}]}},
                     { title: '简称', key: 'short_name',query:true,component:{name:'el-input',width:'150px'} },
                     { title: '所属机构', key: 'affiliate',query:true,component:{name:'el-select',options:[]}},
                     { title: '学制', key: 'education' ,query:true,component:{name:'el-input'}},
