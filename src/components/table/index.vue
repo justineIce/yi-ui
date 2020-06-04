@@ -63,6 +63,29 @@
                                                              v-bind="item.component"
                                                              :placeholder="`请选择日期`">
                                             </el-date-picker>
+                                            <!--多选框-->
+                                            <el-checkbox-group size="small"
+                                                               v-else-if="item.component.name === 'el-checkbox'"
+                                                               v-model="queryData[item.key]"
+                                                               v-bind="item.component">
+                                                <template v-if="item.component.buttonMode">
+                                                    <el-checkbox-button
+                                                            v-for="option in item.options"
+                                                            :key="option.value"
+                                                            :label="option.value"
+                                                    >
+                                                        {{option.label}}
+                                                    </el-checkbox-button>
+                                                </template>
+                                                <template v-else>
+                                                    <el-checkbox
+                                                            v-for="option in item.component.options"
+                                                            :key="option.value"
+                                                            :label="option.value">
+                                                        {{option.label}}
+                                                    </el-checkbox>
+                                                </template>
+                                            </el-checkbox-group>
                                         </el-form-item>
                                     </el-col>
                                 </template>

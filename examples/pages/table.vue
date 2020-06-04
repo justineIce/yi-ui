@@ -126,7 +126,7 @@
                     { title: '简称', key: 'short_name',query:true,component:{name:'el-input',width:'150px'} },
                     { title: '所属机构', key: 'affiliate',query:true,component:{name:'el-select',options:[]}},
                     { title: '学制', key: 'education' ,query:true,component:{name:'el-input'}},
-                    { title: '层次', key: 'level',query:true,component:{name:'el-input'}},
+                    { title: '层次', key: 'level',query:true,value:[],component:{name:'el-checkbox', options:[{label:'上海',value:'上海'},{label:'北京',value:'北京'}]}},
                     {
                         title: '学科门类', key: 'category', query: true, component: {
                             name: 'el-cascader',
