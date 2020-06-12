@@ -9,6 +9,7 @@
                     :span="6">
             </yi-form-show>
             <yi-form-show
+                     style="margin-top: 40px;"
                     border
                     labelWidth="120px"
                     labelColor="#ccdc"

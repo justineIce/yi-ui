@@ -10,7 +10,9 @@
   }
   &__tr{
     display: flex;
+    align-items:stretch;
     box-sizing: border-box;
+    border-bottom: 1px solid #f2eeee;
   }
   &__title{
     text-align: right;
@@ -20,7 +22,7 @@
     line-height: 40px;
     padding: 0 5px 0 15px;
     box-sizing: border-box;
-
+    display:block;
   }
   &__content{
     line-height: 40px;
@@ -28,19 +30,21 @@
     font-size: 14px;
     flex: 1;
     padding: 0 15px;
+    display:block;
   }
   &.yi-form-border{
     .yi-form-show__table{
-      border-top: 1px solid #f2eeee;
-      border-left: 1px solid #f2eeee;
+        border:1px solid  #f2eeee;
+        border-bottom-color:transparent !important;
+        border-right-color:transparent !important;
     }
     .yi-form-show__title{
       background: #fbfafa;
-      border-bottom: 1px solid #f2eeee;
-      border-right: 1px solid #f2eeee;
+      //border-bottom: 1px solid #f2eeee;
+      //border-left: 1px solid #f2eeee;
     }
     .yi-form-show__content{
-      border-bottom: 1px solid #f2eeee;
+      border-left: 1px solid #f2eeee;
       border-right: 1px solid #f2eeee;
     }
   }

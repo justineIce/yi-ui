@@ -5,26 +5,25 @@
                cellpadding="0"
                cellspacing="0"
                :style="{
-                    borderTop:border ? `1px solid ${borColor}` : 'unset',
-                    borderLeft:border ? `1px solid ${borColor}` : 'unset',
+                    border:border ? `1px solid ${borColor}` : 'unset',
                }">
             <tbody>
                 <template v-for="(value,key) in template">
-                    <tr class="yi-form-show__tr" :style="{
-                        width:`${100/(template[key] ? handleAttribute(24/template[key].span,24/span) : 24/span)}%`
+                    <tr class="yi-form-show__tr"
+                        :style="{
+                        width:`${100/(template[key] ? handleAttribute(24/template[key].span,24/span) : 24/span)}%`,
+                        borderBottom:border ? `1px solid ${borColor}` : 'unset'
                     }">
                         <td class="yi-form-show__title"
                             :width="labelWidth"
                             :style="{
                                 textAlign:labelPosition,
-                                backgroundColor:border ? labelColor:'transparent',
-                                borderBottom:border ? `1px solid ${borColor}` : 'unset',
-                                borderRight:border ? `1px solid ${borColor}` : 'unset',
+                                backgroundColor:border ? labelColor:'transparent'
                             }">{{template[key].title}}：</td>
                         <td class="yi-form-show__content"
                             :style="{
-                                borderBottom:border ? `1px solid ${borColor}` : 'unset',
-                                borderRight:border ? `1px solid ${borColor}` : 'unset',
+                                borderLeft:border ? `1px solid ${borColor}` : 'unset',
+                                borderRight:border ? `1px solid ${borColor}` : 'unset'
                             }">
                             <slot :name="key" v-bind="data">
                                 <el-tag v-if="template[key].component && template[key].component.name && template[key].component.name === 'el-tag'"
