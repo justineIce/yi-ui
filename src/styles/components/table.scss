@@ -5,12 +5,16 @@
     padding-bottom: 20px;
     .el-form{
       .el-form-item{
-        display: flex;
-        align-items: center;
+        //display: flex;
+        //align-items: center;
         margin: 0 10px 0!important;
-        .el-input--small .el-input__inner {
-          height: 32px !important;
-          line-height: 32px !important;
+        .el-input.el-input--small{
+            //width:auto;
+            .el-input__inner {
+              height: 32px !important;
+              line-height: 32px !important;
+              //width:auto;
+            }
         }
         .el-form-item__content{
           flex: 1;
@@ -34,6 +38,7 @@
         flex-wrap: wrap;
         align-items: center;
         padding-right: 30px;
+        width:100%;
         //flex: 1;
       }
     }

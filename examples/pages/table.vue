@@ -127,8 +127,7 @@
                     { title: '所属机构', key: 'affiliate',query:true,component:{name:'el-select',options:[]}},
                     { title: '学制', key: 'education' ,query:true,component:{name:'el-input'}},
                     { title: '层次', key: 'level',query:true,value:[],component:{name:'el-checkbox', options:[{label:'上海',value:'上海'},{label:'北京',value:'北京'}]}},
-                    {
-                        title: '学科门类', key: 'category', query: true, component: {
+                    {title: '学科门类', key: 'category', query: true, component: {
                             name: 'el-cascader',
                             props:{value:'id'},
                             options: [
@@ -154,8 +153,7 @@
                                     }]
                                 }
                             ]
-                        }
-                    },
+                        }},
                     { title: '时间', key: 'time',query:true,dataType:'time',format:'yyyy-MM-dd',component:{name:'el-date-picker',valueFormat:'yyyy-MM-dd'}},
                 ],
                 data:[
