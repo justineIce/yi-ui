@@ -16,8 +16,8 @@
                                     class="wrap-row"
                                     :style="{
                                         height: showMore && isClick ? 'auto' : '40px'}">
-                                <template v-for="item in queryModel">
-                                    <el-col v-if="item.component && handleAttribute(item.component.name,false)"
+                                <template v-for="(item,index) in queryModel">
+                                    <el-col :key="index" v-if="item.component && handleAttribute(item.component.name,false)"
                                             :span="item.component ? handleAttribute(item.component.span,null) :null"
                                             :offset="item.component ? handleAttribute(item.component.offset,0) :0">
                                         <el-form-item :label="`${item.title}:`" :prop="item.key">
@@ -152,137 +152,138 @@
                       @current-change="handleCurrentChange"
                       @expand-change="handleExpandChange">
                 <el-table-column type="selection" width="50px" v-if="selection"></el-table-column>
-                <el-table-column v-for="(item,index) in columns"
-                                 :key="`column__${index}`"
-                                 v-if="handleAttribute(item.show,true) && (item.onlyQuery ? !item.onlyQuery :true)"
-                                 v-bind="item"
-                                 :width="isImageColumnWidth(item)"
-                                 :prop="handleAttribute(item.key,null)"
-                                 :label="handleAttribute(item.title,'')"
-                                 :filters="item.filters ? item.filters : null"
-                                 :filter-method="item.filterMethod ? item.filterMethod : null">
-                    <template v-if="item.children"></template>
-                    <template slot-scope="scope">
-                        <div v-if="item.component && item.component.isEdit && handleAttributeShow(item.component.isEdit,scope.$index, scope.row)">
-                            <el-input
-                                    v-if="item.component && item.component.name === 'el-input'"
-                                    v-model="scope.row[item.key]"
-                                    v-bind="item.component"
-                                    @change="$emit('row-data-change', {rowIndex: scope.$index, key: item.key, value: scope.row[item.key], row: scope.row})">
-                            </el-input>
-                            <el-input-number
-                                    v-else-if="item.component && item.component.name === 'el-input-number'"
-                                    v-model="scope.row[item.key]"
-                                    v-bind="item.component"
-                                    @change="$emit('row-data-change', {rowIndex: scope.$index, key: item.key, value: scope.row[item.key], row: scope.row})">
-                            </el-input-number>
-                            <el-radio-group
-                                    v-else-if="item.component && item.component.name === 'el-radio'"
-                                    v-model="scope.row[item.key]"
-                                    v-bind="item.component"
-                                    @change="$emit('row-data-change', {rowIndex: scope.$index, key: item.key, value: scope.row[item.key], row: scope.row})">
-                                <template v-if="item.component.buttonMode">
-                                    <el-radio-button
+                <template v-for="(item,index) in columns">
+                    <el-table-column :key="`column__${index}`"
+                                     v-if="handleAttribute(item.show,true) && (item.onlyQuery ? !item.onlyQuery :true)"
+                                     v-bind="item"
+                                     :width="isImageColumnWidth(item)"
+                                     :prop="handleAttribute(item.key,null)"
+                                     :label="handleAttribute(item.title,'')"
+                                     :filters="item.filters ? item.filters : null"
+                                     :filter-method="item.filterMethod ? item.filterMethod : null">
+                        <template v-if="item.children"></template>
+                        <template slot-scope="scope">
+                            <div v-if="item.component && item.component.isEdit && handleAttributeShow(item.component.isEdit,scope.$index, scope.row)">
+                                <el-input
+                                        v-if="item.component && item.component.name === 'el-input'"
+                                        v-model="scope.row[item.key]"
+                                        v-bind="item.component"
+                                        @change="$emit('row-data-change', {rowIndex: scope.$index, key: item.key, value: scope.row[item.key], row: scope.row})">
+                                </el-input>
+                                <el-input-number
+                                        v-else-if="item.component && item.component.name === 'el-input-number'"
+                                        v-model="scope.row[item.key]"
+                                        v-bind="item.component"
+                                        @change="$emit('row-data-change', {rowIndex: scope.$index, key: item.key, value: scope.row[item.key], row: scope.row})">
+                                </el-input-number>
+                                <el-radio-group
+                                        v-else-if="item.component && item.component.name === 'el-radio'"
+                                        v-model="scope.row[item.key]"
+                                        v-bind="item.component"
+                                        @change="$emit('row-data-change', {rowIndex: scope.$index, key: item.key, value: scope.row[item.key], row: scope.row})">
+                                    <template v-if="item.component.buttonMode">
+                                        <el-radio-button
+                                                v-for="option in item.component.options"
+                                                :key="option.value"
+                                                :label="option.value">
+                                            {{option.label}}
+                                        </el-radio-button>
+                                    </template>
+                                    <template v-else>
+                                        <el-radio
+                                                v-for="option in item.component.options"
+                                                :key="option.value"
+                                                :label="option.value">
+                                            {{option.label}}
+                                        </el-radio>
+                                    </template>
+                                </el-radio-group>
+                                <el-checkbox-group
+                                        v-else-if="item.component && item.component.name === 'el-checkbox'"
+                                        v-model="scope.row[item.key]"
+                                        v-bind="item.component"
+                                        @change="$emit('row-data-change', {rowIndex: scope.$index, key: item.key, value: scope.row[item.key], row: scope.row})">
+                                    <template v-if="item.component.buttonMode">
+                                        <el-checkbox-button
+                                                v-for="option in item.component.options"
+                                                :key="option.value"
+                                                :label="option.value">
+                                            {{option.label}}
+                                        </el-checkbox-button>
+                                    </template>
+                                    <template v-else>
+                                        <el-checkbox
+                                                v-for="option in item.component.options"
+                                                :key="option.value"
+                                                :label="option.value">
+                                            {{option.label}}
+                                        </el-checkbox>
+                                    </template>
+                                </el-checkbox-group>
+                                <el-select
+                                        v-else-if="item.component && item.component.name === 'el-select'"
+                                        v-model="scope.row[item.key]"
+                                        v-bind="item.component"
+                                        @change="$emit('row-data-change', {rowIndex: scope.$index, key: item.key, value: scope.row[item.key], row: scope.row})">
+                                    <el-option
                                             v-for="option in item.component.options"
                                             :key="option.value"
-                                            :label="option.value">
-                                        {{option.label}}
-                                    </el-radio-button>
-                                </template>
-                                <template v-else>
-                                    <el-radio
-                                            v-for="option in item.component.options"
-                                            :key="option.value"
-                                            :label="option.value">
-                                        {{option.label}}
-                                    </el-radio>
-                                </template>
-                            </el-radio-group>
-                            <el-checkbox-group
-                                    v-else-if="item.component && item.component.name === 'el-checkbox'"
-                                    v-model="scope.row[item.key]"
-                                    v-bind="item.component"
-                                    @change="$emit('row-data-change', {rowIndex: scope.$index, key: item.key, value: scope.row[item.key], row: scope.row})">
-                                <template v-if="item.component.buttonMode">
-                                    <el-checkbox-button
-                                            v-for="option in item.component.options"
-                                            :key="option.value"
-                                            :label="option.value">
-                                        {{option.label}}
-                                    </el-checkbox-button>
-                                </template>
-                                <template v-else>
-                                    <el-checkbox
-                                            v-for="option in item.component.options"
-                                            :key="option.value"
-                                            :label="option.value">
-                                        {{option.label}}
-                                    </el-checkbox>
-                                </template>
-                            </el-checkbox-group>
-                            <el-select
-                                    v-else-if="item.component && item.component.name === 'el-select'"
-                                    v-model="scope.row[item.key]"
-                                    v-bind="item.component"
-                                    @change="$emit('row-data-change', {rowIndex: scope.$index, key: item.key, value: scope.row[item.key], row: scope.row})">
-                                <el-option
-                                        v-for="option in item.component.options"
-                                        :key="option.value"
-                                        v-bind="option">
-                                </el-option>
-                            </el-select>
-                            <el-cascader
-                                    v-else-if="item.component && item.component.name === 'el-cascader'"
-                                    v-model="scope.row[item.key]"
-                                    v-bind="item.component"
-                                    @change="$emit('row-data-change', {rowIndex: scope.$index, key: item.key, value: scope.row[item.key], row: scope.row})">
-                            </el-cascader>
-                            <el-switch
-                                    v-else-if="item.component && item.component.name === 'el-switch'"
-                                    v-model="scope.row[item.key]"
-                                    v-bind="item.component"
-                                    @change="$emit('row-data-change', {rowIndex: scope.$index, key: item.key, value: scope.row[item.key], row: scope.row})">
-                            </el-switch>
-                            <el-time-select
-                                    v-else-if="item.component && item.component.name === 'el-time-select'"
-                                    v-model="scope.row[item.key]"
-                                    v-bind="item.component"
-                                    @change="$emit('row-data-change', {rowIndex: scope.$index, key: item.key, value: scope.row[item.key], row: scope.row})">
-                            </el-time-select>
-                            <el-time-picker
-                                    v-else-if="item.component && item.component.name === 'el-time-picker'"
-                                    v-model="scope.row[item.key]"
-                                    v-bind="item.component"
-                                    @change="$emit('row-data-change', {rowIndex: scope.$index, key: item.key, value: scope.row[item.key], row: scope.row})">
-                            </el-time-picker>
-                            <el-date-picker
-                                    v-else-if="item.component && item.component.name === 'el-date-picker'"
-                                    v-model="scope.row[item.key]"
-                                    v-bind="item.component"
-                                    @change="$emit('row-data-change', {rowIndex: scope.$index, key: item.key, value: scope.row[item.key], row: scope.row})">
-                            </el-date-picker>
-                            <slot :name="item.key" v-bind="scope.row" v-else>{{scope.row[item.key]}}</slot>
-                        </div>
-                        <slot :name="item.key" v-bind="scope.row" v-else>
-                            <el-image
-                                    v-if="item.component && item.component.name === 'el-image'"
-                                    v-bind="item.component"
-                                    style="border:1px solid #ddd;"
-                                    :style="{height:isImageColumnHeight(item)}"
-                                    lazy
-                                    fit="cover"
-                                    :src="scope.row[item.key]"
-                                    :preview-src-list="[scope.row[item.key]]">
-                            </el-image>
-                            <span v-else-if="item.dataType && item.dataType === 'time'">
+                                            v-bind="option">
+                                    </el-option>
+                                </el-select>
+                                <el-cascader
+                                        v-else-if="item.component && item.component.name === 'el-cascader'"
+                                        v-model="scope.row[item.key]"
+                                        v-bind="item.component"
+                                        @change="$emit('row-data-change', {rowIndex: scope.$index, key: item.key, value: scope.row[item.key], row: scope.row})">
+                                </el-cascader>
+                                <el-switch
+                                        v-else-if="item.component && item.component.name === 'el-switch'"
+                                        v-model="scope.row[item.key]"
+                                        v-bind="item.component"
+                                        @change="$emit('row-data-change', {rowIndex: scope.$index, key: item.key, value: scope.row[item.key], row: scope.row})">
+                                </el-switch>
+                                <el-time-select
+                                        v-else-if="item.component && item.component.name === 'el-time-select'"
+                                        v-model="scope.row[item.key]"
+                                        v-bind="item.component"
+                                        @change="$emit('row-data-change', {rowIndex: scope.$index, key: item.key, value: scope.row[item.key], row: scope.row})">
+                                </el-time-select>
+                                <el-time-picker
+                                        v-else-if="item.component && item.component.name === 'el-time-picker'"
+                                        v-model="scope.row[item.key]"
+                                        v-bind="item.component"
+                                        @change="$emit('row-data-change', {rowIndex: scope.$index, key: item.key, value: scope.row[item.key], row: scope.row})">
+                                </el-time-picker>
+                                <el-date-picker
+                                        v-else-if="item.component && item.component.name === 'el-date-picker'"
+                                        v-model="scope.row[item.key]"
+                                        v-bind="item.component"
+                                        @change="$emit('row-data-change', {rowIndex: scope.$index, key: item.key, value: scope.row[item.key], row: scope.row})">
+                                </el-date-picker>
+                                <slot :name="item.key" v-bind="scope.row" v-else>{{scope.row[item.key]}}</slot>
+                            </div>
+                            <slot :name="item.key" v-bind="scope.row" v-else>
+                                <el-image
+                                        v-if="item.component && item.component.name === 'el-image'"
+                                        v-bind="item.component"
+                                        style="border:1px solid #ddd;"
+                                        :style="{height:isImageColumnHeight(item)}"
+                                        lazy
+                                        fit="cover"
+                                        :src="scope.row[item.key]"
+                                        :preview-src-list="[scope.row[item.key]]">
+                                </el-image>
+                                <span v-else-if="item.dataType && item.dataType === 'time'">
                                 {{formatDate(scope.row[item.key],item.format)}}
                             </span>
-                            <span v-else>
+                                <span v-else>
                                 {{item.formatter ? item.formatter(scope.row, scope.column, scope.row[item.key], scope.$index) : scope.row[item.key]}}
                             </span>
-                        </slot>
-                    </template>
-                </el-table-column>
+                            </slot>
+                        </template>
+                    </el-table-column>
+                </template>
                 <!--操作栏-->
                 <el-table-column v-if="rowHandle && handleRowHandleShow(rowHandle)"
                                  v-bind="rowHandle"
@@ -290,16 +291,17 @@
                                  fixed="right">
                     <template slot-scope="scope">
                         <div style="display: flex;">
-                            <div style="margin-right: 10px"
-                                 v-for="(item,index) in handleAttribute(rowHandle.operate, [])"
-                                 :key="index"
-                                 v-if="handleAttributeShow(item.show, scope.$index, scope.row)">
-                                <el-button  size="mini"
-                                            type="text"
-                                            v-bind="item"
-                                            :disabled="handleAttributeDisabled(item.disabled, scope.row, scope.$index)"
-                                            @click.stop="$emit(item.emit, {index: scope.$index, row: scope.row, event: $event})">{{item.text}}</el-button>
-                            </div>
+                            <template v-for="(item,index) in handleAttribute(rowHandle.operate, [])">
+                                <div style="margin-right: 10px"
+                                     :key="index"
+                                     v-if="handleAttributeShow(item.show, scope.$index, scope.row)">
+                                    <el-button  size="mini"
+                                                type="text"
+                                                v-bind="item"
+                                                :disabled="handleAttributeDisabled(item.disabled, scope.row, scope.$index)"
+                                                @click.stop="$emit(item.emit, {index: scope.$index, row: scope.row, event: $event})">{{item.text}}</el-button>
+                                </div>
+                            </template>
                         </div>
                     </template>
                 </el-table-column>
@@ -322,11 +324,11 @@
 </template>
 <script>
     import Tool from '../../mixins/tool'
-    import renderCustomComponent from './renderCustomComponent.vue'
+    // import renderCustomComponent from './renderCustomComponent.vue'
     export default {
         name: "YiTable",
         components: {
-            renderCustomComponent
+            // renderCustomComponent
         },
         mixins:[Tool],
         props:{
@@ -374,14 +376,18 @@
         },
         data(){
             return{
+                queryModel:null,
                 queryData:{},
                 isClick:false,
                 showMore:false,
                 time:null
             }
         },
-        computed:{
-            queryModel(){
+        created() {
+            this.init()
+        },
+        methods:{
+            init(){
                 if(this.columns){
                     let columns=JSON.parse(JSON.stringify(this.columns))
                     let data=[]
@@ -393,14 +399,12 @@
                         }
                     })
                     this.queryData=query
-                    return data
+                    this.queryModel =  data
                 }
-                return null
-            }
-        },
-        methods:{
+            },
             //判断是否发生溢出情况
             resetTable(){
+                this.init()
                 this.$nextTick(()=>{
                     if(this.$refs.fbody && this.$refs.fbody.$el.scrollHeight  && this.$refs.fbody.$el.clientHeight){
                         this.showMore = this.$refs.fbody.$el.scrollHeight > this.$refs.fbody.$el.clientHeight * 3 /2 ?true :false

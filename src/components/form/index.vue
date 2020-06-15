@@ -8,7 +8,7 @@
                  @submit.native.prevent>
             <el-row v-bind="options">
                 <template v-for="(value,key) in template">
-                    <el-col v-if="template[key] ? (template[key].component ? handleAttribute(template[key].component.show,true) : true) : false"
+                    <el-col :key="key" v-if="template[key] ? (template[key].component ? handleAttribute(template[key].component.show,true) : true) : false"
                             :span="template[key].component ? handleAttribute(template[key].component.span,(options ? (options.inline ? null : 24) : 24 )) : (options ? (options.inline ? null : 24) : 24 )"
                             :offset="template[key].component ? handleAttribute(template[key].component.offset, 0) : 0">
                         <el-form-item :label="`${template[key].title}：`"

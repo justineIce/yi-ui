@@ -5,8 +5,6 @@ import  Form from './components/form'
 import  FormShow from './components/form-show'
 //无缝滚动
 import SeamlessScroll from './components/seamless-scroll'
-
-
 const components=[
     Card,
     Table,
@@ -15,7 +13,7 @@ const components=[
     FormShow,
     SeamlessScroll
 ]
-const install = function (Vue, opts = {}) {
+const install = function (Vue) {
     components.forEach(component => {
         Vue.component(component.name, component);
     });

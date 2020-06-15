@@ -10,6 +10,7 @@
             <tbody>
                 <template v-for="(value,key) in template">
                     <tr class="yi-form-show__tr"
+                        :key="`${key}`"
                         :style="{
                         width:`${100/(template[key] ? handleAttribute(24/template[key].span,24/span) : 24/span)}%`,
                         borderBottom:border ? `1px solid ${borColor}` : 'unset'

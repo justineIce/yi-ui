@@ -3,13 +3,14 @@ export default {
         /**
          * @description 组件属性默认值
          */
-        handleAttribute (attribute, defaultValue) {
+        handleAttribute: function(attribute, defaultValue) {
             if (attribute === false || attribute === 0 || attribute === '') {
                 return attribute
             }
             return attribute || defaultValue
         },
-        handleAttributeShow (show = true, index, row) {
+        handleAttributeShow : function(show , index, row) {
+            show = show || true
             if (typeof show === 'boolean') {
                 return show
             } else if (typeof show === 'function') {
@@ -17,7 +18,8 @@ export default {
             }
             return Boolean(show)
         },
-        handleAttributeDisabled (disabled = false, index, row) {
+        handleAttributeDisabled : function(disabled, index, row) {
+            disabled = disabled || false
             if (typeof disabled === 'boolean') {
                 return disabled
             } else if (typeof disabled === 'function') {
@@ -28,7 +30,7 @@ export default {
         /**
          格式化时间
          */
-        formatDate (date, fmt) {
+        formatDate : function(date, fmt) {
             if (date === '' || date === null || date === undefined) {
                 return null
             }

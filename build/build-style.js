@@ -12,8 +12,8 @@ gulp.task('css', function () {
             browsers: ['last 2 versions', 'ie > 8']
         }))
         .pipe(cleanCSS())
-        .pipe(rename('yi-ui.css'))
-        .pipe(gulp.dest('../dist/styles'));
+        .pipe(rename('yiview.css'))
+        .pipe(gulp.dest('../lib/styles'));
 });
 
 // // 拷贝字体文件
