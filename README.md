@@ -9,7 +9,7 @@ Vue.use(ElementUI);
 
 ```
 import YiView from 'yiview'
-import 'yiview/dist/styles/yi-ui.css'
+import 'yiview/lib/styles/yiview.css'
 Vue.use(YiView)
 ```
 
