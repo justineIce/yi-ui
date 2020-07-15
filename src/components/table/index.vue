@@ -37,6 +37,8 @@
                                                 <el-option
                                                         v-for="option in item.component.options"
                                                         :key="option.value"
+                                                        :label="option.label"
+                                                        :value="option.value"
                                                         v-bind="option">
                                                 </el-option>
                                             </el-select>

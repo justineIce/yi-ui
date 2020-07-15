@@ -3,15 +3,12 @@ import  CountTo from './components/count-to'
 import  Table from './components/table'
 import  Form from './components/form'
 import  FormShow from './components/form-show'
-//无缝滚动
-import SeamlessScroll from './components/seamless-scroll'
 const components=[
     Card,
     Table,
     Form,
     CountTo,
-    FormShow,
-    SeamlessScroll
+    FormShow
 ]
 const install = function (Vue) {
     components.forEach(component => {

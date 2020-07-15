@@ -87,6 +87,8 @@
                                     <el-option
                                             v-for="option in template[key].component.options"
                                             :key="option.value"
+                                            :label="option.label"
+                                            :value="option.value"
                                             v-bind="option"
                                     >
                                     </el-option>
