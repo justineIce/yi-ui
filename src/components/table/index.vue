@@ -373,7 +373,10 @@
             pagination: {type: [Object,Boolean], default(){return{currentPage: 1, pageSize: 10, total: 0}}}
         },
         watch:{
-            columns:'resetTable',
+            columns:{
+                deep:true,
+                handler:'resetTable'
+            },
             expandAll:'resetTable',
         },
         data(){
