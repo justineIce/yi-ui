@@ -334,6 +334,10 @@
         },
         mixins:[Tool],
         props:{
+            // 点击查询按钮的时候 改变地址栏参数
+            changeUrl:Boolean,
+            // 查询条件
+            param:Object,
             /**
              * @description 搜索栏的标签宽度
              */
@@ -378,6 +382,18 @@
                 handler:'resetTable'
             },
             expandAll:'resetTable',
+            param:{
+                deep:true,
+                handler (v) { if (v) {
+                    let form=JSON.parse(JSON.stringify(this.queryData))
+                    Object.keys(v).forEach(key=>{
+                        if(v[key]){
+                            form[key]=v[key]
+                        }
+                    })
+                    this.queryData=form
+                } }
+            }
         },
         data(){
             return{
@@ -401,6 +417,10 @@
                         if(item.query !==undefined && typeof item.query === 'boolean' && item.query && this.handleAttribute(item.show,true)){
                             data.push(item)
                             query[item.key]=item.value !== undefined ? item.value : ''
+                            //设置查询条件
+                            if(this.param && this.param[item.key]){
+                                query[item.key]=this.param[item.key]
+                            }
                         }
                     })
                     this.queryData=query
@@ -536,24 +556,45 @@
             },
             handleQuery(){
                 this.pagination.currentPage = 1
-                let data=JSON.parse(JSON.stringify(this.queryData))
-                this.$emit('query-changes',Object.assign(data,{
-                    pageIndex:this.pagination.currentPage,
-                    pageSize :this.pagination && this.pagination.pageSize ? this.pagination.pageSize : 100 }))
+                let data=this.dealQueryParam()
+                this.changeUrlWay(data)
+                this.$emit('query-changes',data)
             },
             handleClear(){
                 this.$refs.form.resetFields()
             },
             handlePaginationCurrentChange(page){
                 this.pagination.currentPage = page
-                let data=JSON.parse(JSON.stringify(this.queryData))
-                this.$emit('query-changes',Object.assign(data,{
+                let data=this.dealQueryParam()
+                this.changeUrlWay(data)
+                this.$emit('query-changes',data)
+            },
+            dealQueryParam(){
+                let data={}
+                let param = Object.assign({},this.queryData,{
                     pageIndex:this.pagination.currentPage,
-                    pageSize :this.pagination && this.pagination.pageSize ? this.pagination.pageSize : 100 }))
+                    pageSize :this.pagination && this.pagination.pageSize ? this.pagination.pageSize : 100 })
+                Object.keys(param).forEach(key=>{
+                    if(param[key]!=='' && param[key]!==null && param[key]!==undefined){
+                        data[key]=param[key]
+                    }
+                })
+                return data
+            },
+            changeUrlWay(data){
+                if(this.changeUrl){
+                    let str=''
+                    if(data){
+                        Object.keys(data).forEach(key=>{
+                            str+=`${key}=${data[key]}&`
+                        })
+                    }
+                    window.history.replaceState('', '', `${window.location.href.indexOf('#') >= 0 ? '#' : ''}${this.$route.path}?${str}`)
+                }
             },
             //得到查询条件的值
             getQueryCriteria(){
-              return  JSON.parse(JSON.stringify(this.queryData))
+                return  JSON.parse(JSON.stringify(this.queryData))
             },
             //设置查询条件
             setQueryCriteria(data){
@@ -565,7 +606,7 @@
             }
         },
         mounted() {
-           this.resetTable()
+            this.resetTable()
         }
     }
 </script>
