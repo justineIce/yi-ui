@@ -434,16 +434,18 @@
                     if(this.$refs.fbody && this.$refs.fbody.$el.scrollHeight  && this.$refs.fbody.$el.clientHeight){
                         this.showMore = this.$refs.fbody.$el.scrollHeight > this.$refs.fbody.$el.clientHeight * 3 /2 ?true :false
                         this.isClick = this.expandAll && this.showMore
-                        let keys=Object.keys(this.param)
-                        if(keys.length>0){
-                            for (let i=0;i<keys.length;i++){
-                                if(this.param[keys[i]]!=='' && this.param[keys[i]]!==undefined && this.param[keys[i]].length>0){
-                                    this.isClick=true
-                                    this.showMore = true
-                                    break
-                                }
-                            }
-                        }
+                       if(this.param){
+                           let keys=Object.keys(this.param)
+                           if(keys.length>0){
+                               for (let i=0;i<keys.length;i++){
+                                   if(this.param[keys[i]]!=='' && this.param[keys[i]]!==undefined && this.param[keys[i]].length>0){
+                                       this.isClick=true
+                                       this.showMore = true
+                                       break
+                                   }
+                               }
+                           }
+                       }
                         clearInterval(this.time)
                     }
                 })

@@ -1,6 +1,6 @@
 {
   "name": "yiview",
-  "version": "1.3.5",
+  "version": "1.3.6",
   "description": "vue 组件",
   "main": "lib/yiview.common.js",
   "scripts": {
