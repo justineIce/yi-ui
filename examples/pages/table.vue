@@ -24,6 +24,13 @@
                 <template slot="name" slot-scope="scope">
                     <el-tag>{{scope.name}}</el-tag>
                 </template>
+                <template slot="handle">
+                    <el-table-column label="操作1" fixed="right">
+                        <template slot-scope="scope">
+                            {{scope.row}}
+                        </template>
+                    </el-table-column>
+                </template>
             </yi-table>
             <yi-table ref="table"
                       :columns="column"
