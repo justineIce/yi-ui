@@ -292,7 +292,7 @@
                                  :label="handleAttribute(rowHandle.title, '操作')"
                                  fixed="right">
                     <template slot-scope="scope">
-                        <div style="display: flex;">
+                        <div style="display: flex;flex-wrap: wrap;">
                             <template v-for="(item,index) in handleAttribute(rowHandle.operate, [])">
                                 <div style="margin-right: 10px"
                                      :key="index"
@@ -307,6 +307,13 @@
                         </div>
                     </template>
                 </el-table-column>
+                <div v-else>
+                    <el-table-column label="操作" fixed="right">
+                        <template slot-scope="scope">
+                            <slot name="handle" v-bind="scope.row"></slot>
+                        </template>
+                    </el-table-column>
+                </div>
             </el-table>
             <div class="yi-table__foot" v-if="$slots.foot">
                 <slot name="foot"></slot>

@@ -8,51 +8,51 @@
                     border:border ? `1px solid ${borColor}` : 'unset',
                }">
             <tbody>
-                <template v-for="(value,key) in template">
-                    <tr class="yi-form-show__tr"
-                        :key="`${key}`"
-                        :style="{
+            <template v-for="(value,key) in template">
+                <tr class="yi-form-show__tr"
+                    :key="`${key}`"
+                    :style="{
                         width:`${100/(template[key] ? handleAttribute(24/template[key].span,24/span) : 24/span)}%`,
                         borderBottom:border ? `1px solid ${borColor}` : 'unset'
                     }">
-                        <td class="yi-form-show__title"
-                            :width="labelWidth"
-                            :style="{
+                    <td class="yi-form-show__title"
+                        :width="labelWidth"
+                        :style="{
                                 textAlign:labelPosition,
                                 backgroundColor:border ? labelColor:'transparent'
                             }">{{template[key].title}}：</td>
-                        <td class="yi-form-show__content"
-                            :style="{
+                    <td class="yi-form-show__content"
+                        :style="{
                                 borderLeft:border ? `1px solid ${borColor}` : 'unset',
                                 borderRight:border ? `1px solid ${borColor}` : 'unset'
                             }">
-                            <slot :name="key" v-bind="data">
-                                <el-tag v-if="template[key].component && template[key].component.name && template[key].component.name === 'el-tag'"
-                                        v-bind="template[key].component">
-                                    {{template[key].dataType && template[key].dataType === 'time' ? formatDate( data[key],template[key].format) : data[key]}}
-                                </el-tag>
-                                <el-button v-else-if="template[key].component && template[key].component.name && template[key].component.name === 'el-button'"
-                                           v-bind="template[key].component" @click="handleClick(key,data)">
-                                    {{template[key].dataType && template[key].dataType === 'time' ? formatDate( data[key],template[key].format) : data[key]}}
-                                </el-button>
-                                <el-link v-else-if="template[key].component && template[key].component.name && template[key].component.name === 'el-link'"
-                                         v-bind="template[key].component">
-                                    {{template[key].dataType && template[key].dataType === 'time' ? formatDate( data[key],template[key].format) : data[key]}}
-                                </el-link>
-                                <render-custom-component
-                                        v-else-if="template[key].component && template[key].component.name && template[key].component.name !==''"
-                                        v-bind="template[key].component"
-                                        :component-name="template[key].component.name"
-                                        :props="template[key].component.props ? template[key].component.props : null"
-                                        :scope="data">
-                                </render-custom-component>
-                                <label  v-else>
-                                    {{data ? (template[key].formatter ? template[key].formatter(data[key],template[key].format) : (template[key].dataType && template[key].dataType === 'time' ? formatDate( data[key],template[key].format) : data[key])) : ''}}
-                                </label>
-                            </slot>
-                        </td>
-                    </tr>
-                </template>
+                        <slot :name="key" v-bind="data">
+                            <el-tag v-if="template[key].component && template[key].component.name && template[key].component.name === 'el-tag'"
+                                    v-bind="template[key].component">
+                                {{template[key].dataType && template[key].dataType === 'time' ? formatDate( data[key],template[key].format) : (template[key].formatter ? template[key].formatter(data[key],template[key].format): data[key])}}
+                            </el-tag>
+                            <el-button v-else-if="template[key].component && template[key].component.name && template[key].component.name === 'el-button'"
+                                       v-bind="template[key].component" @click="handleClick(key,data)">
+                                {{template[key].dataType && template[key].dataType === 'time' ? formatDate( data[key],template[key].format) :(template[key].formatter ? template[key].formatter(data[key],template[key].format): data[key])}}
+                            </el-button>
+                            <el-link v-else-if="template[key].component && template[key].component.name && template[key].component.name === 'el-link'"
+                                     v-bind="template[key].component">
+                                {{template[key].dataType && template[key].dataType === 'time' ? formatDate( data[key],template[key].format) : (template[key].formatter ? template[key].formatter(data[key],template[key].format): data[key])}}
+                            </el-link>
+                            <render-custom-component
+                                    v-else-if="template[key].component && template[key].component.name && template[key].component.name !==''"
+                                    v-bind="template[key].component"
+                                    :component-name="template[key].component.name"
+                                    :props="template[key].component.props ? template[key].component.props : null"
+                                    :scope="data">
+                            </render-custom-component>
+                            <label  v-else>
+                                {{data ? (template[key].formatter ? template[key].formatter(data[key],template[key].format) : (template[key].dataType && template[key].dataType === 'time' ? formatDate( data[key],template[key].format) : data[key])) : ''}}
+                            </label>
+                        </slot>
+                    </td>
+                </tr>
+            </template>
             </tbody>
         </table>
     </div>
