@@ -158,6 +158,7 @@
                     <el-table-column :key="`column__${index}`"
                                      v-if="handleAttribute(item.show,true) && (item.onlyQuery ? !item.onlyQuery :true)"
                                      v-bind="item"
+                                     :sortable="handleAttribute(item.sortable,sortable)"
                                      :width="isImageColumnWidth(item)"
                                      :prop="handleAttribute(item.key,null)"
                                      :label="handleAttribute(item.title,'')"
@@ -318,8 +319,8 @@
                         v-if="pagination"
                         v-bind="pagination"
                         background
-                        layout="total, prev, pager, next,jumper"
-                        @current-change="handlePaginationCurrentChange">
+                        @current-change="handlePaginationCurrentChange"
+                        @size-change="handleSizeChange">
                 </el-pagination>
             </div>
         </div>
@@ -339,6 +340,7 @@
             changeUrl:Boolean,
             // 查询条件
             param:Object,
+            sortable:{type:[Boolean,String], default:false},
             /**
              * @description 搜索栏的标签宽度
              */
@@ -375,7 +377,7 @@
             /**
              * @description 表格数据
              */
-            pagination: {type: [Object,Boolean], default(){return{currentPage: 1, pageSize: 10, total: 0}}}
+            pagination: {type: [Object,Boolean], default(){return{currentPage: 1, pageSize: 10, total: 0,layout:"total, prev, pager, next,jumper"}}}
         },
         watch:{
             columns:{
@@ -435,18 +437,18 @@
                     if(this.$refs.fbody && this.$refs.fbody.$el.scrollHeight  && this.$refs.fbody.$el.clientHeight){
                         this.showMore = this.$refs.fbody.$el.scrollHeight > this.$refs.fbody.$el.clientHeight * 3 /2 ?true :false
                         this.isClick = this.expandAll && this.showMore
-                       if(this.param){
-                           let keys=Object.keys(this.param)
-                           if(keys.length>0){
-                               for (let i=0;i<keys.length;i++){
-                                   if(this.param[keys[i]]!=='' && this.param[keys[i]]!==undefined && this.param[keys[i]].length>0){
-                                       this.isClick=true
-                                       this.showMore = true
-                                       break
-                                   }
-                               }
-                           }
-                       }
+                        if(this.param){
+                            let keys=Object.keys(this.param)
+                            if(keys.length>0){
+                                for (let i=0;i<keys.length;i++){
+                                    if(this.param[keys[i]]!=='' && this.param[keys[i]]!==undefined && this.param[keys[i]].length>0){
+                                        this.isClick=true
+                                        this.showMore = true
+                                        break
+                                    }
+                                }
+                            }
+                        }
                         clearInterval(this.time)
                     }
                 })
@@ -578,6 +580,13 @@
             },
             handlePaginationCurrentChange(page){
                 this.pagination.currentPage = page
+                let data=this.dealQueryParam()
+                this.changeUrlWay(data)
+                this.$emit('query-changes',data)
+            },
+            handleSizeChange(val){
+                this.pagination.pageSize=val
+                this.pagination.currentPage=1
                 let data=this.dealQueryParam()
                 this.changeUrlWay(data)
                 this.$emit('query-changes',data)
