@@ -1,6 +1,39 @@
 <template>
     <el-tabs tab-position="left">
         <el-tab-pane label="基础表格">
+            <el-table
+                    ref="singleTable"
+                    :data="tableData"
+                    style="width: 100%">
+            <el-table-column
+                    type="index"
+                    width="50">
+            </el-table-column>
+            <el-table-column
+                    property="date"
+                    label="日期"
+                    width="120">
+            </el-table-column>
+            <el-table-column
+                    property="name"
+                    label="姓名"
+                    width="120">
+            </el-table-column>
+            <el-table-column
+                    property="address"
+                    label="地址">
+            </el-table-column>
+            </el-table>
+
+
+
+            <yi-table ref="table"
+                      showSort
+                      selection
+                      :columns="column"
+                      :data="data"/>
+
+
             <p>设置查询条件:setQueryCriteria({name:'法律专业', code:'选项一', level:'高级'})</p>
             <p>得到查询条件:getQueryCriteria()</p>
             <yi-table ref="table"
@@ -33,6 +66,7 @@
                 </template>
             </yi-table>
             <yi-table ref="table"
+                      showSort
                       :columns="column"
                       :data="data"
                       :expand-all="true"
@@ -69,6 +103,23 @@
         name: "dtable",
         data(){
             return{
+                tableData: [{
+                    date: '2016-05-02',
+                    name: '王小虎',
+                    address: '上海市普陀区金沙江路 1518 弄'
+                }, {
+                    date: '2016-05-04',
+                    name: '王小虎',
+                    address: '上海市普陀区金沙江路 1517 弄'
+                }, {
+                    date: '2016-05-01',
+                    name: '王小虎',
+                    address: '上海市普陀区金沙江路 1519 弄'
+                }, {
+                    date: '2016-05-03',
+                    name: '王小虎',
+                    address: '上海市普陀区金沙江路 1516 弄'
+                }],
                 tColumn:[
                     { title: '时间', key: 'date'},
                     { title: '名称', key: 'name'},

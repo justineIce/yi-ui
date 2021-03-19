@@ -153,9 +153,10 @@
                       @filter-change="handleFilterChange"
                       @current-change="handleCurrentChange"
                       @expand-change="handleExpandChange">
+                <el-table-column type="index" width="50" label="序号" v-if="showSort"></el-table-column>
                 <el-table-column type="selection" width="50px" v-if="selection"></el-table-column>
                 <template v-for="(item,index) in columns">
-                    <el-table-column :key="`column__${index}`"
+                    <el-table-column :key="`column__${index+1}`"
                                      v-if="handleAttribute(item.show,true) && (item.onlyQuery ? !item.onlyQuery :true)"
                                      v-bind="item"
                                      :sortable="handleAttribute(item.sortable,sortable)"
@@ -369,6 +370,11 @@
              * @description 是否多选
              */
             selection: {type: Boolean, default: false},
+            /**
+             * @description
+             *
+             */
+             showSort: {type: Boolean, default: false},
             /**
              * @description 表格操作
              * title 标题   operate操作数组
