@@ -153,8 +153,8 @@
                       @filter-change="handleFilterChange"
                       @current-change="handleCurrentChange"
                       @expand-change="handleExpandChange">
-                <el-table-column type="index" width="50" label="序号" v-if="showSort"></el-table-column>
                 <el-table-column type="selection" width="50px" v-if="selection"></el-table-column>
+                <el-table-column type="index" width="50" label="序号" v-if="showSort"></el-table-column>
                 <template v-for="(item,index) in columns">
                     <el-table-column :key="`column__${index+1}`"
                                      v-if="handleAttribute(item.show,true) && (item.onlyQuery ? !item.onlyQuery :true)"
