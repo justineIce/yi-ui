@@ -74,6 +74,7 @@
                       :pagination="pagination"
                       selection
                       :rowHandle="rowHandle"
+                      @form-change="formChange"
                       @query-changes="handleQueryChange"/>
         </el-tab-pane>
         <el-tab-pane label="树形数据与懒加载">
@@ -242,6 +243,9 @@
             },
             handleQueryChange(data){
                 console.log(data)
+            },
+            formChange(data){
+              console.log(data)
             }
         }
     }

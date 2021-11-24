@@ -27,13 +27,15 @@
                                                       v-model="queryData[item.key]"
                                                       v-bind="item.component"
                                                       :placeholder="`请输入${item.title}`"
+                                                      @change="$emit('form-change',{key: item.key, data: queryData})"
                                                       :style="{width:handleAttribute(item.component.width,'100%')}"></el-input>
                                             <!--选择框-->
                                             <el-select size="small"
                                                        v-else-if="item.component.name === 'el-select'"
                                                        v-model="queryData[item.key]"
                                                        v-bind="item.component"
-                                                       :placeholder="`请选择${item.title}`">
+                                                       :placeholder="`请选择${item.title}`"
+                                                       @change="$emit('form-change',{key: item.key, data: queryData})">
                                                 <el-option
                                                         v-for="option in item.component.options"
                                                         :key="option.value"
@@ -49,33 +51,36 @@
                                                          v-bind="item.component"
                                                          :options="item.component.options"
                                                          :props="item.component.props"
-                                                         :placeholder="`请选择${item.title}`">
+                                                         :placeholder="`请选择${item.title}`"
+                                                         @change="$emit('form-change',{key: item.key, data: queryData})">
                                             </el-cascader>
                                             <!--时间选择-->
                                             <el-time-picker  size="small"
                                                              v-else-if="item.component.name === 'el-time-picker'"
                                                              v-model="queryData[item.key]"
                                                              v-bind="item.component"
-                                                             :placeholder="`请选择时间`">
+                                                             :placeholder="`请选择时间`"
+                                                             @change="$emit('form-change',{key: item.key, data: queryData})">
                                             </el-time-picker>
                                             <!--日期选择-->
                                             <el-date-picker  size="small"
                                                              v-else-if="item.component.name === 'el-date-picker'"
                                                              v-model="queryData[item.key]"
                                                              v-bind="item.component"
-                                                             :placeholder="`请选择日期`">
+                                                             :placeholder="`请选择日期`"
+                                                             @change="$emit('form-change',{key: item.key, data: queryData})">
                                             </el-date-picker>
                                             <!--多选框-->
                                             <el-checkbox-group size="small"
                                                                v-else-if="item.component.name === 'el-checkbox'"
                                                                v-model="queryData[item.key]"
-                                                               v-bind="item.component">
+                                                               v-bind="item.component"
+                                                               @change="$emit('form-change',{key: item.key, data: queryData})">
                                                 <template v-if="item.component.buttonMode">
                                                     <el-checkbox-button
                                                             v-for="option in item.options"
                                                             :key="option.value"
-                                                            :label="option.value"
-                                                    >
+                                                            :label="option.value">
                                                         {{option.label}}
                                                     </el-checkbox-button>
                                                 </template>
@@ -455,6 +460,7 @@
                                 }
                             }
                         }
+
                         clearInterval(this.time)
                     }
                 })
