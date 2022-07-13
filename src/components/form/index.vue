@@ -1,6 +1,7 @@
 <template>
     <div class="yi-form">
-        <el-form ref="form" role="form"
+        <el-form ref="form"
+                 role="form"
                  v-bind="options"
                  :model="form"
                  :rules="rules"
@@ -173,6 +174,7 @@
                                    native-type="submit"
                         >{{options ? handleAttribute(options.saveButtonText, '确定') : '确定'}}
                         </el-button>
+                         <el-button @click="resetForm()">重置</el-button>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -253,6 +255,9 @@
                         this.saveLoading = false
                     })
                 })
+            },
+            resetForm(){
+              this.$refs.form.resetFields();
             }
         },
         mounted() {
