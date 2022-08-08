@@ -4,8 +4,7 @@ const less = require('gulp-less');
 const rename = require('gulp-rename');
 const autoprefixer = require('gulp-autoprefixer');
 
-// 编译less
-gulp.task('css', function () {
+gulp.task('default', gulp.series((done) => {
     gulp.src('../src/styles/index.scss')
         .pipe(less())
         .pipe(autoprefixer({
@@ -14,12 +13,5 @@ gulp.task('css', function () {
         .pipe(cleanCSS())
         .pipe(rename('yiview.css'))
         .pipe(gulp.dest('../lib/styles'));
-});
-
-// // 拷贝字体文件
-// gulp.task('fonts', function () {
-//     gulp.src('../src/styles/common/iconfont/fonts/*.*')
-//         .pipe(gulp.dest('../dist/styles/fonts'));
-// });
-
-gulp.task('default', ['css']);
+    done();
+}));

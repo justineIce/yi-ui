@@ -1,6 +1,6 @@
 {
   "name": "yiview",
-  "version": "1.4.7",
+  "version": "1.4.8",
   "description": "vue 组件",
   "main": "lib/yiview.common.js",
   "scripts": {
@@ -17,15 +17,15 @@
     "@vue/cli-plugin-eslint": "^4.4.0",
     "@vue/cli-service": "^4.4.0",
     "babel-eslint": "^10.1.0",
+    "dart-sass": "^1.25.0",
     "element-ui": "^2.13.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.2",
     "gulp-autoprefixer": "^5.0.0",
-    "gulp-clean-css": "^3.10.0",
-    "gulp-less": "^4.0.1",
-    "gulp-rename": "^1.4.0",
-    "dart-sass": "^1.25.0",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-less": "^5.0.0",
+    "gulp-rename": "^2.0.0",
     "sass": "^1.49.9",
     "sass-loader": "^7.3.1",
     "vue-template-compiler": "^2.6.11"
